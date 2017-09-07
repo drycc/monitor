@@ -1,5 +1,5 @@
 name: monitor
-home: https://github.com/deis/monitor
+home: https://github.com/deisthree/monitor
 version: <Will be populated by the ci before publishing the chart>
 description: Monitoring for Deis Workflow.
 maintainers:

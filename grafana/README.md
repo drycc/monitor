@@ -2,7 +2,7 @@
 [![Docker Repository on Quay](https://quay.io/repository/deisci/grafana/status "Docker Repository on Quay")](https://quay.io/repository/deisci/grafana)
 
 ## Description
-[Grafana](https://grafana.org/) is a graphing application built for time series data. It natively supports influxdb and provides great dashboarding support. This project is focused on provided a grafana installation that can be run within a kubernetes installation. The grafana application is agnostic to [Workflow](https://github.com/deis/workflow) and can be installed as a stand alone system with the monitoring suite.
+[Grafana](https://grafana.org/) is a graphing application built for time series data. It natively supports influxdb and provides great dashboarding support. This project is focused on provided a grafana installation that can be run within a kubernetes installation. The grafana application is agnostic to [Workflow](https://github.com/deisthree/workflow) and can be installed as a stand alone system with the monitoring suite.
 
 ## Configuration
 | ENV Var | Default Value | Description |
