@@ -1,5 +1,5 @@
 name: influxdb
-home: https://github.com/deisthree/monitor/tree/master/influxdb
+home: https://github.com/teamhephy/monitor/tree/master/influxdb
 version: <Will be populated by the ci before publishing the chart>
 description: Monitoring for Deis Workflow.
 maintainers:
