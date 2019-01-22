@@ -1,7 +1,8 @@
 grafana:
   org: "drycc"
   pull_policy: "Always"
-  docker_tag: canary
+  docker_tag: "canary"
+  docker_registry: ""
   allow_sign_up: "true"
   # limits_cpu: "100m"
   # limits_memory: "50Mi"
@@ -12,7 +13,8 @@ grafana:
 influxdb:
   org: "drycc"
   pull_policy: "Always"
-  docker_tag: canary
+  docker_tag: "canary"
+  docker_registry: ""
   # limits_cpu: "100m"
   # limits_memory: "50Mi"
   url: "my.influx.url"
@@ -26,7 +28,8 @@ influxdb:
 telegraf:
   org: "drycc"
   pull_policy: "Always"
-  docker_tag: canary
+  docker_tag: "canary"
+  docker_registry: ""
   # limits_cpu: "100m"
   # limits_memory: "50Mi"
 

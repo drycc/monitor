@@ -19,7 +19,7 @@ spec:
       serviceAccount: drycc-monitor-telegraf
       containers:
         - name: drycc-monitor-telegraf
-          image: quay.io/{{.Values.org}}/telegraf:{{.Values.docker_tag}}
+          image: {{.Values.docker_registry}}{{.Values.org}}/telegraf:{{.Values.docker_tag}}
           imagePullPolicy: {{.Values.pull_policy}}
 {{- if or (.Values.limits_cpu) (.Values.limits_memory)}}
           resources:
