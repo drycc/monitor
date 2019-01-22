@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Deis Component Health",
+    "title": "Drycc Component Health",
     "tags": [
-      "deis"
+      "drycc"
     ],
     "style": "dark",
     "timezone": "browser",
@@ -111,7 +111,7 @@
                   {
                     "key": "namespace",
                     "operator": "=",
-                    "value": "deis"
+                    "value": "drycc"
                   }
                 ]
               }
@@ -236,7 +236,7 @@
                   {
                     "key": "namespace",
                     "operator": "=",
-                    "value": "deis"
+                    "value": "drycc"
                   }
                 ]
               }
@@ -377,7 +377,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-controller"
+                    "value": "drycc-controller"
                   }
                 ]
               }
@@ -503,7 +503,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-controller"
+                    "value": "drycc-controller"
                   }
                 ]
               }
@@ -644,7 +644,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-builder"
+                    "value": "drycc-builder"
                   }
                 ]
               }
@@ -770,7 +770,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-builder"
+                    "value": "drycc-builder"
                   }
                 ]
               }
@@ -911,7 +911,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-database"
+                    "value": "drycc-database"
                   }
                 ]
               }
@@ -1036,7 +1036,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-database"
+                    "value": "drycc-database"
                   }
                 ]
               }
@@ -1177,7 +1177,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger-fluentd"
+                    "value": "drycc-logger-fluentd"
                   }
                 ]
               }
@@ -1302,7 +1302,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger-fluentd"
+                    "value": "drycc-logger-fluentd"
                   }
                 ]
               }
@@ -1443,7 +1443,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-grafana"
+                    "value": "drycc-monitor-grafana"
                   }
                 ]
               }
@@ -1568,7 +1568,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-grafana"
+                    "value": "drycc-monitor-grafana"
                   }
                 ]
               }
@@ -1709,7 +1709,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-influxdb"
+                    "value": "drycc-monitor-influxdb"
                   }
                 ]
               }
@@ -1834,7 +1834,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-influxdb"
+                    "value": "drycc-monitor-influxdb"
                   }
                 ]
               }
@@ -1975,7 +1975,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger"
+                    "value": "drycc-logger"
                   }
                 ]
               }
@@ -2100,7 +2100,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger"
+                    "value": "drycc-logger"
                   }
                 ]
               }
@@ -2241,7 +2241,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-minio"
+                    "value": "drycc-minio"
                   }
                 ]
               }
@@ -2366,7 +2366,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-minio"
+                    "value": "drycc-minio"
                   }
                 ]
               }
@@ -2507,7 +2507,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-nsqd"
+                    "value": "drycc-nsqd"
                   }
                 ]
               }
@@ -2632,7 +2632,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-nsqd"
+                    "value": "drycc-nsqd"
                   }
                 ]
               }
@@ -2773,7 +2773,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger-redis"
+                    "value": "drycc-logger-redis"
                   }
                 ]
               }
@@ -2898,7 +2898,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger-redis"
+                    "value": "drycc-logger-redis"
                   }
                 ]
               }
@@ -3039,7 +3039,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-registry"
+                    "value": "drycc-registry"
                   }
                 ]
               }
@@ -3164,7 +3164,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-registry"
+                    "value": "drycc-registry"
                   }
                 ]
               }
@@ -3305,7 +3305,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-registry-proxy"
+                    "value": "drycc-registry-proxy"
                   }
                 ]
               }
@@ -3430,7 +3430,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-registry-proxy"
+                    "value": "drycc-registry-proxy"
                   }
                 ]
               }
@@ -3571,7 +3571,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-router"
+                    "value": "drycc-router"
                   }
                 ]
               }
@@ -3696,7 +3696,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-router"
+                    "value": "drycc-router"
                   }
                 ]
               }
@@ -3837,7 +3837,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-telegraf"
+                    "value": "drycc-monitor-telegraf"
                   }
                 ]
               }
@@ -3962,7 +3962,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-telegraf"
+                    "value": "drycc-monitor-telegraf"
                   }
                 ]
               }
@@ -4103,7 +4103,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-workflow-manager"
+                    "value": "drycc-workflow-manager"
                   }
                 ]
               }
@@ -4230,7 +4230,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-workflow-manager"
+                    "value": "drycc-workflow-manager"
                   }
                 ]
               }

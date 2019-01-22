@@ -1,11 +1,11 @@
 apiVersion: extensions/v1beta1
 kind: DaemonSet
 metadata:
-  name: deis-monitor-telegraf
+  name: drycc-monitor-telegraf
   labels:
-    heritage: deis
+    heritage: drycc
   annotations:
-    component.deis.io/version: {{ .Values.docker_tag }}
+    component.drycc.cc/version: {{ .Values.docker_tag }}
 spec:
   {{- if ge .Capabilities.KubeVersion.Minor "6" }}
   updateStrategy:
@@ -14,11 +14,11 @@ spec:
   template:
     metadata:
       labels:
-        app: deis-monitor-telegraf
+        app: drycc-monitor-telegraf
     spec:
-      serviceAccount: deis-monitor-telegraf
+      serviceAccount: drycc-monitor-telegraf
       containers:
-        - name: deis-monitor-telegraf
+        - name: drycc-monitor-telegraf
           image: quay.io/{{.Values.org}}/telegraf:{{.Values.docker_tag}}
           imagePullPolicy: {{.Values.pull_policy}}
 {{- if or (.Values.limits_cpu) (.Values.limits_memory)}}
@@ -59,9 +59,9 @@ spec:
                 key: password
           {{- else }}
           - name: "INFLUXDB_URLS"
-            value: "\"http://$(DEIS_MONITOR_INFLUXAPI_SERVICE_HOST):$(DEIS_MONITOR_INFLUXAPI_SERVICE_PORT_TRANSPORT)\""
+            value: "\"http://$(DRYCC_MONITOR_INFLUXAPI_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXAPI_SERVICE_PORT_TRANSPORT)\""
           - name: "INFLUXDB_INPUT_URLS"
-            value: "\"http://$(DEIS_MONITOR_INFLUXAPI_SERVICE_HOST):$(DEIS_MONITOR_INFLUXAPI_SERVICE_PORT_TRANSPORT)/debug/vars\""
+            value: "\"http://$(DRYCC_MONITOR_INFLUXAPI_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXAPI_SERVICE_PORT_TRANSPORT)/debug/vars\""
           - name: "ENABLE_INFLUXDB_INPUT"
             value: "true"
           {{- end }}
@@ -76,19 +76,19 @@ spec:
           - name: "ENABLE_KUBERNETES"
             value: "true"
           - name: "NSQ_CONSUMER_SERVER"
-            value: "$(DEIS_NSQD_SERVICE_HOST):$(DEIS_NSQD_SERVICE_PORT_TRANSPORT)"
+            value: "$(DRYCC_NSQD_SERVICE_HOST):$(DRYCC_NSQD_SERVICE_PORT_TRANSPORT)"
           - name: "NSQ_CONSUMER_TOPIC"
             value: "metrics"
           - name: "NSQ_ENDPOINTS"
-            value: "\"http://$(DEIS_NSQD_SERVICE_HOST):$(DEIS_NSQD_SERVICE_PORT_HTTP)\""
+            value: "\"http://$(DRYCC_NSQD_SERVICE_HOST):$(DRYCC_NSQD_SERVICE_PORT_HTTP)\""
           {{- if ne .Values.global.logger_redis_location "off-cluster" }}
-          - name: DEIS_LOGGER_REDIS_PASSWORD
+          - name: DRYCC_LOGGER_REDIS_PASSWORD
             valueFrom:
               secretKeyRef:
                 name: logger-redis-creds
                 key: password
           - name: "REDIS_SERVERS"
-            value: "\"tcp://:$(DEIS_LOGGER_REDIS_PASSWORD)@$(DEIS_LOGGER_REDIS_SERVICE_HOST):$(DEIS_LOGGER_REDIS_SERVICE_PORT)\""
+            value: "\"tcp://:$(DRYCC_LOGGER_REDIS_PASSWORD)@$(DRYCC_LOGGER_REDIS_SERVICE_HOST):$(DRYCC_LOGGER_REDIS_SERVICE_PORT)\""
           {{- end }}
           volumeMounts:
           - mountPath: /var/run/docker.sock
@@ -103,7 +103,7 @@ spec:
             mountPath: /var/run/utmp
             readOnly: true
           - name: logger-redis-creds
-            mountPath: /var/run/secrets/deis/redis/creds
+            mountPath: /var/run/secrets/drycc/redis/creds
       volumes:
       - name: docker-socket
         hostPath:

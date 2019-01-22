@@ -1,13 +1,13 @@
 
-# Hephy Monitor v2
-[![Build Status](https://ci.deis.io/job/monitor/badge/icon)](https://ci.deis.io/job/monitor)
-[![Docker Repository on Quay](https://quay.io/repository/deisci/grafana/status "Docker Repository on Quay")](https://quay.io/repository/deisci/grafana)
-[![Docker Repository on Quay](https://quay.io/repository/deisci/influxdb/status "Docker Repository on Quay")](https://quay.io/repository/deisci/influxdb)
-[![Docker Repository on Quay](https://quay.io/repository/deisci/telegraf/status "Docker Repository on Quay")](https://quay.io/repository/deisci/telegraf)
+# Drycc Monitor v2
+[![Build Status](https://ci.drycc.cc/job/monitor/badge/icon)](https://ci.drycc.cc/job/monitor)
+[![Docker Repository on Quay](https://quay.io/repository/drycc/grafana/status "Docker Repository on Quay")](https://quay.io/repository/drycc/grafana)
+[![Docker Repository on Quay](https://quay.io/repository/drycc/influxdb/status "Docker Repository on Quay")](https://quay.io/repository/drycc/influxdb)
+[![Docker Repository on Quay](https://quay.io/repository/drycc/telegraf/status "Docker Repository on Quay")](https://quay.io/repository/drycc/telegraf)
 
-Deis (pronounced DAY-iss) Workflow is an open source Platform as a Service (PaaS) that adds a developer-friendly layer to any [Kubernetes](http://kubernetes.io) cluster, making it easy to deploy and manage applications on your own servers.
+Drycc (pronounced DAY-iss) Workflow is an open source Platform as a Service (PaaS) that adds a developer-friendly layer to any [Kubernetes](http://kubernetes.io) cluster, making it easy to deploy and manage applications on your own servers.
 
-For more information about the Deis Workflow, please visit the main project page at https://github.com/teamhephy/workflow.
+For more information about the Drycc Workflow, please visit the main project page at https://github.com/drycc/workflow.
 
 We welcome your input! If you have feedback, please [submit an issue][issues]. If you'd like to participate in development, please read the "Development" section below and [submit a pull request][prs].
 
@@ -19,7 +19,7 @@ Currently this repo provides only 3 components (Influxdb, Telegraf, and Grafana)
 
 Also provided is an Influxdb container which only runs 1 instance of the database. It also does not write any data to the host filesystem so it is not a durable system right now. For more information please read [this](influxdb/README.md)
 
-Lastly, Grafana is a stand alone graphing application. It natively supports Influxdb as a datasource and provides a robust engine for creating dashboards on top of timeseries data. We provide a few out of the box dashboards for monitoring Deis Workflow and Kubernetes but please feel free to use them as a starting point for creating your own dashboards.
+Lastly, Grafana is a stand alone graphing application. It natively supports Influxdb as a datasource and provides a robust engine for creating dashboards on top of timeseries data. We provide a few out of the box dashboards for monitoring Drycc Workflow and Kubernetes but please feel free to use them as a starting point for creating your own dashboards.
 
 # Architecture Diagram
 
@@ -54,7 +54,7 @@ Lastly, Grafana is a stand alone graphing application. It natively supports Infl
 ```
 
 [k8s-home]: http://kubernetes.io/
-[issues]: https://github.com/teamhephy/monitor/issues
-[prs]: https://github.com/teamhephy/monitor/pulls
-[v2.18]: https://github.com/teamhephy/workflow/releases/tag/v2.18.0
+[issues]: https://github.com/drycc/monitor/issues
+[prs]: https://github.com/drycc/monitor/pulls
+[v2.18]: https://github.com/drycc/workflow/releases/tag/v2.18.0
 

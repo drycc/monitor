@@ -1,8 +1,8 @@
 # [Telegraf](https://influxdata.com/time-series-platform/telegraf/)
-[![Docker Repository on Quay](https://quay.io/repository/deisci/telegraf/status "Docker Repository on Quay")](https://quay.io/repository/deisci/telegraf)
+[![Docker Repository on Quay](https://quay.io/repository/drycc/telegraf/status "Docker Repository on Quay")](https://quay.io/repository/drycc/telegraf)
 
 ## Description
-Telegraf is a metrics collection daemon from InfluxData. It contains numerous input and output plugins that allows the user to customize what data they collect and where it is sent. This image is based on the official [deis base image](https://github.com/teamhephy/docker-base).
+Telegraf is a metrics collection daemon from InfluxData. It contains numerous input and output plugins that allows the user to customize what data they collect and where it is sent. This image is based on the official [drycc base image](https://github.com/drycc/docker-base).
 
 ## Configuration
 Telegraf configuration is based largely on a toml file that is passed in when the binary starts. The issue with doing this in a containerized environment is how can you "dynamically" build this file based on values passed into the container at runtime. Therefore, this image relies on a project called [envtpl](https://github.com/arschles/envtpl) to produce the telegraf configuration file. It can take environment variables and through using go templates produce the necessary stanzas in the toml file to start telegraf. Currently, the go template only supports basic if checks and outputting values that have been set.
@@ -10,7 +10,7 @@ Telegraf configuration is based largely on a toml file that is passed in when th
 ## Host information
 You must do 2 things if you want to receive host level metrics from telegraf.
  * - Set the volume mounts for both `/sys` and `/proc`
- * - Set the environment variables `HOST_PROC` and `HOST_SYS` to the values of where `/sys` and `/proc` are mounted in the container. Example entries can be found in the [manifest](manifests/deis-monitor-telegraf-daemon.yaml).
+ * - Set the environment variables `HOST_PROC` and `HOST_SYS` to the values of where `/sys` and `/proc` are mounted in the container. Example entries can be found in the [manifest](manifests/drycc-monitor-telegraf-daemon.yaml).
 
  ## Environment Variables
  The configuration is driven via environment variables which are published to the `config.toml` file passed to telegraf when it starts. The following table gives the environment variable name and the default value if it is not set.
@@ -36,8 +36,8 @@ There are a few key environment variables you should be aware of when interactin
 
 * `BUILD_TAG` - The tag provided to the docker image when it is built (defaults to the git-sha)
 * `SHORT_NAME` - The name of the image (defaults to `grafana`)
-* `DEIS_REGISTRY` - This is the registry you are using (default `dockerhub`)
-* `IMAGE_PREFIX` - This is the account for the registry you are using (default `deis`)
+* `DRYCC_REGISTRY` - This is the registry you are using (default `dockerhub`)
+* `IMAGE_PREFIX` - This is the account for the registry you are using (default `drycc`)
 
 ### Make targets
 
@@ -45,4 +45,4 @@ There are a few key environment variables you should be aware of when interactin
 * `make push` - Push docker image to a registry
 * `make upgrade` - Replaces the running grafana instance with a new one
 
-The typical workflow will look something like this - `DEIS_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push upgrade``
+The typical workflow will look something like this - `DRYCC_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push upgrade``

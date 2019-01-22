@@ -2,25 +2,25 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: deis-monitor-influxdb
+  name: drycc-monitor-influxdb
   labels:
-    heritage: deis
+    heritage: drycc
   annotations:
-    component.deis.io/version: {{ .Values.docker_tag }}
+    component.drycc.cc/version: {{ .Values.docker_tag }}
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app: deis-monitor-influxdb
+      app: drycc-monitor-influxdb
   template:
     metadata:
       labels:
-        app: deis-monitor-influxdb
+        app: drycc-monitor-influxdb
     spec:
       containers:
-      - name: deis-monitor-influxdb
+      - name: drycc-monitor-influxdb
         image: quay.io/{{.Values.org}}/influxdb:{{.Values.docker_tag}}
         imagePullPolicy: {{.Values.pull_policy}}
 {{- if or (.Values.limits_cpu) (.Values.limits_memory)}}
@@ -64,6 +64,6 @@ spec:
       volumes:
       - name: influxdb-data
         persistentVolumeClaim:
-          claimName: deis-monitor-influxdb
+          claimName: drycc-monitor-influxdb
 {{- end }}
 {{- end }}

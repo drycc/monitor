@@ -3,7 +3,7 @@
     "id": null,
     "title": "Influx",
     "tags": [
-      "deis"
+      "drycc"
     ],
     "style": "dark",
     "timezone": "browser",
@@ -335,7 +335,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-monitor-influxdb"
+                    "value": "drycc-monitor-influxdb"
                   }
                 ]
               }

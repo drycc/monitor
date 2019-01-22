@@ -3,7 +3,7 @@
     "id": null,
     "title": "NSQ Health",
     "tags": [
-      "deis"
+      "drycc"
     ],
     "style": "dark",
     "timezone": "browser",
@@ -117,7 +117,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-nsqd"
+                    "value": "drycc-nsqd"
                   }
                 ]
               }
@@ -236,7 +236,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-nsqd"
+                    "value": "drycc-nsqd"
                   }
                 ]
               }

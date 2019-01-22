@@ -3,14 +3,14 @@ SHELL := /bin/bash
 # all monitor components share/use the following targets/exports
 DOCKER_HOST = $(shell echo $$DOCKER_HOST)
 BUILD_TAG ?= git-$(shell git rev-parse --short HEAD)
-DEIS_REGISTRY ?= ${DEV_REGISTRY}
-IMAGE_PREFIX ?= deis
+DRYCC_REGISTRY ?= ${DEV_REGISTRY}
+IMAGE_PREFIX ?= drycc
 
 include ../includes.mk
 include ../versioning.mk
 include ../deploy.mk
 
-TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash quay.io/deis/shell-dev
+TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash quay.io/drycc/go-dev:v0.22.0
 
 build: docker-build
 push: docker-push
@@ -31,11 +31,11 @@ test-style:
 .PHONY: build push docker-build clean upgrade deploy test test-style
 
 build-all:
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION} ../influxdb/rootfs
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DEIS_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION} ../influxdb/rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
 
 push-all:
-	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION}
-	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION}
-	docker push ${DEIS_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}
+	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION}
+	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION}
+	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}

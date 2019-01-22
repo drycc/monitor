@@ -2,7 +2,7 @@
 set -e
 
 API_URL=${API_URL:-"https://$KUBERNETES_SERVICE_HOST:$KUBERNETES_SERVICE_PORT"}
-NSQ_TOPIC_URL=${NSQ_TOPIC_URL:-"http://$DEIS_NSQD_SERVICE_HOST:$DEIS_NSQD_SERVICE_PORT/topic/create?topic=$NSQ_CONSUMER_TOPIC"}
+NSQ_TOPIC_URL=${NSQ_TOPIC_URL:-"http://$DRYCC_NSQD_SERVICE_HOST:$DRYCC_NSQD_SERVICE_PORT/topic/create?topic=$NSQ_CONSUMER_TOPIC"}
 
 export BEARER_TOKEN_PATH TOKEN NODE_NAME NODE_IP AGENT_HOSTNAME
 BEARER_TOKEN_PATH=/var/run/secrets/kubernetes.io/serviceaccount/token
@@ -13,7 +13,7 @@ NODE_IP="$(curl -s "$API_URL/api/v1/namespaces/$POD_NAMESPACE/pods/$HOSTNAME" --
 echo "Node IP set (${NODE_IP})"
 AGENT_HOSTNAME=$NODE_NAME
 
-if [ -n "$DEIS_NSQD_SERVICE_HOST" ]; then
+if [ -n "$DRYCC_NSQD_SERVICE_HOST" ]; then
   echo "Creating topic with URL: ${NSQ_TOPIC_URL}"
   curl -s -X POST "${NSQ_TOPIC_URL}"
 fi

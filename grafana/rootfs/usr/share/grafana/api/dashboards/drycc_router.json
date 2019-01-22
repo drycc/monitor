@@ -1,9 +1,9 @@
 {
   "dashboard": {
     "id": null,
-    "title": "Deis Router",
+    "title": "Drycc Router",
     "tags": [
-      "deis"
+      "drycc"
     ],
     "style": "dark",
     "timezone": "browser",
@@ -111,7 +111,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-router"
+                    "value": "drycc-router"
                   }
                 ]
               }
@@ -230,7 +230,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-router"
+                    "value": "drycc-router"
                   }
                 ]
               }
@@ -317,9 +317,9 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
-                "query": "SELECT last(\"value\") FROM \"deis_router_request_time\" WHERE $timeFilter GROUP BY time($interval), \"app\" fill(null)",
+                "query": "SELECT last(\"value\") FROM \"drycc_router_request_time\" WHERE $timeFilter GROUP BY time($interval), \"app\" fill(null)",
                 "refId": "A",
                 "resultFormat": "time_series",
                 "select": [
@@ -425,7 +425,7 @@
                   }
                 ],
                 "hide": false,
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "B",
                 "resultFormat": "time_series",
@@ -465,7 +465,7 @@
                   }
                 ],
                 "hide": false,
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "C",
                 "resultFormat": "time_series",
@@ -503,7 +503,7 @@
                   }
                 ],
                 "hide": false,
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "D",
                 "resultFormat": "time_series",
@@ -541,7 +541,7 @@
                   }
                 ],
                 "hide": false,
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "A",
                 "resultFormat": "time_series",
@@ -674,9 +674,9 @@
                   }
                 ],
                 "hide": false,
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
-                "query": "SELECT last(\"value\") FROM \"deis_router_request_count\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+                "query": "SELECT last(\"value\") FROM \"drycc_router_request_count\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
                 "refId": "A",
                 "resultFormat": "time_series",
                 "select": [
@@ -719,9 +719,9 @@
                   }
                 ],
                 "hide": false,
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
-                "query": "SELECT last(\"value\") FROM \"deis_router_request_count\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+                "query": "SELECT last(\"value\") FROM \"drycc_router_request_count\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
                 "refId": "B",
                 "resultFormat": "time_series",
                 "select": [
@@ -833,7 +833,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "A",
                 "resultFormat": "time_series",
@@ -882,7 +882,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "B",
                 "resultFormat": "time_series",
@@ -931,7 +931,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "C",
                 "resultFormat": "time_series",
@@ -980,7 +980,7 @@
                     "type": "fill"
                   }
                 ],
-                "measurement": "deis_router_response_time_ms",
+                "measurement": "drycc_router_response_time_ms",
                 "policy": "default",
                 "refId": "D",
                 "resultFormat": "time_series",

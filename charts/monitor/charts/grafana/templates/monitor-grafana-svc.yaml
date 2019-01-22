@@ -2,20 +2,20 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: deis-monitor-grafana
+  name: drycc-monitor-grafana
   labels:
-    heritage: deis
-    app: deis-monitor-grafana
-    router.deis.io/routable: "true"
+    heritage: drycc
+    app: drycc-monitor-grafana
+    router.drycc.cc/routable: "true"
   annotations:
-    router.deis.io/domains: grafana
-    router.deis.io/connectTimeout: "10"
-    router.deis.io/tcpTimeout: "1200"
+    router.drycc.cc/domains: grafana
+    router.drycc.cc/connectTimeout: "10"
+    router.drycc.cc/tcpTimeout: "1200"
 spec:
   ports:
   - port: 80
     name: ui
     targetPort: ui
   selector:
-    app: deis-monitor-grafana
+    app: drycc-monitor-grafana
 {{- end }}

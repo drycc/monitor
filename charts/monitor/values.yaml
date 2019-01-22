@@ -1,5 +1,5 @@
 grafana:
-  org: "deisci"
+  org: "drycc"
   pull_policy: "Always"
   docker_tag: canary
   allow_sign_up: "true"
@@ -10,7 +10,7 @@ grafana:
     accessMode: ReadWriteOnce
     size: 5Gi
 influxdb:
-  org: "deisci"
+  org: "drycc"
   pull_policy: "Always"
   docker_tag: canary
   # limits_cpu: "100m"
@@ -24,7 +24,7 @@ influxdb:
     accessMode: ReadWriteOnce
     size: 20Gi
 telegraf:
-  org: "deisci"
+  org: "drycc"
   pull_policy: "Always"
   docker_tag: canary
   # limits_cpu: "100m"

@@ -3,10 +3,10 @@
 kind: Role
 apiVersion: {{ template "rbacAPIVersion" . }}
 metadata:
-  name: deis-monitor-telegraf
+  name: drycc-monitor-telegraf
   labels:
-    app: deis-monitor-telegraf
-    heritage: deis
+    app: drycc-monitor-telegraf
+    heritage: drycc
 rules:
 - apiGroups: [""]
   resources: ["pods"]

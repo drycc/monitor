@@ -1,4 +1,4 @@
-FROM quay.io/deis/base:v0.3.6
+FROM quay.io/drycc/base:v0.3.6
 
 COPY . /
 

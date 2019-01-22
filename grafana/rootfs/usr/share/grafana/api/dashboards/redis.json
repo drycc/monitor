@@ -3,7 +3,7 @@
     "id": null,
     "title": "Redis",
     "tags": [
-      "deis"
+      "drycc"
     ],
     "style": "dark",
     "timezone": "browser",
@@ -117,7 +117,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger-redis"
+                    "value": "drycc-logger-redis"
                   }
                 ]
               }
@@ -230,7 +230,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "deis-logger-redis"
+                    "value": "drycc-logger-redis"
                   }
                 ]
               }
