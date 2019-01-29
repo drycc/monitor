@@ -1,6 +1,6 @@
 
 # Drycc Monitor v2
-[![Build Status](https://ci.drycc.cc/job/monitor/badge/icon)](https://ci.drycc.cc/job/monitor)
+
 [![Build Status](https://travis-ci.org/drycc/monitor.svg?branch=master)](https://travis-ci.org/drycc/monitor)
 [![Docker Repository on Quay](https://quay.io/repository/drycc/grafana/status "Docker Repository on Quay")](https://quay.io/repository/drycc/grafana)
 [![Docker Repository on Quay](https://quay.io/repository/drycc/influxdb/status "Docker Repository on Quay")](https://quay.io/repository/drycc/influxdb)
