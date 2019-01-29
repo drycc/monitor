@@ -1,0 +1,12 @@
+language: bash
+sudo: required
+services:
+  - docker
+script:
+  - cd grafana && make test && cd ..
+  - cd influxdb && make test && cd ..
+  - cd telegraf && make test && cd ..
+notifications:
+  slack:
+    rooms:
+      - drycc:xKmLlmJR4hfRAgVIOwdpAoC9#drycc
