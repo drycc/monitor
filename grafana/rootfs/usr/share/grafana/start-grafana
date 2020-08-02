@@ -28,7 +28,7 @@ echo "###########################################"
 echo "###########################################"
 
 GF_PATHS_PLUGINS=${PLUGINS_PATH:-"/var/lib/grafana/plugins"}
-if [ ! -z "${GF_INSTALL_PLUGINS}" ]; then
+if [ -n "${GF_INSTALL_PLUGINS}" ]; then
   echo "Installing Grafana plugins..."
   OLDIFS=$IFS
   IFS=','
@@ -81,7 +81,7 @@ curl -i -XPOST -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFA
 
 echo ""
 echo "Importing default dashboards..."
-for filename in ${DASHBOARD_LOCATION}/*.json; do
+for filename in "${DASHBOARD_LOCATION}"/*.json; do
   echo "Importing ${filename} ..."
   curl -i -XPOST --data "@${filename}" -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFANA_USER}:${GRAFANA_PASSWD}@localhost:${GRAFANA_PORT}/api/dashboards/db"
   echo ""

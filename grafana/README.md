@@ -1,5 +1,4 @@
 # Grafana
-[![Docker Repository on Quay](https://quay.io/repository/drycc/grafana/status "Docker Repository on Quay")](https://quay.io/repository/drycc/grafana)
 
 ## Description
 [Grafana](https://grafana.org/) is a graphing application built for time series data. It natively supports influxdb and provides great dashboarding support. This project is focused on provided a grafana installation that can be run within a kubernetes installation. The grafana application is agnostic to [Workflow](https://github.com/drycc/workflow) and can be installed as a stand alone system with the monitoring suite.
@@ -120,4 +119,4 @@ There are a few key environment variables you should be aware of when interactin
 * `make push` - Push docker image to a registry
 * `make upgrade` - Replaces the running grafana instance with a new one
 
-The typical workflow will look something like this - `DRYCC_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push upgrade`
+The typical workflow will look something like this - `DRYCC_REGISTRY= IMAGE_PREFIX=foouser make build push upgrade`

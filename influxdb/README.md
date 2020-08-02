@@ -1,5 +1,4 @@
 # InfluxDB
-[![Docker Repository on Quay](https://quay.io/repository/drycc/influxdb/status "Docker Repository on Quay")](https://quay.io/repository/drycc/influxdb)
 
 ## Configuration
 Right now the configuration is completely static but eventually I hope to use the [envtpl](https://github.com/arschles/envtpl) project to help provide a more robust solution.
@@ -21,7 +20,7 @@ There are a few key environment variables you should be aware of when interactin
 * `make push` - Push docker image to a registry
 * `make upgrade` - Replaces the running grafana instance with a new one
 
-The typical workflow will look something like this - `DRYCC_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push upgrade`
+The typical workflow will look something like this - `DRYCC_REGISTRY= IMAGE_PREFIX=foouser make build push upgrade`
 
 ### Accessing Admin UI
 Included is a proxy pod that proxies the UI ports so they are accessible when doing local development. These ports are `8086` and `8083`. You can access the UI by going to the `http://<host_ip>:8083`.

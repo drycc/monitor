@@ -1,5 +1,4 @@
 # [Telegraf](https://influxdata.com/time-series-platform/telegraf/)
-[![Docker Repository on Quay](https://quay.io/repository/drycc/telegraf/status "Docker Repository on Quay")](https://quay.io/repository/drycc/telegraf)
 
 ## Description
 Telegraf is a metrics collection daemon from InfluxData. It contains numerous input and output plugins that allows the user to customize what data they collect and where it is sent. This image is based on the official [drycc base image](https://github.com/drycc/docker-base).
@@ -45,4 +44,4 @@ There are a few key environment variables you should be aware of when interactin
 * `make push` - Push docker image to a registry
 * `make upgrade` - Replaces the running grafana instance with a new one
 
-The typical workflow will look something like this - `DRYCC_REGISTRY=quay.io/ IMAGE_PREFIX=foouser make build push upgrade``
+The typical workflow will look something like this - `DRYCC_REGISTRY= IMAGE_PREFIX=foouser make build push upgrade``

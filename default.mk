@@ -10,7 +10,7 @@ include ../includes.mk
 include ../versioning.mk
 include ../deploy.mk
 
-TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash quay.io/drycc/go-dev:v0.22.0
+TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash drycc/go-dev
 
 build: docker-build
 push: docker-push

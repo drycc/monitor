@@ -1,27 +1,17 @@
-FROM quay.io/drycc/base:v0.3.6
-
-RUN adduser --system \
-	--shell /bin/bash \
-	--disabled-password \
-	--home /home/influxdb \
-	--group \
-	influxdb
+FROM alpine:3.12
 
 COPY . /
 
-RUN curl -SL -o /home/influxdb/envtpl https://github.com/arschles/envtpl/releases/download/0.2.3/envtpl_linux_amd64 \
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories \
+    && echo "https://mirrors.aliyun.com/alpine/edge/community" >> /etc/apk/repositories \
+    && apk add --update bash fontconfig curl influxdb \
+    && curl -SL -o /home/influxdb/envtpl https://github.com/arschles/envtpl/releases/download/0.2.3/envtpl_linux_amd64 \
 	&& chmod +x /home/influxdb/envtpl \
-	&& curl -SL -o /tmp/influxdb.deb https://dl.influxdata.com/influxdb/releases/influxdb_1.1.1_amd64.deb \
-	&& dpkg -i /tmp/influxdb.deb \
-	&& rm /tmp/influxdb.deb \
 	&& mkdir -p /data \
-	&& chown influxdb:influxdb /data \
-	&& chown -R influxdb:influxdb /home/influxdb \
 	&& chmod +x /home/influxdb/start-influx
 
 VOLUME /data
 
-USER influxdb
 WORKDIR /home/influxdb
 CMD ["./start-influx"]
 
