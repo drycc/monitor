@@ -1,0 +1,16 @@
+{{ if .Values.cert_manager_enabled }}
+apiVersion: cert-manager.io/v1alpha2
+kind: Certificate
+metadata:
+  name: drycc-monitor-grafana
+  namespace: "{{ .Release.Namespace }}"
+spec:
+  secretName: drycc-monitor-grafana-auto-tls
+  issuerRef:
+    name: drycc-cluster-issuer
+    kind: ClusterIssuer
+  dnsNames:
+  - drycc.{{ .Values.platform_domain }}
+  privateKey:
+    rotationPolicy: Always
+{{- end }}

@@ -6,11 +6,6 @@ metadata:
   labels:
     heritage: drycc
     app: drycc-monitor-influxapi
-    router.drycc.cc/routable: "true"
-  annotations:
-    router.drycc.cc/domains: influxapi
-    router.drycc.cc/connectTimeout: "10"
-    router.drycc.cc/tcpTimeout: "1200"
 spec:
   ports:
   - port: 80

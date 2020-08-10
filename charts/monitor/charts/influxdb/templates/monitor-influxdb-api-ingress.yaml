@@ -1,0 +1,34 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  namespace: "{{ .Release.Namespace }}"
+  name: "drycc-monitor-influxapi-ingress"
+  labels:
+    app: "drycc-monitor-influxapi"
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    {{- if not (eq .Values.global.ingress_class "") }}
+    kubernetes.io/ingress.class: "{{ .Values.global.ingress_class }}"
+    {{ end }}
+spec:
+  rules:
+  - host: drycc.{{ .Values.platform_domain }}
+    http:
+      paths:
+      {{- if eq .Values.global.ingress_class "gce" "alb" }}
+      - path: /*
+      {{- else }}{{/* Has annotations but ingress class is not "gce" nor "alb" */}}
+      - path: /
+      {{- end }}
+        backend:
+          serviceName: drycc-monitor-influxapi
+          servicePort: 80
+  {{ if .Values.cert_manager_enabled }}
+  tls:
+    - secretName: drycc-monitor-influxapi-auto-tls
+      hosts:
+        - drycc-monitor-influxapi.{{ .Values.platform_domain }}
+  {{- end }}
