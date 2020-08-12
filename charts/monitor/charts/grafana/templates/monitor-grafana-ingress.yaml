@@ -15,7 +15,7 @@ metadata:
     {{ end }}
 spec:
   rules:
-  - host: drycc.{{ .Values.platform_domain }}
+  - host: drycc.{{ .Values.global.platform_domain }}
     http:
       paths:
       {{- if eq .Values.global.ingress_class "gce" "alb" }}
@@ -30,5 +30,5 @@ spec:
   tls:
     - secretName: drycc-monitor-grafana-auto-tls
       hosts:
-        - drycc-monitor-grafana.{{ .Values.platform_domain }}
+        - drycc-monitor-grafana.{{ .Values.global.platform_domain }}
   {{- end }}

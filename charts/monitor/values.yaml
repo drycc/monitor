@@ -54,5 +54,9 @@ global:
   logger_redis_location: "on-cluster"
   # Role-Based Access Control for Kubernetes >= 1.5
   use_rbac: false
+  # The public resolvable hostname to build your cluster with.
+  #
+  # This will be the hostname that is used to build endpoints such as "drycc.$HOSTNAME"
+  platform_domain: ""
   # Whether cert_manager is enabled to automatically generate drycc certificates
   cert_manager_enabled: "true"
