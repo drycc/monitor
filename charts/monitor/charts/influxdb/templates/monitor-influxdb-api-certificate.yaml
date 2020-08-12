@@ -2,15 +2,15 @@
 apiVersion: cert-manager.io/v1alpha2
 kind: Certificate
 metadata:
-  name: drycc-monitor-influxapi
+  name: drycc-monitor-influx-api
   namespace: "{{ .Release.Namespace }}"
 spec:
-  secretName: drycc-monitor-influxapi-auto-tls
+  secretName: drycc-monitor-influx-api-auto-tls
   issuerRef:
     name: drycc-cluster-issuer
     kind: ClusterIssuer
   dnsNames:
-  - drycc-monitor-influxapi.{{ .Values.global.platform_domain }}
+  - drycc-monitor-influx-api.{{ .Values.global.platform_domain }}
   privateKey:
     rotationPolicy: Always
 {{- end }}

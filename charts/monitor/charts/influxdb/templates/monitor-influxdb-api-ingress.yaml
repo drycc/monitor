@@ -2,9 +2,9 @@ apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
   namespace: "{{ .Release.Namespace }}"
-  name: "drycc-monitor-influxapi-ingress"
+  name: "drycc-monitor-influx-api-ingress"
   labels:
-    app: "drycc-monitor-influxapi"
+    app: "drycc-monitor-influx-api"
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
     release: "{{ .Release.Name }}"
     heritage: "{{ .Release.Service }}"
@@ -15,7 +15,7 @@ metadata:
     {{ end }}
 spec:
   rules:
-  - host: drycc-monitor-influxapi.{{ .Values.global.platform_domain }}
+  - host: drycc-monitor-influx-api.{{ .Values.global.platform_domain }}
     http:
       paths:
       {{- if eq .Values.global.ingress_class "gce" "alb" }}
@@ -24,11 +24,11 @@ spec:
       - path: /
       {{- end }}
         backend:
-          serviceName: drycc-monitor-influxapi
+          serviceName: drycc-monitor-influx-api
           servicePort: 80
   {{ if .Values.global.cert_manager_enabled }}
   tls:
-    - secretName: drycc-monitor-influxapi-auto-tls
+    - secretName: drycc-monitor-influx-api-auto-tls
       hosts:
-        - drycc-monitor-influxapi.{{ .Values.global.platform_domain }}
+        - drycc-monitor-influx-api.{{ .Values.global.platform_domain }}
   {{- end }}
