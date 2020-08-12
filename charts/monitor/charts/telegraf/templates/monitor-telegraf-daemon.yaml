@@ -7,6 +7,9 @@ metadata:
   annotations:
     component.drycc.cc/version: {{ .Values.docker_tag }}
 spec:
+  selector:
+    matchLabels:
+      app: drycc-monitor-telegraf
   {{- if ge .Capabilities.KubeVersion.Minor "6" }}
   updateStrategy:
     type: RollingUpdate
