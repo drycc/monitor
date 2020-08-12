@@ -10,7 +10,7 @@ spec:
     name: drycc-cluster-issuer
     kind: ClusterIssuer
   dnsNames:
-  - drycc.{{ .Values.global.platform_domain }}
+  - drycc-monitor-grafana.{{ .Values.global.platform_domain }}
   privateKey:
     rotationPolicy: Always
 {{- end }}
