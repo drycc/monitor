@@ -26,7 +26,7 @@ spec:
         backend:
           serviceName: drycc-monitor-grafana
           servicePort: 80
-  {{ if .Values.cert_manager_enabled }}
+  {{ if .Values.global.cert_manager_enabled }}
   tls:
     - secretName: drycc-monitor-grafana-auto-tls
       hosts:

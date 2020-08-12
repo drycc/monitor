@@ -54,3 +54,5 @@ global:
   logger_redis_location: "on-cluster"
   # Role-Based Access Control for Kubernetes >= 1.5
   use_rbac: false
+  # Whether cert_manager is enabled to automatically generate drycc certificates
+  cert_manager_enabled: "true"
