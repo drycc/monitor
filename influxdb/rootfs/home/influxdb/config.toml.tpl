@@ -42,7 +42,7 @@ bind-address = {{ default ":8088" .BIND_ADDRESS | quote }}
   max-points-per-block = {{ default 0 .DATA_MAX_POINTS_PER_BLOCK }}
   data-logging-enabled = {{ default false .DATA_LOGGING_ENABLED }}
 
-[cluster]
+[coordinator]
   force-remote-mapping = {{ default false .CLUSTER_FORCE_REMOTE_MAPPING }}
   write-timeout = {{ default "5s" .CLUSTER_WRITE_TIMEOUT | quote }}
   shard-writer-timeout = {{ default "5s" .CLUSTER_SHARD_WRITER_TIMEOUT | quote }}
@@ -56,12 +56,6 @@ bind-address = {{ default ":8088" .BIND_ADDRESS | quote }}
   enabled = {{ default true .SHARD_PRECREATION_ENABLED }}
   check-interval = {{ default "10m0s" .SHARD_PRECREATION_CHECK_INTERVAL | quote }}
   advance-period = {{ default "30m0s" .SHARD_PRECREATION_ADVANCE_PERIOD | quote }}
-
-[admin]
-  enabled = {{ default false .ADMIN_ENABLED }}
-  bind-address = {{ default ":8083" .ADMIN_BIND_ADDRESS | quote }}
-  https-enabled = {{ default false .ADMIN_HTTPS_ENABLED }}
-  https-certificate = {{ default "/etc/ssl/influxdb.pem" .ADMIN_HTTPS_CERTIFICATE | quote }}
 
 [monitor]
   store-enabled = {{ default true .MONITOR_STORE_ENABLED }}
