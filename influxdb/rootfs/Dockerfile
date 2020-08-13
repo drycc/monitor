@@ -15,8 +15,6 @@ VOLUME /data
 WORKDIR /home/influxdb
 CMD ["./start-influx"]
 
-# Expose the admin port
-EXPOSE 8083
 # Expose the ssl http api port
 EXPOSE 8084
 # Expose the http api port
