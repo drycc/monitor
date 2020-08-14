@@ -1099,7 +1099,7 @@
               "selected": false
             }
           ],
-          "query": "show tag values from kubernetes_pod_container with key in (\"container_name\")", 
+          "query": "show tag values from kubernetes_pod_container with key in (\"container_name\") where namespace =~ /kube-*/ or container_name =~ /kube.*/", 
           "refresh": 1,
           "regex": "",
           "type": "query"

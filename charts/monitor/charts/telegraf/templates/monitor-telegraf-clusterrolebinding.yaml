@@ -3,18 +3,18 @@
 kind: ClusterRoleBinding 
 apiVersion: {{ template "rbacAPIVersion" . }}
 metadata:
-  name: drycc:influx:telegraf:viewer
+  name: drycc:drycc-monitor-telegraf
   labels:
     app: drycc-monitor-telegraf
     heritage: drycc
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: drycc:influx:telegraf
+  name: drycc:drycc-monitor-telegraf
 subjects:
 - kind: ServiceAccount
   name: drycc-monitor-telegraf
-  namespace: drycc
+  namespace: {{ .Release.Namespace }}
 {{- end -}}
 {{- end -}}
 
