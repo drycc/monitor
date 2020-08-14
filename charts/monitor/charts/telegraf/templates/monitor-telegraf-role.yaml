@@ -1,15 +1,32 @@
 {{- if (.Values.global.use_rbac) -}}
 {{- if (.Capabilities.APIVersions.Has (include "rbacAPIVersion" .)) -}}
-kind: Role
+kind: ClusterRole
 apiVersion: {{ template "rbacAPIVersion" . }}
 metadata:
-  name: drycc-monitor-telegraf
+  name: drycc:influx:stats:viewer
   labels:
+    rbac.authorization.k8s.io/aggregate-view-telegraf-stats: "true"
     app: drycc-monitor-telegraf
     heritage: drycc
 rules:
-- apiGroups: [""]
-  resources: ["pods"]
-  verbs: ["get"]
+  - apiGroups: ["metrics.k8s.io"]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+  - apiGroups: [""]
+    resources: ["nodes/proxy", "nodes/stats"]
+    verbs: ["get", "list", "watch"]
+---
+# Define global role with the default system:aggregate-to-view cluster role and the two rules we just created
+kind: ClusterRole
+apiVersion: {{ template "rbacAPIVersion" . }}
+metadata:
+  name: drycc:influx:telegraf
+aggregationRule:
+  clusterRoleSelectors:
+    - matchLabels:
+        rbac.authorization.k8s.io/aggregate-view-telegraf-stats: "true"
+    - matchLabels:
+        rbac.authorization.k8s.io/aggregate-to-view: "true"
+rules: [] # Rules are automatically filled in by the controller manager.
 {{- end -}}
 {{- end -}}

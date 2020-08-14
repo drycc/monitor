@@ -20,7 +20,7 @@ fi
 
 if [ -n "$ENABLE_KUBERNETES" ]; then
   export KUBERNETES_BEARER_TOKEN_PATH=${BEARER_TOKEN_PATH}
-  export KUBERNETES_URL="http://${NODE_IP}:10255"
+  export KUBERNETES_URL="https://${NODE_IP}:10250"
   echo "Setting KUBERNETES_URL: $KUBERNETES_URL"
 fi
 

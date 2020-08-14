@@ -173,9 +173,9 @@
 [[inputs.kubernetes]]
   url = {{ .KUBERNETES_URL | quote }}
   bearer_token = {{ .KUBERNETES_BEARER_TOKEN_PATH | quote }}
-  {{ if .KUBERNETES_SSL_CA }} ssl_ca = {{ .KUBERNETES_SSL_CA | quote }} {{ end }}
-  {{ if .KUBERNETES_SSL_CERT }} ssl_cert = {{ .KUBERNETES_SSL_CERT | quote }} {{ end }}
-  {{ if .KUBERNETES_SSL_KEY }} ssl_key = {{ .KUBERNETES_SSL_KEY | quote }} {{ end }}
+  {{ if .KUBERNETES_SSL_CA }}tls_ca = {{ .KUBERNETES_SSL_CA | quote }} {{ end }}
+  {{ if .KUBERNETES_SSL_CERT }}tls_cert = {{ .KUBERNETES_SSL_CERT | quote }} {{ end }}
+  {{ if .KUBERNETES_SSL_KEY }}tls_key = {{ .KUBERNETES_SSL_KEY | quote }} {{ end }}
   insecure_skip_verify = {{ default true .KUBERNETES_INSECURE_SKIP_VERIFY }}
 {{ end }}
 

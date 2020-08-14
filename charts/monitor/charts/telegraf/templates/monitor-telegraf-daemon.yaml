@@ -62,9 +62,9 @@ spec:
                 key: password
           {{- else }}
           - name: "INFLUXDB_URLS"
-            value: "\"http://$(DRYCC_MONITOR_INFLUXAPI_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXAPI_SERVICE_PORT_TRANSPORT)\""
+            value: "\"http://$(DRYCC_MONITOR_INFLUXDB_API_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXDB_API_SERVICE_PORT_TRANSPORT)\""
           - name: "INFLUXDB_INPUT_URLS"
-            value: "\"http://$(DRYCC_MONITOR_INFLUXAPI_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXAPI_SERVICE_PORT_TRANSPORT)/debug/vars\""
+            value: "\"http://$(DRYCC_MONITOR_INFLUXDB_API_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXDB_API_SERVICE_PORT_TRANSPORT)/debug/vars\""
           - name: "ENABLE_INFLUXDB_INPUT"
             value: "true"
           {{- end }}
