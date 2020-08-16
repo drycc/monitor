@@ -1,7 +1,6 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  namespace: "{{ .Release.Namespace }}"
   name: "drycc-monitor-influxdb-api-ingress"
   labels:
     app: "drycc-monitor-influxdb-api"
