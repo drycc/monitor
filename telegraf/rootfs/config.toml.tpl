@@ -201,7 +201,7 @@
 
 {{ if .NSQ_ENDPOINTS }}
 [[inputs.nsq]]
-  endpoints = [{{ .NSQ_ENDPOINTS }}]
+  endpoints = {{ .NSQ_ENDPOINTS }}
   interval = {{ default "1s" .AGENT_INTERVAL | quote }}
 {{ end }}
 
@@ -234,7 +234,7 @@
 
 {{ if .REDIS_SERVERS }}
 [[inputs.redis]]
-  servers = [{{ .REDIS_SERVERS }}]
+  servers = {{ .REDIS_SERVERS }}
 {{ end }}
 
 {{ if .RETHINKDB_SERVERS }}
@@ -257,9 +257,9 @@
   offset = {{ .KAFKA_CONSUMER_OFFSET | quote }}
 {{ end }}
 
-{{ if .NSQ_CONSUMER_SERVER }}
+{{ if .NSQ_CONSUMER_SERVERS }}
 [[inputs.nsq_consumer]]
-  server = {{ .NSQ_CONSUMER_SERVER | quote }}
+  nsqd = {{ .NSQ_CONSUMER_SERVERS }}
   topic = {{ default "telegraf" .NSQ_CONSUMER_TOPIC | quote }}
   channel = {{ default "consumer" .NSQ_CONSUMER_CHANNEL | quote }}
   max_in_flight = {{ default 100 .NSQ_CONSUMER_MAX_IN_FLIGHT }}

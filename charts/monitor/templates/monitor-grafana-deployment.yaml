@@ -6,7 +6,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.docker_tag }}
+    component.drycc.cc/version: {{ .Values.monitor.grafana.docker_tag }}
 spec:
   replicas: 1
   strategy:
@@ -24,16 +24,16 @@ spec:
     spec:
       containers:
       - name: drycc-monitor-grafana
-        image: {{.Values.docker_registry}}{{.Values.org}}/grafana:{{.Values.docker_tag}}
-        imagePullPolicy: {{.Values.pull_policy}}
-{{- if or (.Values.limits_cpu) (.Values.limits_memory)}}
+        image: {{.Values.monitor.grafana.docker_registry}}{{.Values.monitor.grafana.org}}/grafana:{{.Values.monitor.grafana.docker_tag}}
+        imagePullPolicy: {{.Values.monitor.grafana.pull_policy}}
+{{- if or (.Values.monitor.grafana.limits_cpu) (.Values.monitor.grafana.limits_memory)}}
         resources:
           limits:
-{{- if (.Values.limits_cpu) }}
-            cpu: {{.Values.limits_cpu}}
+{{- if (.Values.monitor.grafana.limits_cpu) }}
+            cpu: {{.Values.monitor.grafana.limits_cpu}}
 {{- end}}
-{{- if (.Values.limits_memory) }}
-            memory: {{.Values.limits_memory}}
+{{- if (.Values.monitor.grafana.limits_memory) }}
+            memory: {{.Values.monitor.grafana.limits_memory}}
 {{- end}}
 {{- end}}
         env:
@@ -65,15 +65,15 @@ spec:
         - name: "BIND_PORT"
           value: "3500"
         - name: "DEFAULT_USER"
-          value: {{.Values.user}}
+          value: {{.Values.monitor.grafana.user}}
         - name: "DEFAULT_USER_PASSWORD"
-          value: {{.Values.password}}
+          value: {{.Values.monitor.grafana.password}}
         - name: "ALLOW_SIGN_UP"
-          value: {{.Values.allow_sign_up | quote}}
+          value: {{.Values.monitor.grafana.allow_sign_up | quote}}
         ports:
         - containerPort: 3500
           name: ui
-{{- if .Values.persistence.enabled }}
+{{- if .Values.monitor.grafana.persistence.enabled }}
         volumeMounts:
         - name: grafana-data
           mountPath: /var/lib/grafana

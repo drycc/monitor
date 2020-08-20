@@ -6,7 +6,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.docker_tag }}
+    component.drycc.cc/version: {{ .Values.monitor.influxdb.docker_tag }}
 spec:
   replicas: 1
   strategy:
@@ -21,16 +21,16 @@ spec:
     spec:
       containers:
       - name: drycc-monitor-influxdb
-        image: {{.Values.docker_registry}}{{.Values.org}}/influxdb:{{.Values.docker_tag}}
-        imagePullPolicy: {{.Values.pull_policy}}
-{{- if or (.Values.limits_cpu) (.Values.limits_memory)}}
+        image: {{.Values.monitor.influxdb.docker_registry}}{{.Values.monitor.influxdb.org}}/influxdb:{{.Values.monitor.influxdb.docker_tag}}
+        imagePullPolicy: {{.Values.monitor.influxdb.pull_policy}}
+{{- if or (.Values.monitor.influxdb.limits_cpu) (.Values.monitor.influxdb.limits_memory)}}
         resources:
           limits:
-{{- if (.Values.limits_cpu) }}
-            cpu: {{.Values.limits_cpu}}
+{{- if (.Values.monitor.influxdb.limits_cpu) }}
+            cpu: {{.Values.monitor.influxdb.limits_cpu}}
 {{- end}}
-{{- if (.Values.limits_memory) }}
-            memory: {{.Values.limits_memory}}
+{{- if (.Values.monitor.influxdb.limits_memory) }}
+            memory: {{.Values.monitor.influxdb.limits_memory}}
 {{- end}}
 {{- end}}
         ports:
@@ -54,7 +54,7 @@ spec:
             port: 8086
           initialDelaySeconds: 1
           timeoutSeconds: 1
-{{- if .Values.persistence.enabled }}
+{{- if .Values.monitor.influxdb.persistence.enabled }}
         volumeMounts:
         - name: influxdb-data
           mountPath: /data

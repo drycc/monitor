@@ -1,37 +1,47 @@
-grafana:
-  org: "drycc"
-  pull_policy: "Always"
-  docker_tag: "canary"
-  docker_registry: ""
-  allow_sign_up: "true"
-  # limits_cpu: "100m"
-  # limits_memory: "50Mi"
-  persistence:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 5Gi
-influxdb:
-  org: "drycc"
-  pull_policy: "Always"
-  docker_tag: "canary"
-  docker_registry: ""
-  # limits_cpu: "100m"
-  # limits_memory: "50Mi"
-  url: "my.influx.url"
-  database: "kubernetes"
-  user: "user"
-  password: "password"
-  persistence:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 20Gi
-telegraf:
-  org: "drycc"
-  pull_policy: "Always"
-  docker_tag: "canary"
-  docker_registry: ""
-  # limits_cpu: "100m"
-  # limits_memory: "50Mi"
+monitor:
+  grafana:
+    org: "drycc"
+    pull_policy: "Always"
+    docker_tag: "canary"
+    docker_registry: ""
+    allow_sign_up: "true"
+    # limits_cpu: "100m"
+    # limits_memory: "50Mi"
+    persistence:
+      enabled: false
+      accessMode: ReadWriteOnce
+      size: 5Gi
+  influxdb:
+    org: "drycc"
+    pull_policy: "Always"
+    docker_tag: "canary"
+    docker_registry: ""
+    # limits_cpu: "100m"
+    # limits_memory: "50Mi"
+    url: "my.influx.url"
+    database: "kubernetes"
+    user: "user"
+    password: "password"
+    persistence:
+      enabled: false
+      accessMode: ReadWriteOnce
+      size: 20Gi
+  telegraf:
+    org: "drycc"
+    pull_policy: "Always"
+    docker_tag: "canary"
+    docker_registry: ""
+    # limits_cpu: "100m"
+    # limits_memory: "50Mi"
+
+nsqd:
+  replicas: 1
+  tcp_port: 4150
+  http_port: 4151
+
+redis:
+  replicas: 1
+  port: "6379"
 
 global:
   # Set the location of Workflow's influxdb cluster
@@ -54,6 +64,7 @@ global:
   logger_redis_location: "on-cluster"
   # Role-Based Access Control for Kubernetes >= 1.5
   use_rbac: false
+  ingress_class: ""
   # The public resolvable hostname to build your cluster with.
   #
   # This will be the hostname that is used to build endpoints such as "drycc.$HOSTNAME"

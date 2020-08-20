@@ -1,3 +1,5 @@
+{{ $nsqdNodeCount := .Values.nsqd.replicas | int }}
+{{ $redisNodeCount := .Values.redis.replicas | int }}
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -5,7 +7,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.docker_tag }}
+    component.drycc.cc/version: {{ .Values.monitor.telegraf.docker_tag }}
 spec:
   selector:
     matchLabels:
@@ -22,16 +24,16 @@ spec:
       serviceAccount: drycc-monitor-telegraf
       containers:
         - name: drycc-monitor-telegraf
-          image: {{.Values.docker_registry}}{{.Values.org}}/telegraf:{{.Values.docker_tag}}
-          imagePullPolicy: {{.Values.pull_policy}}
-{{- if or (.Values.limits_cpu) (.Values.limits_memory)}}
+          image: {{.Values.monitor.telegraf.docker_registry}}{{.Values.monitor.telegraf.org}}/telegraf:{{.Values.monitor.telegraf.docker_tag}}
+          imagePullPolicy: {{.Values.monitor.telegraf.pull_policy}}
+{{- if or (.Values.monitor.telegraf.limits_cpu) (.Values.monitor.telegraf.limits_memory)}}
           resources:
             limits:
-{{- if (.Values.limits_cpu) }}
-              cpu: {{.Values.limits_cpu}}
+{{- if (.Values.monitor.telegraf.limits_cpu) }}
+              cpu: {{.Values.monitor.telegraf.limits_cpu}}
 {{- end}}
-{{- if (.Values.limits_memory) }}
-              memory: {{.Values.limits_memory}}
+{{- if (.Values.monitor.telegraf.limits_memory) }}
+              memory: {{.Values.monitor.telegraf.limits_memory}}
 {{- end}}
 {{- end}}
           env:
@@ -78,12 +80,12 @@ spec:
             value: "100000"
           - name: "ENABLE_KUBERNETES"
             value: "true"
-          - name: "NSQ_CONSUMER_SERVER"
-            value: "$(DRYCC_NSQD_SERVICE_HOST):$(DRYCC_NSQD_SERVICE_PORT_TRANSPORT)"
+          - name: "NSQ_CONSUMER_SERVERS"
+            value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.nsqd.tcp_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
           - name: "NSQ_CONSUMER_TOPIC"
             value: "metrics"
           - name: "NSQ_ENDPOINTS"
-            value: "\"http://$(DRYCC_NSQD_SERVICE_HOST):$(DRYCC_NSQD_SERVICE_PORT_HTTP)\""
+            value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.nsqd.http_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
           {{- if ne .Values.global.logger_redis_location "off-cluster" }}
           - name: DRYCC_LOGGER_REDIS_PASSWORD
             valueFrom:
@@ -91,7 +93,7 @@ spec:
                 name: logger-redis-creds
                 key: password
           - name: "REDIS_SERVERS"
-            value: "\"tcp://:$(DRYCC_LOGGER_REDIS_PASSWORD)@$(DRYCC_LOGGER_REDIS_SERVICE_HOST):$(DRYCC_LOGGER_REDIS_SERVICE_PORT)\""
+            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_LOGGER_REDIS_PASSWORD)@drycc-logger-redis-{{$i}}.drycc-logger-redis.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
           {{- end }}
           volumeMounts:
           - mountPath: /var/run/docker.sock
