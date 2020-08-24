@@ -2,10 +2,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: drycc-monitor-influxdb-api
+  name: drycc-monitor-influxdb
   labels:
     heritage: drycc
-    app: drycc-monitor-influxdb-api
+    app: drycc-monitor-influxdb
 spec:
   ports:
   - port: 80

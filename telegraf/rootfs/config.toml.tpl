@@ -104,6 +104,7 @@
 {{ end }}
 
 # Set Input Configuration
+{{ if .ENABLE_BARE_METAL_SERVER }}
 [[inputs.netstat]]
 [[inputs.swap]]
 [[inputs.system]]
@@ -111,19 +112,17 @@
 [[inputs.cpu]]
   percpu = true
   totalcpu = true
-
-{{ if .ENABLE_ZFS }}[[inputs.zfs]]{{ end }}
-
-[[inputs.disk]]
-  {{ if .DISK_MOUNT_POINTS }} mount_points = [{{ .DISK_MOUNT_POINTS }}] {{ end }}
-
-
 [[inputs.diskio]]
   {{ if .DISKIO_DEVICES }} devices = [{{ .DISKIO_DEVICES }}] {{ end }}
   {{ if .DISKIO_SKIP_SERIAL_NUMBER }} skip_serial_number = {{ .DISKIO_SKIP_SERIAL_NUMBER }} {{ end }}
 
 [[inputs.net]]
   {{ if .NET_INTERFACES }} interfaces = [{{ .NET_INTERFACES}}] {{ end }}
+[[inputs.disk]]
+  {{ if .DISK_MOUNT_POINTS }} mount_points = [{{ .DISK_MOUNT_POINTS }}] {{ end }}
+{{ end }}
+
+{{ if .ENABLE_ZFS }}[[inputs.zfs]]{{ end }}
 
 {{ if .APACHE_URLS }}
 [[inputs.apache]]

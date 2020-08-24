@@ -1,5 +1,7 @@
+{{ $nsqdNodeCount := .Values.nsqd.replicas | int }}
+{{ $redisNodeCount := .Values.redis.replicas | int }}
 apiVersion: apps/v1
-kind: DaemonSet
+kind: Deployment
 metadata:
   name: drycc-monitor-telegraf
   labels:
@@ -7,6 +9,7 @@ metadata:
   annotations:
     component.drycc.cc/version: {{ .Values.monitor.telegraf.docker_tag }}
 spec:
+  replicas: 1
   selector:
     matchLabels:
       app: drycc-monitor-telegraf
@@ -63,41 +66,34 @@ spec:
           {{- else }}
           - name: "INFLUXDB_URLS"
             value: "\"http://$(DRYCC_MONITOR_INFLUXDB_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
+          - name: "INFLUXDB_INPUT_URLS"
+            value: "\"http://$(DRYCC_MONITOR_INFLUXDB_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXDB_SERVICE_PORT_TRANSPORT)/debug/vars\""
+          - name: "ENABLE_INFLUXDB_INPUT"
+            value: "true"
           {{- end }}
-          - name: "HOST_PROC"
-            value: "/rootfs/proc"
-          - name: "HOST_SYS"
-            value: "/rootfs/sys"
           - name: "AGENT_QUIET"
             value: "true"
           - name: "AGENT_BUFFER_LIMIT"
             value: "100000"
-          - name: "ENABLE_KUBERNETES"
-            value: "true"
-          - name: "ENABLE_BARE_METAL_SERVER"
-            value: "true"
+          - name: "NSQ_CONSUMER_SERVERS"
+            value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.nsqd.tcp_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
+          - name: "NSQ_CONSUMER_TOPIC"
+            value: "metrics"
+          - name: "NSQ_ENDPOINTS"
+            value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.nsqd.http_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
+{{- if ne .Values.global.logger_redis_location "off-cluster" }}
+          - name: DRYCC_LOGGER_REDIS_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: logger-redis-creds
+                key: password
+          - name: "REDIS_SERVERS"
+            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_LOGGER_REDIS_PASSWORD)@drycc-logger-redis-{{$i}}.drycc-logger-redis.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
           volumeMounts:
-          - mountPath: /var/run/docker.sock
-            name: docker-socket
-          - name: sysro
-            mountPath: /rootfs/sys
-            readOnly: true
-          - name: procro
-            mountPath: /rootfs/proc
-            readOnly: true
-          - name: varrunutmpro
-            mountPath: /var/run/utmp
-            readOnly: true
+          - name: logger-redis-creds
+            mountPath: /var/run/secrets/drycc/redis/creds
       volumes:
-      - name: docker-socket
-        hostPath:
-          path: /var/run/docker.sock
-      - name: sysro
-        hostPath:
-          path: /sys
-      - name: procro
-        hostPath:
-          path: /proc
-      - name: varrunutmpro
-        hostPath:
-          path: /var/run/utmp
+      - name: logger-redis-creds
+        secret:
+          secretName: logger-redis-creds
+{{- end }}
