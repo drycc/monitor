@@ -1,4 +1,4 @@
-{{- if .Values.monitor.grafana.persistence.enabled }}
+{{- if .Values.grafana.persistence.enabled }}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
@@ -7,18 +7,18 @@ metadata:
     heritage: drycc
 spec:
   accessModes:
-    - {{ .Values.monitor.grafana.persistence.accessMode | quote }}
+    - {{ .Values.grafana.persistence.accessMode | quote }}
   resources:
     requests:
-      storage: {{ .Values.monitor.grafana.persistence.size | quote }}
-{{- if .Values.monitor.grafana.persistence.storageClass }}
-{{- if (eq "-" .Values.monitor.grafana.persistence.storageClass) }}
+      storage: {{ .Values.grafana.persistence.size | quote }}
+{{- if .Values.grafana.persistence.storageClass }}
+{{- if (eq "-" .Values.grafana.persistence.storageClass) }}
   storageClassName: ""
 {{- else }}
-  storageClassName: "{{ .Values.monitor.grafana.persistence.storageClass }}"
+  storageClassName: "{{ .Values.grafana.persistence.storageClass }}"
 {{- end }}
 {{- end }}
-{{- if .Values.monitor.grafana.persistence.volumeName }}
-  volumeName: "{{ .Values.monitor.grafana.persistence.volumeName }}"
+{{- if .Values.grafana.persistence.volumeName }}
+  volumeName: "{{ .Values.grafana.persistence.volumeName }}"
 {{- end }}
 {{- end }}

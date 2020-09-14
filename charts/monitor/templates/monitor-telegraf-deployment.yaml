@@ -7,7 +7,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.monitor.telegraf.docker_tag }}
+    component.drycc.cc/version: {{ .Values.telegraf.docker_tag }}
 spec:
   replicas: 1
   selector:
@@ -25,16 +25,16 @@ spec:
       serviceAccount: drycc-monitor-telegraf
       containers:
         - name: drycc-monitor-telegraf
-          image: {{.Values.monitor.telegraf.docker_registry}}{{.Values.monitor.telegraf.org}}/telegraf:{{.Values.monitor.telegraf.docker_tag}}
-          imagePullPolicy: {{.Values.monitor.telegraf.pull_policy}}
-{{- if or (.Values.monitor.telegraf.limits_cpu) (.Values.monitor.telegraf.limits_memory)}}
+          image: {{.Values.telegraf.docker_registry}}{{.Values.telegraf.org}}/telegraf:{{.Values.telegraf.docker_tag}}
+          imagePullPolicy: {{.Values.telegraf.pull_policy}}
+{{- if or (.Values.telegraf.limits_cpu) (.Values.telegraf.limits_memory)}}
           resources:
             limits:
-{{- if (.Values.monitor.telegraf.limits_cpu) }}
-              cpu: {{.Values.monitor.telegraf.limits_cpu}}
+{{- if (.Values.telegraf.limits_cpu) }}
+              cpu: {{.Values.telegraf.limits_cpu}}
 {{- end}}
-{{- if (.Values.monitor.telegraf.limits_memory) }}
-              memory: {{.Values.monitor.telegraf.limits_memory}}
+{{- if (.Values.telegraf.limits_memory) }}
+              memory: {{.Values.telegraf.limits_memory}}
 {{- end}}
 {{- end}}
           env:

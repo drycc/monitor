@@ -221,9 +221,9 @@ enabled = {{ default "true" .BASIC_AUTH }}
 
 #################################### Auth LDAP ##########################
 [auth.ldap]
-{{ if .LDAP_AUTH }}
-enabled = {{ .LDAP_AUTH }}
-config_file = {{ default "/etc/grafana/ldap.toml" .LDAP_AUTH_CONFIG_FILE }}
+{{ if .LDAP_ENDPOINT }}
+enabled = true
+config_file = "/usr/share/grafana/ldap.toml"
 {{ end }}
 
 #################################### SMTP / Emailing ##########################

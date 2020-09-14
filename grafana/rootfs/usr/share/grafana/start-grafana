@@ -19,13 +19,35 @@ DASHBOARD_LOCATION=${DASHBOARD_JSON_PATH:-"/usr/share/grafana/api/dashboards"}
 mkdir /usr/share/grafana/dashboards
 
 echo "Building grafana.ini!"
-./envtpl -in grafana.ini.tpl >> grafana.ini
+./envtpl -in grafana.ini.tpl > grafana.ini
 echo "Finished building grafana config..."
 echo "###########################################"
 echo "###########################################"
 cat /usr/share/grafana/grafana.ini
 echo "###########################################"
 echo "###########################################"
+
+if [ -n "${LDAP_ENDPOINT}" ]; then
+  echo "Building ldap.toml!"
+  OLD_IFS="$IFS"
+  IFS=':/' read -ra ldap_url_array <<< "$LDAP_ENDPOINT"
+  IFS="$OLD_IFS"
+  ldap_schema=${ldap_url_array[0]}
+  if [ "${ldap_schema}" == "ldaps" ]; then
+    export LDAP_USE_SSL=true
+  else
+    export LDAP_USE_SSL=false
+  fi
+  export LDAP_HOST=${ldap_url_array[3]//\/\//}
+  export LDAP_PORT=${ldap_url_array[4]}
+  ./envtpl -in ldap.toml.tpl > ldap.toml
+  echo "Finished building ldap config..."
+  echo "###########################################"
+  echo "###########################################"
+  cat /usr/share/grafana/ldap.toml
+  echo "###########################################"
+  echo "###########################################"
+fi
 
 GF_PATHS_PLUGINS=${PLUGINS_PATH:-"/var/lib/grafana/plugins"}
 if [ -n "${GF_INSTALL_PLUGINS}" ]; then

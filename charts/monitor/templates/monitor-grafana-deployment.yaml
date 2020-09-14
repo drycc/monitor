@@ -6,7 +6,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.monitor.grafana.docker_tag }}
+    component.drycc.cc/version: {{ .Values.grafana.docker_tag }}
 spec:
   replicas: 1
   strategy:
@@ -24,16 +24,16 @@ spec:
     spec:
       containers:
       - name: drycc-monitor-grafana
-        image: {{.Values.monitor.grafana.docker_registry}}{{.Values.monitor.grafana.org}}/grafana:{{.Values.monitor.grafana.docker_tag}}
-        imagePullPolicy: {{.Values.monitor.grafana.pull_policy}}
-{{- if or (.Values.monitor.grafana.limits_cpu) (.Values.monitor.grafana.limits_memory)}}
+        image: {{.Values.grafana.docker_registry}}{{.Values.grafana.org}}/grafana:{{.Values.grafana.docker_tag}}
+        imagePullPolicy: {{.Values.grafana.pull_policy}}
+{{- if or (.Values.grafana.limits_cpu) (.Values.grafana.limits_memory)}}
         resources:
           limits:
-{{- if (.Values.monitor.grafana.limits_cpu) }}
-            cpu: {{.Values.monitor.grafana.limits_cpu}}
+{{- if (.Values.grafana.limits_cpu) }}
+            cpu: {{.Values.grafana.limits_cpu}}
 {{- end}}
-{{- if (.Values.monitor.grafana.limits_memory) }}
-            memory: {{.Values.monitor.grafana.limits_memory}}
+{{- if (.Values.grafana.limits_memory) }}
+            memory: {{.Values.grafana.limits_memory}}
 {{- end}}
 {{- end}}
         env:
@@ -65,15 +65,17 @@ spec:
         - name: "BIND_PORT"
           value: "3500"
         - name: "DEFAULT_USER"
-          value: {{.Values.monitor.grafana.user}}
+          value: {{.Values.grafana.user}}
         - name: "DEFAULT_USER_PASSWORD"
-          value: {{.Values.monitor.grafana.password}}
-        - name: "ALLOW_SIGN_UP"
-          value: {{.Values.monitor.grafana.allow_sign_up | quote}}
+          value: {{.Values.grafana.password}}
+        {{- range $key, $value := .Values.grafana.environment }}
+        - name: {{ $key }}
+          value: {{ $value | quote }}
+        {{- end }}
         ports:
         - containerPort: 3500
           name: ui
-{{- if .Values.monitor.grafana.persistence.enabled }}
+{{- if .Values.grafana.persistence.enabled }}
         volumeMounts:
         - name: grafana-data
           mountPath: /var/lib/grafana
