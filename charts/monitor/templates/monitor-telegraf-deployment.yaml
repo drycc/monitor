@@ -76,11 +76,11 @@ spec:
           - name: "AGENT_BUFFER_LIMIT"
             value: "100000"
           - name: "NSQ_CONSUMER_SERVERS"
-            value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.nsqd.tcp_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
+            value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.nsqd.tcp_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
           - name: "NSQ_CONSUMER_TOPIC"
             value: "metrics"
           - name: "NSQ_ENDPOINTS"
-            value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.nsqd.http_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
+            value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.nsqd.http_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
 {{- if ne .Values.global.logger_redis_location "off-cluster" }}
           - name: DRYCC_LOGGER_REDIS_PASSWORD
             valueFrom:
@@ -88,7 +88,7 @@ spec:
                 name: logger-redis-creds
                 key: password
           - name: "REDIS_SERVERS"
-            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_LOGGER_REDIS_PASSWORD)@drycc-logger-redis-{{$i}}.drycc-logger-redis.{{ $.Release.Namespace }}.svc.cluster.local:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
+            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_LOGGER_REDIS_PASSWORD)@drycc-logger-redis-{{$i}}.drycc-logger-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
           volumeMounts:
           - name: logger-redis-creds
             mountPath: /var/run/secrets/drycc/redis/creds

@@ -68,6 +68,8 @@ spec:
           value: {{.Values.grafana.user}}
         - name: "DEFAULT_USER_PASSWORD"
           value: {{.Values.grafana.password}}
+        - name: "KUBERNETES_CLUSTER_DOMAIN"
+          value: {{.Values.global.cluster_domain}}
         {{- range $key, $value := .Values.grafana.environment }}
         - name: {{ $key }}
           value: {{ $value | quote }}
