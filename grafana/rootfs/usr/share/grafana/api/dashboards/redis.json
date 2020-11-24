@@ -117,7 +117,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "drycc-logger-redis"
+                    "value": "drycc-redis"
                   }
                 ]
               }
@@ -230,7 +230,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "drycc-logger-redis"
+                    "value": "drycc-redis"
                   }
                 ]
               }

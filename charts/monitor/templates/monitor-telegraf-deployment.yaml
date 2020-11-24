@@ -88,7 +88,7 @@ spec:
                 name: logger-redis-creds
                 key: password
           - name: "REDIS_SERVERS"
-            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_LOGGER_REDIS_PASSWORD)@drycc-logger-redis-{{$i}}.drycc-logger-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
+            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_LOGGER_REDIS_PASSWORD)@drycc-redis-{{$i}}.drycc-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
           volumeMounts:
           - name: logger-redis-creds
             mountPath: /var/run/secrets/drycc/redis/creds
