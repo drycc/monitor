@@ -14,21 +14,6 @@ grafana:
   # this is usually a non required setting.
   environment:
     ALLOW_SIGN_UP: false
-influxdb:
-  org: "drycc"
-  pull_policy: "Always"
-  docker_tag: "canary"
-  docker_registry: ""
-  # limits_cpu: "100m"
-  # limits_memory: "50Mi"
-  url: "my.influx.url"
-  database: "kubernetes"
-  user: "user"
-  password: "password"
-  persistence:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 20Gi
 telegraf:
   org: "drycc"
   pull_policy: "Always"

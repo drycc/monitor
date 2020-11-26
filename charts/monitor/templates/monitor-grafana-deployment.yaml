@@ -60,7 +60,7 @@ spec:
               key: password
         {{- else }}
         - name: "INFLUXDB_URLS"
-          value: http://$(DRYCC_MONITOR_INFLUXDB_SERVICE_HOST):$(DRYCC_MONITOR_INFLUXDB_SERVICE_PORT_TRANSPORT)
+          value: http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)
         {{- end }}
         - name: "BIND_PORT"
           value: "3500"

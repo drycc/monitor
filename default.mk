@@ -32,10 +32,8 @@ test-style:
 
 build-all:
 	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION} ../influxdb/rootfs
 	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
 
 push-all:
 	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION}
-	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/influxdb:${VERSION}
 	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}
