@@ -335,7 +335,7 @@
                   {
                     "key": "container_name",
                     "operator": "=",
-                    "value": "drycc-monitor-influxdb"
+                    "value": "drycc-influxdb"
                   }
                 ]
               }
