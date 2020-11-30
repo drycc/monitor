@@ -1,10 +1,15 @@
+FROM drycc/go-dev:latest AS go-dev
+
+
 FROM telegraf:1.16.2
 
 COPY . /
+COPY --from=go-dev /bin/envtpl /home/influxdb/envtpl
 
-RUN curl -fSL -o /usr/bin/envtpl https://github.com/arschles/envtpl/releases/download/0.2.3/envtpl_linux_amd64 \
-	&& chmod +x /usr/bin/envtpl \
-    && curl -fSL -o /usr/bin/jq https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 \
-    && chmod +x /usr/bin/jq
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends jq \
+  && apt-get autoremove -y \
+  && apt-get clean -y \
+  && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/man /usr/share/doc
 
 CMD ["/start-telegraf"]
