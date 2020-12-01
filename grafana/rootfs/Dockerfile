@@ -4,7 +4,7 @@ FROM drycc/go-dev:latest AS go-dev
 FROM grafana/grafana:7.3.4
 USER root
 COPY . /
-COPY --from=go-dev /bin/envtpl /home/influxdb/envtpl
+COPY --from=go-dev /bin/envtpl /usr/share/grafana/envtpl
 RUN echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk add --update bash fontconfig curl \
     && chmod +x /usr/share/grafana/start-grafana \
