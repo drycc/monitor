@@ -78,14 +78,14 @@ export GF_AUTH_ANONYMOUS_ENABLED=true
 export GF_SERVER_HTTP_PORT=${GRAFANA_PORT}
 
 BACKEND_ACCESS_MODE=${BACKEND_ACCESS_MODE:-proxy}
-INFLUXDB_SERVICE_URL=${INFLUXDB_SERVICE_URL}
-if [ -n "$INFLUXDB_SERVICE_URL" ]; then
+INFLUXDB_URL=${INFLUXDB_URL}
+if [ -n "$INFLUXDB_URL" ]; then
   echo "Influxdb service URL is provided."
 else
-  INFLUXDB_SERVICE_URL="http://${INFLUXDB_HOST}:${INFLUXDB_PORT}"
+  INFLUXDB_URL="http://${INFLUXDB_HOST}:${INFLUXDB_PORT}"
 fi
 
-echo "Using the following URL for InfluxDB: ${INFLUXDB_SERVICE_URL}"
+echo "Using the following URL for InfluxDB: ${INFLUXDB_URL}"
 echo "Using the following backend access mode for InfluxDB: ${BACKEND_ACCESS_MODE}"
 
 echo "Creating default influxdb datasource..."
@@ -95,7 +95,7 @@ curl -i -XPOST -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFA
   "type": "influxdb",
   "access": "'"${BACKEND_ACCESS_MODE}"'",
   "isDefault": true,
-  "url": "'"${INFLUXDB_SERVICE_URL}"'",
+  "url": "'"${INFLUXDB_URL}"'",
   "password": "'"${INFLUXDB_PASSWORD}"'",
   "user": "'"${INFLUXDB_USER}"'",
   "database": "'"${INFLUXDB_DATABASE}"'"

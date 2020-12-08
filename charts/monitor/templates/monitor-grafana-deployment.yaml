@@ -38,7 +38,7 @@ spec:
 {{- end}}
         env:
         {{- if eq .Values.global.influxdb_location "off-cluster" }}
-        - name: "INFLUXDB_SERVICE_URL"
+        - name: "INFLUXDB_URL"
           valueFrom:
             secretKeyRef:
               name: influxdb-creds

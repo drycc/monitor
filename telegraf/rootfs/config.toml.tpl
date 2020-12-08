@@ -60,7 +60,7 @@
   database = {{default "kubernetes" .INFLUXDB_DATABASE | quote }}
   precision = {{ default "ns" .INFLUXDB_PRECISION | quote }}
   timeout = {{ default "5s" .INFLUXDB_TIMEOUT | quote }}
-  {{ if .INFLUXDB_USERNAME}} username = {{ .INFLUXDB_USERNAME | quote }} {{ end }}
+  {{ if .INFLUXDB_USER}} username = {{ .INFLUXDB_USER | quote }} {{ end }}
   {{ if .INFLUXDB_PASSWORD}} password = {{ .INFLUXDB_PASSWORD | quote }} {{ end }}
   {{ if .INFLUXDB_USER_AGENT}} user_agent = {{ .INFLUXDB_USER_AGENT | quote }} {{ end }}
   {{ if .INFLUXDB_UDP_PAYLOAD}} udp_payload = {{ .INFLUXDB_UDP_PAYLOAD | quote }} {{ end }}

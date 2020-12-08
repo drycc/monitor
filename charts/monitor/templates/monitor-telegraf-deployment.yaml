@@ -53,7 +53,7 @@ spec:
               secretKeyRef:
                 name: influxdb-creds
                 key: database
-          - name: "INFLUXDB_USERNAME"
+          - name: "INFLUXDB_USER"
             valueFrom:
               secretKeyRef:
                 name: influxdb-creds
