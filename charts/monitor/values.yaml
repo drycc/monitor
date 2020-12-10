@@ -1,8 +1,8 @@
 grafana:
   org: "drycc"
-  pull_policy: "Always"
-  docker_tag: "canary"
-  docker_registry: ""
+  image_pull_policy: "Always"
+  image_tag: "canary"
+  image_registry: ""
   # limits_cpu: "100m"
   # limits_memory: "50Mi"
   persistence:
@@ -16,9 +16,9 @@ grafana:
     ALLOW_SIGN_UP: false
 telegraf:
   org: "drycc"
-  pull_policy: "Always"
-  docker_tag: "canary"
-  docker_registry: ""
+  image_pull_policy: "Always"
+  image_tag: "canary"
+  image_registry: ""
   # limits_cpu: "100m"
   # limits_memory: "50Mi"
 
