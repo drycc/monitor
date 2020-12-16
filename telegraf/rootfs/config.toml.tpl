@@ -66,6 +66,14 @@
   {{ if .INFLUXDB_UDP_PAYLOAD}} udp_payload = {{ .INFLUXDB_UDP_PAYLOAD | quote }} {{ end }}
 {{ end }}
 
+{{ if .INFLUXDB_URLS_V2}}
+[[outputs.influxdb_v2]]
+  urls = [{{ .INFLUXDB_URLS_V2 }}]
+  bucket = {{default "kubernetes" .INFLUXDB_BUCKET | quote }}
+  organization = {{default "drycc" .INFLUXDB_ORG | quote }}
+  token = {{default "" .INFLUXDB_TOKEN | quote }}
+{{ end }}
+
 {{ if .KAFKA_BROKERS}}
 [[outputs.kafka]]
   brokers = [{{ .KAFKA_BROKERS }}]
@@ -166,6 +174,11 @@
 {{ if .ENABLE_INFLUXDB_INPUT }}
 [[inputs.influxdb]]
   urls = [{{ .INFLUXDB_INPUT_URLS }}]
+{{ end }}
+
+{{ if .ENABLE_INFLUXDB_V2_INPUT }}
+[[inputs.prometheus]]
+  urls = [{{ .INFLUXDB_V2_INPUT_URLS }}]
 {{ end }}
 
 {{ if and .KUBERNETES_URL .ENABLE_KUBERNETES }}

@@ -39,7 +39,7 @@ if [ "${INFLUXDB_URLS:0:1}" != "\"" ]; then
 fi
 
 echo "Building config.toml!"
-envtpl -in config.toml.tpl | sed  '/^$/d' > config.toml
+envtpl > config.toml < config.toml.tpl | sed  '/^$/d'
 
 echo "Finished building toml..."
 echo "###########################################"
