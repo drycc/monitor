@@ -10,16 +10,16 @@ GRAFANA_PORT=${BIND_PORT:-3000}
 
 INFLUXDB_HOST=${DRYCC_INFLUXDB_SERVICE_HOST:-"drycc-influxdb.drycc.svc.${KUBERNETES_CLUSTER_DOMAIN}"}
 INFLUXDB_PORT=${DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT:-8086}
-INFLUXDB_DATABASE=${INFLUXDB_DATABASE:-kubernetes}
-INFLUXDB_USER=${INFLUXDB_USER:-admin}
-INFLUXDB_PASSWORD=${INFLUXDB_PASSWORD:-admin}
+INFLUXDB_BUCKET=${INFLUXDB_BUCKET:-kubernetes}
+INFLUXDB_ORG=${INFLUXDB_ORG:-drycc}
+INFLUXDB_VERSION=${INFLUXDB_VERSION:-Flux}
 
 DASHBOARD_LOCATION=${DASHBOARD_JSON_PATH:-"/usr/share/grafana/api/dashboards"}
 # Create the dashboards directory
 mkdir /usr/share/grafana/dashboards
 
 echo "Building grafana.ini!"
-./envtpl -in grafana.ini.tpl > grafana.ini
+./envtpl > grafana.ini < grafana.ini.tpl
 echo "Finished building grafana config..."
 echo "###########################################"
 echo "###########################################"
@@ -40,7 +40,7 @@ if [ -n "${LDAP_ENDPOINT}" ]; then
   fi
   export LDAP_HOST=${ldap_url_array[3]//\/\//}
   export LDAP_PORT=${ldap_url_array[4]}
-  ./envtpl -in ldap.toml.tpl > ldap.toml
+  ./envtpl > ldap.toml < ldap.toml.tpl
   echo "Finished building ldap config..."
   echo "###########################################"
   echo "###########################################"
@@ -96,9 +96,10 @@ curl -i -XPOST -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFA
   "access": "'"${BACKEND_ACCESS_MODE}"'",
   "isDefault": true,
   "url": "'"${INFLUXDB_URL}"'",
-  "password": "'"${INFLUXDB_PASSWORD}"'",
-  "user": "'"${INFLUXDB_USER}"'",
-  "database": "'"${INFLUXDB_DATABASE}"'"
+  "token": "'"${INFLUXDB_TOKEN}"'",
+  "bucket": "'"${INFLUXDB_BUCKET}"'",
+  "version": "'"${INFLUXDB_VERSION}"'",
+  "organization": "'"${INFLUXDB_ORG}"'",
 }'
 
 echo ""
