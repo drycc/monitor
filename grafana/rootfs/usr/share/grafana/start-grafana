@@ -96,10 +96,8 @@ curl -i -XPOST -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFA
   "access": "'"${BACKEND_ACCESS_MODE}"'",
   "isDefault": true,
   "url": "'"${INFLUXDB_URL}"'",
-  "token": "'"${INFLUXDB_TOKEN}"'",
-  "bucket": "'"${INFLUXDB_BUCKET}"'",
-  "version": "'"${INFLUXDB_VERSION}"'",
-  "organization": "'"${INFLUXDB_ORG}"'",
+  "secureJsonData": {"token": "'"${INFLUXDB_TOKEN}"'"},
+  "jsonData": {"version": "'"${INFLUXDB_VERSION}"'", "httpMode": "POST", "organization": "'"${INFLUXDB_ORG}"'", "defaultBucket": "'"${INFLUXDB_BUCKET}"'"}
 }'
 
 echo ""
