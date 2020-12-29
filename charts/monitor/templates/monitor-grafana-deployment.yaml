@@ -38,13 +38,13 @@ spec:
 {{- end}}
         env:
         {{- if eq .Values.global.influxdb_location "off-cluster" }}
-        - name: "INFLUXDB_URLS"
+        - name: "INFLUXDB_URL"
           valueFrom:
             secretKeyRef:
               name: influxdb-creds
               key: url
         {{- else }}
-        - name: "INFLUXDB_URLS"
+        - name: "INFLUXDB_URL"
           value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
         {{- end }}
         - name: "INFLUXDB_BUCKET"
@@ -63,7 +63,7 @@ spec:
               name: influxdb-creds
               key: token
         - name: "BIND_PORT"
-          value: "3500"
+          value: "3000"
         - name: "DEFAULT_USER"
           value: {{.Values.grafana.user}}
         - name: "DEFAULT_USER_PASSWORD"
@@ -75,7 +75,7 @@ spec:
           value: {{ $value | quote }}
         {{- end }}
         ports:
-        - containerPort: 3500
+        - containerPort: 3000
           name: ui
 {{- if .Values.grafana.persistence.enabled }}
         volumeMounts:
