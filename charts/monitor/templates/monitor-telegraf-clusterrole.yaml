@@ -13,7 +13,7 @@ rules:
     resources: ["pods"]
     verbs: ["get", "list", "watch"]
   - apiGroups: [""]
-    resources: ["pods", "nodes/proxy", "nodes/stats"]
+    resources: ["pods", "persistentvolumes", "nodes", "nodes/proxy", "nodes/stats"]
     verbs: ["get", "list", "watch"]
 {{- end -}}
 {{- end -}}
