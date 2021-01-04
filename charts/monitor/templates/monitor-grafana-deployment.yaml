@@ -63,7 +63,7 @@ spec:
               name: influxdb-creds
               key: token
         - name: "BIND_PORT"
-          value: "3500"
+          value: "3000"
         - name: "DEFAULT_USER"
           value: {{.Values.grafana.user}}
         - name: "DEFAULT_USER_PASSWORD"
@@ -75,7 +75,7 @@ spec:
           value: {{ $value | quote }}
         {{- end }}
         ports:
-        - containerPort: 3500
+        - containerPort: 3000
           name: ui
 {{- if .Values.grafana.persistence.enabled }}
         volumeMounts:
