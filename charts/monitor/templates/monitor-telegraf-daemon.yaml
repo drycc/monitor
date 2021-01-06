@@ -39,31 +39,35 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: metadata.namespace
-          {{- if eq .Values.global.influxdb_location "off-cluster" }}
-          - name: "INFLUXDB_URLS"
+{{- if eq .Values.global.influxdb_location "off-cluster" }}
+          - name: "INFLUXDB_URLS_V2"
             valueFrom:
               secretKeyRef:
                 name: influxdb-creds
                 key: url
-          - name: "INFLUXDB_DATABASE"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: database
-          - name: "INFLUXDB_USER"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: user
-          - name: "INFLUXDB_PASSWORD"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: password
-          {{- else }}
-          - name: "INFLUXDB_URLS"
+{{- else }}
+          - name: "INFLUXDB_URLS_V2"
             value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
-          {{- end }}
+          - name: "INFLUXDB_V2_INPUT_URLS"
+            value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)/metrics\""
+          - name: "ENABLE_INFLUXDB_V2_INPUT"
+            value: "true"
+{{- end }}
+          - name: "INFLUXDB_BUCKET"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-creds
+                key: bucket
+          - name: "INFLUXDB_ORG"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-creds
+                key: org
+          - name: "INFLUXDB_TOKEN"
+            valueFrom:
+              secretKeyRef:
+                name: influxdb-creds
+                key: token
           - name: "HOST_PROC"
             value: "/rootfs/proc"
           - name: "HOST_SYS"
