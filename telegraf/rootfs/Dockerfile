@@ -1,7 +1,7 @@
-FROM drycc/go-dev:latest AS go-dev
+FROM docker.io/drycc/go-dev:latest AS go-dev
 
 
-FROM telegraf:1.16.2
+FROM docker.io/library/telegraf:1.16.2
 
 COPY . /
 COPY --from=go-dev /bin/envtpl /usr/bin/envtpl
