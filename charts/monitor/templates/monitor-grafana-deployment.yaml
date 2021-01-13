@@ -45,7 +45,7 @@ spec:
               key: url
         {{- else }}
         - name: "INFLUXDB_URL"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
+          value: http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)
         {{- end }}
         - name: "INFLUXDB_BUCKET"
           valueFrom:
