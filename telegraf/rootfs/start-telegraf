@@ -34,7 +34,8 @@ if [ -n "$ENABLE_PROMETHEUS" ]; then
 fi
 
 # if the influxdb url does not start with a quote, assume it's singular and quote it
-if [ -n "$INFLUXDB_URL" -a "${INFLUXDB_URLS:0:1}" != "\"" ]; then
+# shellcheck disable=SC2153
+if [ -n "$INFLUXDB_URL" ] && [ "${INFLUXDB_URLS:0:1}" != "\"" ]; then
   export INFLUXDB_URLS="\"$INFLUXDB_URLS\""
 fi
 
