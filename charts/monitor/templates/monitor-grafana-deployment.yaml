@@ -24,7 +24,7 @@ spec:
     spec:
       containers:
       - name: drycc-monitor-grafana
-        image: {{.Values.grafana.image_registry}}{{.Values.grafana.org}}/grafana:{{.Values.grafana.image_tag}}
+        image: {{.Values.grafana.image_registry}}/{{.Values.grafana.org}}/grafana:{{.Values.grafana.image_tag}}
         imagePullPolicy: {{.Values.grafana.image_pull_policy}}
 {{- if or (.Values.grafana.limits_cpu) (.Values.grafana.limits_memory)}}
         resources:

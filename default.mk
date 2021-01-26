@@ -11,7 +11,7 @@ include ../includes.mk
 include ../versioning.mk
 include ../deploy.mk
 
-TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash drycc/go-dev
+TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash ${DEV_REGISTRY}/drycc/go-dev
 
 build: docker-build
 push: docker-push
@@ -35,9 +35,9 @@ test-style:
 .PHONY: build push docker-build clean upgrade deploy test test-style
 
 build-all:
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
-	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
+	docker build ${DOCKER_BUILD_FLAGS} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
 
 push-all:
-	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/grafana:${VERSION}
-	docker push ${DRYCC_REGISTRY}${IMAGE_PREFIX}/telegraf:${VERSION}
+	docker push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION}
+	docker push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION}

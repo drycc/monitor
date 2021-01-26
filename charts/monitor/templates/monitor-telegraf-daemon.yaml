@@ -22,7 +22,7 @@ spec:
       serviceAccount: drycc-monitor-telegraf
       containers:
         - name: drycc-monitor-telegraf
-          image: {{.Values.telegraf.image_registry}}{{.Values.telegraf.org}}/telegraf:{{.Values.telegraf.image_tag}}
+          image: {{.Values.telegraf.image_registry}}/{{.Values.telegraf.org}}/telegraf:{{.Values.telegraf.image_tag}}
           imagePullPolicy: {{.Values.telegraf.image_pull_policy}}
 {{- if or (.Values.telegraf.limits_cpu) (.Values.telegraf.limits_memory)}}
           resources:
