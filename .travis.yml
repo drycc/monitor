@@ -3,8 +3,8 @@ sudo: required
 services:
   - docker
 script:
-  - cd grafana && make test && cd ..
-  - cd telegraf && make test && cd ..
+  - cd grafana && DEV_REGISTRY="docker.io" make test && cd ..
+  - cd telegraf && DEV_REGISTRY="docker.io" make test && cd ..
 notifications:
   slack:
     rooms:
