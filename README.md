@@ -1,7 +1,7 @@
 
 # Drycc Monitor v2
 
-[![Build Status](https://travis-ci.org/drycc/monitor.svg?branch=main)](https://travis-ci.org/drycc/monitor)
+[![Build Status](https://drone.drycc.cc/api/badges/drycc/monitor/status.svg)](https://drone.drycc.cc/drycc/monitor)
 
 Drycc (pronounced DAY-iss) Workflow is an open source Platform as a Service (PaaS) that adds a developer-friendly layer to any [Kubernetes](http://kubernetes.io) cluster, making it easy to deploy and manage applications on your own servers.
 
