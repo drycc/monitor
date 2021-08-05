@@ -1,8 +1,7 @@
 {{- if (.Values.global.use_rbac) -}}
-{{- if (.Capabilities.APIVersions.Has (include "rbacAPIVersion" .)) -}}
 # Define global role with the default system:aggregate-to-view cluster role and the two rules we just created
 kind: ClusterRole
-apiVersion: {{ template "rbacAPIVersion" . }}
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: drycc:drycc-monitor
 aggregationRule:
@@ -12,5 +11,4 @@ aggregationRule:
     - matchLabels:
         rbac.authorization.k8s.io/aggregate-to-view: "true"
 rules: [] # Rules are automatically filled in by the controller manager.
-{{- end -}}
 {{- end -}}
