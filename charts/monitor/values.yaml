@@ -1,5 +1,5 @@
 grafana:
-  org: "drycc"
+  image_org: "drycc"
   image_pull_policy: "Always"
   image_tag: "canary"
   image_registry: "docker.io"
@@ -15,7 +15,7 @@ grafana:
   environment:
     ALLOW_SIGN_UP: false
 telegraf:
-  org: "drycc"
+  image_org: "drycc"
   image_pull_policy: "Always"
   image_tag: "canary"
   image_registry: "docker.io"
