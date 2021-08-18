@@ -226,6 +226,25 @@ enabled = true
 config_file = "/usr/share/grafana/ldap.toml"
 {{ end }}
 
+#################################### Generic Oauth ##########################
+[auth.generic_oauth]
+{{ if .SOCIAL_AUTH_DRYCC_GRAFANA_KEY }}
+name = OAuth
+enabled = true
+client_id = {{ .SOCIAL_AUTH_DRYCC_GRAFANA_KEY }}
+client_secret = {{ .SOCIAL_AUTH_DRYCC_GRAFANA_SECRET }}
+scopes = profile,openid
+auth_url = {{ .SOCIAL_AUTH_DRYCC_AUTHORIZATION_URL }}
+token_url = {{ .SOCIAL_AUTH_DRYCC_ACCESS_TOKEN_URL }}
+api_url = {{ .SOCIAL_AUTH_DRYCC_USERINFO_URL }}
+allow_sign_up = true
+tls_skip_verify_insecure = true
+
+[server]
+root_url = {{ .DRYCC_GRAFANA_DOMAIN }}
+
+{{ end }}
+
 #################################### SMTP / Emailing ##########################
 [smtp]
 {{ if .SMTP }}

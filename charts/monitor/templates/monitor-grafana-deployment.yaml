@@ -36,47 +36,10 @@ spec:
             memory: {{.Values.grafana.limits_memory}}
 {{- end}}
 {{- end}}
-        env:
-        {{- if eq .Values.global.influxdb_location "off-cluster" }}
-        - name: "INFLUXDB_URL"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: url
-        {{- else }}
-        - name: "INFLUXDB_URL"
-          value: http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)
-        {{- end }}
-        - name: "INFLUXDB_BUCKET"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: bucket
-        - name: "INFLUXDB_ORG"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: org
-        - name: "INFLUXDB_TOKEN"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: token
-        - name: "BIND_PORT"
-          value: "3000"
-        - name: "DEFAULT_USER"
-          value: {{.Values.grafana.user}}
-        - name: "DEFAULT_USER_PASSWORD"
-          value: {{.Values.grafana.password}}
-        - name: "KUBERNETES_CLUSTER_DOMAIN"
-          value: {{.Values.global.cluster_domain}}
-        {{- range $key, $value := .Values.grafana.environment }}
-        - name: {{ $key }}
-          value: {{ $value | quote }}
-        {{- end }}
         ports:
         - containerPort: 3000
           name: ui
+        {{- include "grafana.envs" . | indent 8 }}
 {{- if .Values.grafana.persistence.enabled }}
         volumeMounts:
         - name: grafana-data
