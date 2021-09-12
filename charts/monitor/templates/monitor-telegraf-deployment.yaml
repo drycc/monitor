@@ -23,75 +23,99 @@ spec:
         app: drycc-monitor-telegraf
     spec:
       serviceAccount: drycc-monitor-telegraf
+      initContainers:
+      - name: drycc-monitor-telegraf-init
+        image: docker.io/drycc/python-dev:latest
+        imagePullPolicy: {{.Values.image_pull_policy}}
+        command:
+          - netcat
+          - -v
+          - -u
+          - $(INFLUXDB_URLS_V2)
+        env:
+{{- if eq .Values.global.influxdb_location "off-cluster" }}
+        - name: "INFLUXDB_URLS_V2"
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-creds
+              key: url
+{{- else }}
+        - name: "INFLUXDB_URLS_V2"
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
+        - name: "INFLUXDB_V2_INPUT_URLS"
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)/metrics\""
+        - name: "ENABLE_INFLUXDB_V2_INPUT"
+          value: "true"
+{{- end }}
       containers:
-        - name: drycc-monitor-telegraf
-          image: {{.Values.telegraf.image_registry}}/{{.Values.telegraf.image_org}}/telegraf:{{.Values.telegraf.image_tag}}
-          imagePullPolicy: {{.Values.telegraf.image_pull_policy}}
+      - name: drycc-monitor-telegraf
+        image: {{.Values.telegraf.image_registry}}/{{.Values.telegraf.image_org}}/telegraf:{{.Values.telegraf.image_tag}}
+        imagePullPolicy: {{.Values.telegraf.image_pull_policy}}
 {{- if or (.Values.telegraf.limits_cpu) (.Values.telegraf.limits_memory)}}
-          resources:
-            limits:
+        resources:
+          limits:
 {{- if (.Values.telegraf.limits_cpu) }}
-              cpu: {{.Values.telegraf.limits_cpu}}
+            cpu: {{.Values.telegraf.limits_cpu}}
 {{- end}}
 {{- if (.Values.telegraf.limits_memory) }}
-              memory: {{.Values.telegraf.limits_memory}}
+            memory: {{.Values.telegraf.limits_memory}}
 {{- end}}
 {{- end}}
-          env:
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-          {{- if eq .Values.global.influxdb_location "off-cluster" }}
-          - name: "INFLUXDB_URLS_V2"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: url
-          {{- else }}
-          - name: "INFLUXDB_URLS_V2"
-            value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
-          - name: "INFLUXDB_V2_INPUT_URLS"
-            value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)/metrics\""
-          - name: "ENABLE_INFLUXDB_V2_INPUT"
-            value: "true"
-          {{- end }}
-          - name: "INFLUXDB_BUCKET"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: bucket
-          - name: "INFLUXDB_ORG"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: org
-          - name: "INFLUXDB_TOKEN"
-            valueFrom:
-              secretKeyRef:
-                name: influxdb-creds
-                key: token
-          - name: "AGENT_QUIET"
-            value: "true"
-          - name: "AGENT_BUFFER_LIMIT"
-            value: "100000"
-          - name: "NSQ_CONSUMER_SERVERS"
-            value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.nsqd.tcp_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
-          - name: "NSQ_CONSUMER_TOPIC"
-            value: "metrics"
-          - name: "NSQ_ENDPOINTS"
-            value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.nsqd.http_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
+        env:
+        - name: POD_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        {{- if eq .Values.global.influxdb_location "off-cluster" }}
+        - name: "INFLUXDB_URLS_V2"
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-creds
+              key: url
+        {{- else }}
+        - name: "INFLUXDB_URLS_V2"
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
+        - name: "INFLUXDB_V2_INPUT_URLS"
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)/metrics\""
+        - name: "ENABLE_INFLUXDB_V2_INPUT"
+          value: "true"
+        {{- end }}
+        - name: "INFLUXDB_BUCKET"
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-creds
+              key: bucket
+        - name: "INFLUXDB_ORG"
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-creds
+              key: org
+        - name: "INFLUXDB_TOKEN"
+          valueFrom:
+            secretKeyRef:
+              name: influxdb-creds
+              key: token
+        - name: "AGENT_QUIET"
+          value: "true"
+        - name: "AGENT_BUFFER_LIMIT"
+          value: "100000"
+        - name: "NSQ_CONSUMER_SERVERS"
+          value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.nsqd.tcp_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
+        - name: "NSQ_CONSUMER_TOPIC"
+          value: "metrics"
+        - name: "NSQ_ENDPOINTS"
+          value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.nsqd.http_port}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
 {{- if ne .Values.global.redis_location "off-cluster" }}
-          - name: DRYCC_REDIS_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: redis-creds
-                key: password
-          - name: "REDIS_SERVERS"
-            value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_REDIS_PASSWORD)@drycc-redis-{{$i}}.drycc-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
-          volumeMounts:
-          - name: redis-creds
-            mountPath: /var/run/secrets/drycc/redis/creds
+        - name: DRYCC_REDIS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: redis-creds
+              key: password
+        - name: "REDIS_SERVERS"
+          value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_REDIS_PASSWORD)@drycc-redis-{{$i}}.drycc-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.cluster_domain}}:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
+        volumeMounts:
+        - name: redis-creds
+          mountPath: /var/run/secrets/drycc/redis/creds
       volumes:
       - name: redis-creds
         secret:
