@@ -39,9 +39,17 @@ env:
   value: {{ $value | quote }}
 {{- end }}
 - name: "DRYCC_GRAFANA_DOMAIN"
+{{- if .Values.global.cert_manager_enabled }}
+  value: https://drycc-monitor-grafana.{{ .Values.global.platform_domain }}
+{{- else }}
   value: http://drycc-monitor-grafana.{{ .Values.global.platform_domain }}
+{{- end }}
 - name: "DRYCC_PASSPORT_DOMAIN"
+{{- if .Values.global.cert_manager_enabled }}
+  value: https://drycc-passport.{{ .Values.global.platform_domain }}
+{{- else }}
   value: http://drycc-passport.{{ .Values.global.platform_domain }}
+{{- end }}
 - name: "SOCIAL_AUTH_DRYCC_AUTHORIZATION_URL"
   value: "$(DRYCC_PASSPORT_DOMAIN)/oauth/authorize/"
 - name: "SOCIAL_AUTH_DRYCC_ACCESS_TOKEN_URL"
