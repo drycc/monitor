@@ -1,4 +1,4 @@
-{{- if eq .Values.global.grafana_location "on-cluster" }}
+{{- if eq .Values.global.grafanaLocation "on-cluster" }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -6,7 +6,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.grafana.image_tag }}
+    component.drycc.cc/version: {{ .Values.grafana.imageTag }}
 spec:
   replicas: 1
   strategy:
@@ -24,16 +24,16 @@ spec:
     spec:
       containers:
       - name: drycc-monitor-grafana
-        image: {{.Values.grafana.image_registry}}/{{.Values.grafana.image_org}}/grafana:{{.Values.grafana.image_tag}}
-        imagePullPolicy: {{.Values.grafana.image_pull_policy}}
-{{- if or (.Values.grafana.limits_cpu) (.Values.grafana.limits_memory)}}
+        image: {{.Values.grafana.imageRegistry}}/{{.Values.grafana.imageOrg}}/grafana:{{.Values.grafana.imageTag}}
+        imagePullPolicy: {{.Values.grafana.imagePullPolicy}}
+{{- if or (.Values.grafana.limitsCpu) (.Values.grafana.limitsMemory)}}
         resources:
           limits:
-{{- if (.Values.grafana.limits_cpu) }}
-            cpu: {{.Values.grafana.limits_cpu}}
+{{- if (.Values.grafana.limitsCpu) }}
+            cpu: {{.Values.grafana.limitsCpu}}
 {{- end}}
-{{- if (.Values.grafana.limits_memory) }}
-            memory: {{.Values.grafana.limits_memory}}
+{{- if (.Values.grafana.limitsMemory) }}
+            memory: {{.Values.grafana.limitsMemory}}
 {{- end}}
 {{- end}}
         ports:

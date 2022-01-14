@@ -5,7 +5,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.telegraf.image_tag }}
+    component.drycc.cc/version: {{ .Values.telegraf.imageTag }}
 spec:
   selector:
     matchLabels:
@@ -23,14 +23,14 @@ spec:
       initContainers:
       - name: drycc-monitor-telegraf-init
         image: docker.io/drycc/python-dev:latest
-        imagePullPolicy: {{.Values.image_pull_policy}}
+        imagePullPolicy: {{.Values.imagePullPolicy}}
         command:
           - netcat
           - -v
           - -u
           - $(INFLUXDB_URLS_V2)
         env:
-{{- if eq .Values.global.influxdb_location "off-cluster" }}
+{{- if eq .Values.global.influxdbLocation "off-cluster" }}
         - name: "INFLUXDB_URLS_V2"
           valueFrom:
             secretKeyRef:
@@ -46,16 +46,16 @@ spec:
 {{- end }}
       containers:
       - name: drycc-monitor-telegraf
-        image: {{.Values.telegraf.image_registry}}/{{.Values.telegraf.image_org}}/telegraf:{{.Values.telegraf.image_tag}}
-        imagePullPolicy: {{.Values.telegraf.image_pull_policy}}
-{{- if or (.Values.telegraf.limits_cpu) (.Values.telegraf.limits_memory)}}
+        image: {{.Values.telegraf.imageRegistry}}/{{.Values.telegraf.imageOrg}}/telegraf:{{.Values.telegraf.imageTag}}
+        imagePullPolicy: {{.Values.telegraf.imagePullPolicy}}
+{{- if or (.Values.telegraf.limitsCpu) (.Values.telegraf.limitsMemory)}}
         resources:
           limits:
-{{- if (.Values.telegraf.limits_cpu) }}
-            cpu: {{.Values.telegraf.limits_cpu}}
+{{- if (.Values.telegraf.limitsCpu) }}
+            cpu: {{.Values.telegraf.limitsCpu}}
 {{- end}}
-{{- if (.Values.telegraf.limits_memory) }}
-            memory: {{.Values.telegraf.limits_memory}}
+{{- if (.Values.telegraf.limitsMemory) }}
+            memory: {{.Values.telegraf.limitsMemory}}
 {{- end}}
 {{- end}}
         env:
@@ -63,7 +63,7 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
-{{- if eq .Values.global.influxdb_location "off-cluster" }}
+{{- if eq .Values.global.influxdbLocation "off-cluster" }}
         - name: "INFLUXDB_URLS_V2"
           valueFrom:
             secretKeyRef:
