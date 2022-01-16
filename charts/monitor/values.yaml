@@ -22,11 +22,6 @@ telegraf:
   # limitsCpu: "100m"
   # limitsMemory: "50Mi"
 
-nsqd:
-  replicas: 1
-  tcpPort: 4150
-  httpPort: 4151
-
 redis:
   replicas: 1
   port: "6379"

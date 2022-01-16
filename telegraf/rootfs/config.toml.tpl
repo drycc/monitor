@@ -92,12 +92,6 @@
   source_tag = {{ .LIBRATO_SOURCE_TAG | quote }}
 {{ end }}
 
-{{- if .NSQ_SERVER }}
-[[outputs.nsq]]
-  server = {{ .NSQ_SERVER | quote }}
-  topic = {{ .NSQ_TOPIC | quote }}
-{{ end }}
-
 {{- if .OPEN_TSDB_HOST }}
   prefix = {{ .OPEN_TSDB_PREFIX | quote }}
   host = {{ .OPEN_TSDB_HOST | quote }}
@@ -226,12 +220,6 @@
   urls = [{{ .NGINX_URLS }}]
 {{ end }}
 
-{{- if .NSQ_ENDPOINTS }}
-[[inputs.nsq]]
-  endpoints = {{ .NSQ_ENDPOINTS }}
-  interval = {{ default "1s" .AGENT_INTERVAL | quote }}
-{{ end }}
-
 {{- if .POSTGRESQL_ADDRESS }}
 [[inputs.postgresql]]
   address = {{ .POSTGRESQL_ADDRESS | quote }}
@@ -282,15 +270,6 @@
   consumer_group = {{ .KAFKA_CONSUMER_GROUP | quote }}
   point_buffer = {{ .KAFKA_CONSUMER_POINT_BUFFER }}
   offset = {{ .KAFKA_CONSUMER_OFFSET | quote }}
-{{ end }}
-
-{{- if .NSQ_CONSUMER_SERVERS }}
-[[inputs.nsq_consumer]]
-  nsqd = {{ .NSQ_CONSUMER_SERVERS }}
-  topic = {{ default "telegraf" .NSQ_CONSUMER_TOPIC | quote }}
-  channel = {{ default "consumer" .NSQ_CONSUMER_CHANNEL | quote }}
-  max_in_flight = {{ default 100 .NSQ_CONSUMER_MAX_IN_FLIGHT }}
-  data_format = {{ default "influx" .NSQ_CONSUMER_DATA_FORMAT | quote }}
 {{ end }}
 
 {{- if .STATSD_SERVICE_ADDRESS }}

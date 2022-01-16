@@ -12,15 +12,6 @@ NODE_IP="$(curl -s "$API_URL/api/v1/namespaces/$POD_NAMESPACE/pods/$HOSTNAME" --
 echo "Node IP set (${NODE_IP})"
 AGENT_HOSTNAME=$NODE_NAME
 
-export NSQ_ENDPOINTS
-for NSQ_ENDPOINT in $(echo "$NSQ_ENDPOINTS" |jq '.[]'); do
-    NSQ_ENDPOINT=${NSQ_ENDPOINT%*\"} # Remove closing quotation mark
-    NSQ_ENDPOINT=${NSQ_ENDPOINT#*\"} # Remove opening quotation mark
-    NSQ_TOPIC_URL="$NSQ_ENDPOINT/topic/create?topic=$NSQ_CONSUMER_TOPIC"
-    echo "Creating topic with URL: ${NSQ_TOPIC_URL}"
-    curl -s -X POST "${NSQ_TOPIC_URL}"
-done
-
 if [ -n "$ENABLE_KUBERNETES" ]; then
   export KUBERNETES_BEARER_TOKEN_PATH=${BEARER_TOKEN_PATH}
   export KUBERNETES_URL="https://${NODE_IP}:10250"

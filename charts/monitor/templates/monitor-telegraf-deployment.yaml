@@ -1,4 +1,3 @@
-{{ $nsqdNodeCount := .Values.nsqd.replicas | int }}
 {{ $redisNodeCount := .Values.redis.replicas | int }}
 apiVersion: apps/v1
 kind: Deployment
@@ -99,12 +98,6 @@ spec:
           value: "true"
         - name: "AGENT_BUFFER_LIMIT"
           value: "100000"
-        - name: "NSQ_CONSUMER_SERVERS"
-          value: "[{{range $i := until $nsqdNodeCount}}\"drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.clusterDomain}}:{{$.Values.nsqd.tcpPort}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
-        - name: "NSQ_CONSUMER_TOPIC"
-          value: "metrics"
-        - name: "NSQ_ENDPOINTS"
-          value: "[{{range $i := until $nsqdNodeCount}}\"http://drycc-nsqd-{{$i}}.drycc-nsqd.{{$.Release.Namespace}}.svc.{{$.Values.global.clusterDomain}}:{{$.Values.nsqd.httpPort}}\"{{if lt (add 1 $i) $nsqdNodeCount}}, {{end}}{{end}}]"
 {{- if ne .Values.global.redisLocation "off-cluster" }}
         - name: DRYCC_REDIS_PASSWORD
           valueFrom:
@@ -112,7 +105,7 @@ spec:
               name: redis-creds
               key: password
         - name: "REDIS_SERVERS"
-          value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_REDIS_PASSWORD)@drycc-redis-{{$i}}.drycc-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.clusterDomain}}:{{$.Values.redis.port}}\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
+          value: "[{{range $i := until $redisNodeCount}}\":$(DRYCC_REDIS_PASSWORD)@drycc-redis-{{$i}}.drycc-redis.{{$.Release.Namespace}}.svc.{{$.Values.global.clusterDomain}}:6379\"{{if lt (add 1 $i) $redisNodeCount}}, {{end}}{{end}}]"
         volumeMounts:
         - name: redis-creds
           mountPath: /var/run/secrets/drycc/redis/creds
