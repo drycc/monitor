@@ -27,9 +27,9 @@ Grafana is a stand alone graphing application. It natively supports Influxdb as 
                         Log file                        │    
                             │                           │    
                             ▼                           ▼    
-┌────────┐             ┌─────────┐    logs/metrics   ┌─────┐
-│App Logs│──Log File──▶│ fluentd │───────topics─────▶│ NSQ │
-└────────┘             └─────────┘                   └─────┘
+┌────────┐             ┌─────────┐    logs/metrics   ┌──────────────┐
+│App Logs│──Log File──▶│ fluentd │───────topics─────▶│ Redis Stream │
+└────────┘             └─────────┘                   └──────────────┘
                                                         │    
                                                         │    
 ┌─────────────┐                                         │    
