@@ -13,6 +13,7 @@ grafana:
   # can be specified as key-value pairs under environment
   # this is usually a non required setting.
   environment:
+    BASIC_AUTH: false
     ALLOW_SIGN_UP: false
 telegraf:
   imageOrg: "drycc"

@@ -1,7 +1,7 @@
 {{/* Generate monitor grafana envs */}}
 {{- define "grafana.envs" }}
 env:
-{{- if eq .Values.global.influxdb_location "off-cluster" }}
+{{- if eq .Values.global.influxdbLocation "off-cluster" }}
 - name: "INFLUXDB_URL"
   valueFrom:
     secretKeyRef:
@@ -33,22 +33,22 @@ env:
 - name: "DEFAULT_USER_PASSWORD"
   value: {{.Values.grafana.password}}
 - name: "KUBERNETES_CLUSTER_DOMAIN"
-  value: {{.Values.global.cluster_domain}}
+  value: {{.Values.global.clusterDomain}}
 {{- range $key, $value := .Values.grafana.environment }}
 - name: {{ $key }}
   value: {{ $value | quote }}
 {{- end }}
 - name: "DRYCC_GRAFANA_DOMAIN"
-{{- if .Values.global.cert_manager_enabled }}
-  value: https://drycc-monitor-grafana.{{ .Values.global.platform_domain }}
+{{- if .Values.global.certManagerEnabled }}
+  value: https://drycc-monitor-grafana.{{ .Values.global.platformDomain }}
 {{- else }}
-  value: http://drycc-monitor-grafana.{{ .Values.global.platform_domain }}
+  value: http://drycc-monitor-grafana.{{ .Values.global.platformDomain }}
 {{- end }}
 - name: "DRYCC_PASSPORT_DOMAIN"
-{{- if .Values.global.cert_manager_enabled }}
-  value: https://drycc-passport.{{ .Values.global.platform_domain }}
+{{- if .Values.global.certManagerEnabled }}
+  value: https://drycc-passport.{{ .Values.global.platformDomain }}
 {{- else }}
-  value: http://drycc-passport.{{ .Values.global.platform_domain }}
+  value: http://drycc-passport.{{ .Values.global.platformDomain }}
 {{- end }}
 - name: "SOCIAL_AUTH_DRYCC_AUTHORIZATION_URL"
   value: "$(DRYCC_PASSPORT_DOMAIN)/oauth/authorize/"
