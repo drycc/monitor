@@ -165,6 +165,9 @@ auto_assign_org_role = {{ default "Viewer" .AUTO_ASSIGN_ORG_ROLE }}
 
 # Background text for the user field on the login page
 login_hint = {{ default "email or username" .LOGIN_HINT }}
+#################################### Auth ####################################
+[auth]
+oauth_auto_login = true
 
 #################################### Anonymous Auth ##########################
 [auth.anonymous]
