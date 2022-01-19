@@ -28,10 +28,14 @@ env:
       key: token
 - name: "BIND_PORT"
   value: "3000"
+{{- if not (.Values.grafana.environment.DEFAULT_USER) }}
 - name: "DEFAULT_USER"
-  value: {{.Values.grafana.user}}
+  value: {{ randAlphaNum 32 | b64enc }}
+{{- end}}
+{{- if not (.Values.grafana.environment.DEFAULT_USER_PASSWORD) }}
 - name: "DEFAULT_USER_PASSWORD"
-  value: {{.Values.grafana.password}}
+  value: {{ randAlphaNum 32 | b64enc }}
+{{- end}}
 - name: "KUBERNETES_CLUSTER_DOMAIN"
   value: {{.Values.global.clusterDomain}}
 {{- range $key, $value := .Values.grafana.environment }}
