@@ -242,6 +242,8 @@ token_url = {{ .SOCIAL_AUTH_DRYCC_ACCESS_TOKEN_URL }}
 api_url = {{ .SOCIAL_AUTH_DRYCC_USERINFO_URL }}
 allow_sign_up = true
 tls_skip_verify_insecure = true
+role_attribute_path = (is_superuser && 'Admin') || (is_staff && 'Viewer') || ''
+role_attribute_strict = true
 
 [server]
 root_url = {{ .DRYCC_GRAFANA_DOMAIN }}

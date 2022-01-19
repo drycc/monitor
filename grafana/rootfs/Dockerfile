@@ -1,7 +1,7 @@
 FROM docker.io/drycc/go-dev:latest AS go-dev
 
 
-FROM docker.io/grafana/grafana:7.3.4
+FROM docker.io/grafana/grafana:8.3.4
 USER root
 COPY . /
 COPY --from=go-dev /bin/envtpl /usr/share/grafana/envtpl
