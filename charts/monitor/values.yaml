@@ -5,6 +5,12 @@ grafana:
   imageRegistry: "docker.io"
   # limitsCpu: "100m"
   # limitsMemory: "50Mi"
+
+  # Service
+  service:
+    # Provide any additional service annotations
+    annotations: {}
+
   persistence:
     enabled: false
     accessMode: ReadWriteOnce
