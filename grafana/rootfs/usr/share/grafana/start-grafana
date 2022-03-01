@@ -19,7 +19,7 @@ DASHBOARD_LOCATION=${DASHBOARD_JSON_PATH:-"/usr/share/grafana/api/dashboards"}
 mkdir /usr/share/grafana/dashboards
 
 echo "Building grafana.ini!"
-./envtpl > grafana.ini < grafana.ini.tpl
+envtpl > grafana.ini < grafana.ini.tpl
 echo "Finished building grafana config..."
 echo "###########################################"
 echo "###########################################"
@@ -40,7 +40,7 @@ if [ -n "${LDAP_ENDPOINT}" ]; then
   fi
   export LDAP_HOST=${ldap_url_array[3]//\/\//}
   export LDAP_PORT=${ldap_url_array[4]}
-  ./envtpl > ldap.toml < ldap.toml.tpl
+  envtpl > ldap.toml < ldap.toml.tpl
   echo "Finished building ldap config..."
   echo "###########################################"
   echo "###########################################"
@@ -65,7 +65,7 @@ fi
 
 set -m
 echo "Starting Grafana in the background"
-exec grafana-server -config /usr/share/grafana/grafana.ini -homepath /usr/share/grafana &
+exec grafana-server -config /usr/share/grafana/grafana.ini -homepath /opt/drycc/grafana &
 echo "Waiting for Grafana to come up..."
 until curl -q --fail --output /dev/null --silent "http://${GRAFANA_USER}:${GRAFANA_PASSWD}@localhost:${GRAFANA_PORT}/api/org"; do
   printf "."
