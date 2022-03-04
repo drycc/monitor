@@ -19,12 +19,16 @@ spec:
       labels:
         app: drycc-monitor-telegraf
     spec:
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsUser: 1001
       serviceAccount: drycc-monitor-telegraf
       initContainers:
       - name: drycc-monitor-telegraf-init
         image: docker.io/drycc/python-dev:latest
         imagePullPolicy: {{.Values.imagePullPolicy}}
-        command:
+        args:
           - netcat
           - -v
           - -u

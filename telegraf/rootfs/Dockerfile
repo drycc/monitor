@@ -1,10 +1,11 @@
 FROM docker.io/drycc/base:bullseye
 
-RUN adduser --system \
-   --shell /bin/bash \
-   --disabled-password \
-   --group \
-   drycc
+ARG DRYCC_UID=1001
+ARG DRYCC_GID=1001
+ARG DRYCC_HOME_DIR=/home/telegraf
+
+RUN groupadd drycc --gid $DRYCC_GID \
+  && useradd drycc -u $DRYCC_UID -g $DRYCC_GID -s /bin/bash -m -d $DRYCC_HOME_DIR
 
 COPY . /
 ENV TELEGRAF_VERSION="1.21.3" \
@@ -27,7 +28,9 @@ RUN install-stack telegraf $TELEGRAF_VERSION \
       /lib/udev \
       /usr/lib/`echo $(uname -m)`-linux-gnu/gconv/IBM* \
       /usr/lib/`echo $(uname -m)`-linux-gnu/gconv/EBC* \
-  && bash -c "mkdir -p /usr/share/man/man{1..8}"
+  && mkdir -p /usr/share/man/man{1..8} \
+  && chown -R drycc:drycc $DRYCC_HOME_DIR
 
 USER drycc
+WORKDIR $DRYCC_HOME_DIR
 CMD ["/home/telegraf/start-telegraf"]

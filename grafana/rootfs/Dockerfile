@@ -1,11 +1,12 @@
 FROM docker.io/drycc/base:bullseye
 
-RUN adduser --system \
-   --shell /bin/bash \
-   --disabled-password \
-   --home /usr/share/grafana \
-   --group \
-   drycc
+ARG DRYCC_UID=1001
+ARG DRYCC_GID=1001
+ARG DRYCC_HOME_DIR=/usr/share/grafana
+
+RUN groupadd drycc --gid $DRYCC_GID \
+  && useradd drycc -u $DRYCC_UID -g $DRYCC_GID -s /bin/bash -m -d $DRYCC_HOME_DIR
+
 
 COPY . /
 ENV GRAFANA_VERSION="8.3.6" \
@@ -35,6 +36,6 @@ RUN install-packages fontconfig curl \
   && chmod +x /usr/share/grafana/entrypoint.sh
 
 USER drycc
-WORKDIR /usr/share/grafana
+WORKDIR $DRYCC_HOME_DIR
 CMD ["./start-grafana"]
 EXPOSE 3000

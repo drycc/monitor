@@ -22,6 +22,10 @@ spec:
       labels:
         app: drycc-monitor-grafana
     spec:
+      securityContext:
+        fsGroup: 1001
+        runAsGroup: 1001
+        runAsUser: 1001
       containers:
       - name: drycc-monitor-grafana
         image: {{.Values.grafana.imageRegistry}}/{{.Values.grafana.imageOrg}}/grafana:{{.Values.grafana.imageTag}}
