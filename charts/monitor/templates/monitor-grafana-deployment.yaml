@@ -22,6 +22,9 @@ spec:
       labels:
         app: drycc-monitor-grafana
     spec:
+      {{- if .Values.global.common }}
+      {{- include "common.affinity" (dict "key" "app" "values" (list "drycc-monitor-grafana")) | indent 6 }}
+      {{- end }}
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
