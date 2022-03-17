@@ -21,9 +21,7 @@ spec:
       labels:
         app: drycc-monitor-telegraf
     spec:
-      {{- if .Values.global.common }}
-      {{- include "common.affinity" (dict "key" "app" "values" (list "drycc-monitor-telegraf")) | indent 6 }}
-      {{- end }}
+      {{- include "common.affinities.nodes.soft" (dict "key" "app" "values" (list "drycc-monitor-telegraf")) | indent 6 }}
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
