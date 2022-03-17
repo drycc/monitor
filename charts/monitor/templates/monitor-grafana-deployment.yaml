@@ -22,7 +22,7 @@ spec:
       labels:
         app: drycc-monitor-grafana
     spec:
-      {{- include "common.affinities.nodes.soft" (dict "key" "app" "values" (list "drycc-monitor-grafana")) | indent 6 }}
+      {{- include "common.affinities.pods.soft" (dict "key" "app" "values" (list "drycc-monitor-grafana")) | indent 6 }}
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
