@@ -3,7 +3,7 @@ FROM docker.io/drycc/base:bullseye
 ENV DRYCC_UID=1001 \
   DRYCC_GID=1001 \
   DRYCC_HOME_DIR=/home/telegraf \
-  TELEGRAF_VERSION="1.21.3" \
+  TELEGRAF_VERSION="1.22.0" \
   ENVTPL_VERSION="1.0.0" \
   JQ_VERSION="1.6"
 
