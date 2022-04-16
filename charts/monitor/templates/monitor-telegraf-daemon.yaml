@@ -26,7 +26,7 @@ spec:
       serviceAccount: drycc-monitor-telegraf
       initContainers:
       - name: drycc-monitor-telegraf-init
-        image: registry.drycc.cc/drycc/python-dev:latest
+        image: {{.Values.imageRegistry}}/{{.Values.imageOrg}}/python-dev:latest
         imagePullPolicy: {{.Values.imagePullPolicy}}
         args:
           - netcat
