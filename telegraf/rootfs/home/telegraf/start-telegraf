@@ -29,6 +29,16 @@ fi
 if [ -n "$INFLUXDB_URL" ] && [ "${INFLUXDB_URLS:0:1}" != "\"" ]; then
   export INFLUXDB_URLS="\"$INFLUXDB_URLS\""
 fi
+# redis servers
+if [ -n "$DRYCC_REDIS_ADDRS" ]; then
+  REDIS_SERVERS=""
+  for ADDR in $(echo "${DRYCC_REDIS_ADDRS}" | tr "," "\n")
+  do
+    REDIS_SERVERS="\":$DRYCC_REDIS_PASSWORD@$ADDR\", ${REDIS_SERVERS}"
+  done
+  REDIS_SERVERS=\["${REDIS_SERVERS::-2}"\]
+  export REDIS_SERVERS
+fi
 
 echo "Building config.toml!"
 envtpl > config.toml < config.toml.tpl | sed  '/^$/d'
