@@ -42,32 +42,32 @@ env:
 - name: {{ $key }}
   value: {{ $value | quote }}
 {{- end }}
-- name: "DRYCC_GRAFANA_DOMAIN"
+- name: "DRYCC_GRAFANA_URL"
 {{- if .Values.global.certManagerEnabled }}
   value: https://drycc-monitor-grafana.{{ .Values.global.platformDomain }}
 {{- else }}
   value: http://drycc-monitor-grafana.{{ .Values.global.platformDomain }}
 {{- end }}
-- name: "DRYCC_PASSPORT_DOMAIN"
+- name: "DRYCC_PASSPORT_URL"
 {{- if .Values.global.certManagerEnabled }}
   value: https://drycc-passport.{{ .Values.global.platformDomain }}
 {{- else }}
   value: http://drycc-passport.{{ .Values.global.platformDomain }}
 {{- end }}
 - name: "SOCIAL_AUTH_DRYCC_AUTHORIZATION_URL"
-  value: "$(DRYCC_PASSPORT_DOMAIN)/oauth/authorize/"
+  value: "$(DRYCC_PASSPORT_URL)/oauth/authorize/"
 - name: "SOCIAL_AUTH_DRYCC_ACCESS_TOKEN_URL"
-  value: "$(DRYCC_PASSPORT_DOMAIN)/oauth/token/"
+  value: "$(DRYCC_PASSPORT_URL)/oauth/token/"
 - name: "SOCIAL_AUTH_DRYCC_ACCESS_API_URL"
-  value: "$(DRYCC_PASSPORT_DOMAIN)"
+  value: "$(DRYCC_PASSPORT_URL)"
 - name: "SOCIAL_AUTH_DRYCC_USERINFO_URL"
-  value: "$(DRYCC_PASSPORT_DOMAIN)/oauth/userinfo/"
-- name: SOCIAL_AUTH_DRYCC_GRAFANA_KEY
+  value: "$(DRYCC_PASSPORT_URL)/oauth/userinfo/"
+- name: SOCIAL_AUTH_DRYCC_KEY
   valueFrom:
     secretKeyRef:
       name: passport-creds
       key: social-auth-drycc-grafana-key
-- name: SOCIAL_AUTH_DRYCC_GRAFANA_SECRET
+- name: SOCIAL_AUTH_DRYCC_SECRET
   valueFrom:
     secretKeyRef:
       name: passport-creds
