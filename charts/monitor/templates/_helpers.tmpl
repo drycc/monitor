@@ -54,22 +54,14 @@ env:
 {{- else }}
   value: http://drycc-passport.{{ .Values.global.platformDomain }}
 {{- end }}
-- name: "SOCIAL_AUTH_DRYCC_AUTHORIZATION_URL"
-  value: "$(DRYCC_PASSPORT_URL)/oauth/authorize/"
-- name: "SOCIAL_AUTH_DRYCC_ACCESS_TOKEN_URL"
-  value: "$(DRYCC_PASSPORT_URL)/oauth/token/"
-- name: "SOCIAL_AUTH_DRYCC_ACCESS_API_URL"
-  value: "$(DRYCC_PASSPORT_URL)"
-- name: "SOCIAL_AUTH_DRYCC_USERINFO_URL"
-  value: "$(DRYCC_PASSPORT_URL)/oauth/userinfo/"
-- name: SOCIAL_AUTH_DRYCC_KEY
+- name: DRYCC_PASSPORT_KEY
   valueFrom:
     secretKeyRef:
       name: passport-creds
-      key: social-auth-drycc-grafana-key
-- name: SOCIAL_AUTH_DRYCC_SECRET
+      key: drycc-passport-grafana-key
+- name: DRYCC_PASSPORT_SECRET
   valueFrom:
     secretKeyRef:
       name: passport-creds
-      key: social-auth-drycc-grafana-secret
+      key: drycc-passport-grafana-secret
 {{- end }}

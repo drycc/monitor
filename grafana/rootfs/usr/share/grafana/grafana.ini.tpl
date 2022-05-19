@@ -231,15 +231,15 @@ config_file = "/usr/share/grafana/ldap.toml"
 
 #################################### Generic Oauth ##########################
 [auth.generic_oauth]
-{{ if .SOCIAL_AUTH_DRYCC_KEY }}
+{{ if .DRYCC_PASSPORT_URL }}
 name = OAuth
 enabled = true
-client_id = {{ .SOCIAL_AUTH_DRYCC_KEY }}
-client_secret = {{ .SOCIAL_AUTH_DRYCC_SECRET }}
+client_id = {{ .DRYCC_PASSPORT_KEY }}
+client_secret = {{ .DRYCC_PASSPORT_SECRET }}
 scopes = profile,openid
-auth_url = {{ .SOCIAL_AUTH_DRYCC_AUTHORIZATION_URL }}
-token_url = {{ .SOCIAL_AUTH_DRYCC_ACCESS_TOKEN_URL }}
-api_url = {{ .SOCIAL_AUTH_DRYCC_USERINFO_URL }}
+auth_url = {{ .DRYCC_PASSPORT_URL }}/oauth/authorize/
+token_url = {{ .DRYCC_PASSPORT_URL }}/oauth/token/
+api_url = {{ .DRYCC_PASSPORT_URL }}
 allow_sign_up = true
 tls_skip_verify_insecure = true
 role_attribute_path = (is_superuser && 'Admin') || (is_staff && 'Viewer') || ''
