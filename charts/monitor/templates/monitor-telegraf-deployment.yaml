@@ -20,7 +20,10 @@ spec:
       labels:
         app: drycc-monitor-telegraf
     spec:
-      {{- include "common.affinities.pods.soft" (dict "key" "app" "values" (list "drycc-monitor-telegraf")) | indent 6 }}
+      affinity:
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.telegraf.podAffinityPreset.type "key" .Values.telegraf.podAffinityPreset.key "values" .Values.telegraf.podAffinityPreset.values ) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.telegraf.podAntiAffinityPreset.type "key" .Values.telegraf.podAntiAffinityPreset.key "values" .Values.telegraf.podAntiAffinityPreset.values ) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.telegraf.nodeAffinityPreset.type "key" .Values.telegraf.nodeAffinityPreset.key "values" .Values.telegraf.nodeAffinityPreset.values ) | nindent 10 }}
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
