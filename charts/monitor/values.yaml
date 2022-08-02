@@ -21,7 +21,7 @@ grafana:
     key: "app"
     type: "soft"
     values:
-    - " drycc-monitor-grafana"
+    - "drycc-monitor-grafana"
 
   # Service
   service:
@@ -61,7 +61,7 @@ telegraf:
     key: "app"
     type: "soft"
     values:
-    - " drycc-monitor-telegraf"
+    - "drycc-monitor-telegraf"
 
 redis:
   replicas: 1
