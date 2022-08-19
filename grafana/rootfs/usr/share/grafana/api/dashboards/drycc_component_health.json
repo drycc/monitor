@@ -22,7 +22,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 6,
+    "id": null,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -314,10 +314,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -428,10 +425,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -554,10 +548,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -668,10 +659,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -794,10 +782,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -908,10 +893,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -1265,10 +1247,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -1377,10 +1356,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -1963,10 +1939,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -2075,10 +2048,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -2431,10 +2401,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -2543,10 +2510,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -2669,10 +2633,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -2783,10 +2744,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -2909,10 +2867,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
@@ -3023,10 +2978,7 @@
             "targets": [
               {
                 "alias": "$tag_pod_name",
-                "datasource": {
-                  "type": "influxdb",
-                  "uid": "hg0D_Li4z"
-                },
+                "datasource": null,
                 "dsType": "influxdb",
                 "groupBy": [
                   {
