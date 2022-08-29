@@ -3,7 +3,7 @@ FROM registry.drycc.cc/drycc/base:bullseye
 ENV DRYCC_UID=1001 \
   DRYCC_GID=1001 \
   DRYCC_HOME_DIR=/home/telegraf \
-  TELEGRAF_VERSION="1.22.0" \
+  TELEGRAF_VERSION="1.23.4" \
   ENVTPL_VERSION="1.0.0" \
   JQ_VERSION="1.6"
 
