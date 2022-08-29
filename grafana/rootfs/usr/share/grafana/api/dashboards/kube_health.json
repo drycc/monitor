@@ -9,31 +9,31 @@
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
           "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
           "type": "dashboard"
         }
       ]
     },
     "editable": true,
-    "gnetId": null,
+    "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": null,
-    "iteration": 1609748381875,
+    "iteration": 1660728936662,
     "links": [],
+    "liveNow": false,
     "panels": [
       {
         "aliasColors": {},
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -63,7 +63,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -104,9 +104,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "CPU",
         "tooltip": {
           "msResolution": false,
@@ -116,9 +114,7 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
@@ -127,22 +123,16 @@
             "format": "short",
             "label": "milli-cores",
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       },
       {
@@ -150,15 +140,8 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -188,7 +171,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -229,9 +212,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "Memory",
         "tooltip": {
           "msResolution": false,
@@ -241,45 +222,29 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
         "yaxes": [
           {
             "format": "bytes",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       },
       {
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "gridPos": {
           "h": 7,
           "w": 2,
@@ -293,8 +258,7 @@
           "content": "# Kubelet",
           "mode": "markdown"
         },
-        "pluginVersion": "7.3.4",
-        "title": "",
+        "pluginVersion": "8.4.5",
         "transparent": true,
         "type": "text"
       },
@@ -303,15 +267,8 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -341,7 +298,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -375,9 +332,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "CPU",
         "tooltip": {
           "msResolution": false,
@@ -387,9 +342,7 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
@@ -398,34 +351,21 @@
             "format": "short",
             "label": "milli-cores",
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       },
       {
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "gridPos": {
           "h": 7,
           "w": 2,
@@ -439,8 +379,7 @@
           "content": "",
           "mode": "markdown"
         },
-        "pluginVersion": "7.3.4",
-        "title": "",
+        "pluginVersion": "8.4.5",
         "transparent": true,
         "type": "text"
       },
@@ -449,15 +388,8 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -487,7 +419,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -521,9 +453,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "Memory",
         "tooltip": {
           "msResolution": false,
@@ -533,9 +463,7 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
@@ -544,34 +472,21 @@
             "format": "bytes",
             "label": "milli-cores",
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       },
       {
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "gridPos": {
           "h": 7,
           "w": 2,
@@ -585,8 +500,7 @@
           "content": "# Kube System",
           "mode": "markdown"
         },
-        "pluginVersion": "7.3.4",
-        "title": "",
+        "pluginVersion": "8.4.5",
         "transparent": true,
         "type": "text"
       },
@@ -595,15 +509,8 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -634,7 +541,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -701,9 +608,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "Network",
         "tooltip": {
           "msResolution": false,
@@ -713,46 +618,30 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
         "yaxes": [
           {
-            "decimals": null,
             "format": "Bps",
             "label": "",
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       },
       {
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "gridPos": {
           "h": 7,
           "w": 2,
@@ -766,8 +655,7 @@
           "content": "# Nodes",
           "mode": "markdown"
         },
-        "pluginVersion": "7.3.4",
-        "title": "",
+        "pluginVersion": "8.4.5",
         "transparent": true,
         "type": "text"
       },
@@ -776,15 +664,8 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -814,7 +695,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -855,9 +736,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "CPU",
         "tooltip": {
           "msResolution": false,
@@ -867,9 +746,7 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
@@ -878,34 +755,21 @@
             "format": "short",
             "label": "milli-cores",
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       },
       {
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "gridPos": {
           "h": 7,
           "w": 2,
@@ -919,8 +783,7 @@
           "content": "",
           "mode": "markdown"
         },
-        "pluginVersion": "7.3.4",
-        "title": "",
+        "pluginVersion": "8.4.5",
         "transparent": true,
         "type": "text"
       },
@@ -929,15 +792,8 @@
         "bars": false,
         "dashLength": 10,
         "dashes": false,
-        "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -967,7 +823,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "8.4.5",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -1008,9 +864,7 @@
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "Memory",
         "tooltip": {
           "msResolution": false,
@@ -1020,9 +874,7 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
@@ -1031,57 +883,43 @@
             "format": "bytes",
             "label": "",
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       }
     ],
     "refresh": "5s",
-    "schemaVersion": 26,
+    "schemaVersion": 35,
     "style": "dark",
     "tags": [],
     "templating": {
       "list": [
         {
-          "allValue": "",
           "current": {
-            "selected": false,
-            "text": "coredns",
-            "value": "coredns"
+            "selected": true,
+            "text": "cilium-agent",
+            "value": "cilium-agent"
           },
-          "datasource": "influxdb-datasource",
-          "definition": "",
-          "error": null,
+          "definition": "import \"influxdata/influxdb/schema\" schema.tagValues(bucket: v.bucket, tag: \"container_name\", predicate: (r) => r.namespace =~ /kube-*/ or r.container_name =~ /kube.*/ )",
           "hide": 0,
           "includeAll": false,
-          "label": "Container",
-          "multi": true,
+          "multi": false,
           "name": "container_name",
           "options": [],
-          "query": "import \"influxdata/influxdb/schema\"\nschema.tagValues(bucket: v.bucket, tag: \"container_name\", predicate: (r) => r.namespace =~ /kube-*/ or r.container_name =~ /kube.*/ )",
+          "query": "import \"influxdata/influxdb/schema\" schema.tagValues(bucket: v.bucket, tag: \"container_name\", predicate: (r) => r.namespace =~ /kube-*/ or r.container_name =~ /kube.*/ )",
           "refresh": 1,
           "regex": "",
           "skipUrlSync": false,
           "sort": 0,
-          "tagValuesQuery": "",
-          "tags": [],
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
+          "type": "query"
         }
       ]
     },
@@ -1117,7 +955,8 @@
     "timezone": "browser",
     "title": "Kubernetes Health",
     "uid": "X8IfrooGk",
-    "version": 0
+    "version": 2,
+    "weekStart": ""
   },
   "overwrite": false
 }

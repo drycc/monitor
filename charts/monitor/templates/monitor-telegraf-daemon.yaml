@@ -42,9 +42,9 @@ spec:
               key: url
 {{- else }}
         - name: "INFLUXDB_URLS_V2"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)\""
         - name: "INFLUXDB_V2_INPUT_URLS"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)/metrics\""
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)/metrics\""
         - name: "ENABLE_INFLUXDB_V2_INPUT"
           value: "true"
 {{- end }}
@@ -75,9 +75,9 @@ spec:
               key: url
 {{- else }}
         - name: "INFLUXDB_URLS_V2"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)\""
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)\""
         - name: "INFLUXDB_V2_INPUT_URLS"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT_TRANSPORT)/metrics\""
+          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)/metrics\""
         - name: "ENABLE_INFLUXDB_V2_INPUT"
           value: "true"
 {{- end }}
