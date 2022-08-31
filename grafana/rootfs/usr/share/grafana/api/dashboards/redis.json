@@ -9,298 +9,73 @@
           "hide": true,
           "iconColor": "rgba(0, 211, 255, 1)",
           "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
           "type": "dashboard"
         }
       ]
     },
     "editable": true,
-    "gnetId": null,
+    "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
     "id": null,
     "links": [],
+    "liveNow": false,
     "panels": [
       {
-        "cacheTimeout": null,
-        "colorBackground": false,
-        "colorValue": false,
-        "colors": [
-          "rgba(245, 54, 54, 0.9)",
-          "rgba(237, 129, 40, 0.89)",
-          "rgba(50, 172, 45, 0.97)"
-        ],
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
         "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "format": "none",
-        "gauge": {
-          "maxValue": 100,
-          "minValue": 0,
-          "show": false,
-          "thresholdLabels": false,
-          "thresholdMarkers": true
-        },
-        "gridPos": {
-          "h": 6,
-          "w": 12,
-          "x": 0,
-          "y": 0
-        },
-        "id": 6,
-        "interval": null,
-        "isNew": true,
-        "links": [],
-        "mappingType": 1,
-        "mappingTypes": [
-          {
-            "name": "value to text",
-            "value": 1
-          },
-          {
-            "name": "range to text",
-            "value": 2
-          }
-        ],
-        "maxDataPoints": 100,
-        "nullPointMode": "connected",
-        "nullText": null,
-        "postfix": "",
-        "postfixFontSize": "50%",
-        "prefix": "",
-        "prefixFontSize": "50%",
-        "rangeMaps": [
-          {
-            "from": "null",
-            "text": "N/A",
-            "to": "null"
-          }
-        ],
-        "sparkline": {
-          "fillColor": "rgba(31, 118, 189, 0.18)",
-          "full": false,
-          "lineColor": "rgb(31, 120, 193)",
-          "show": true
-        },
-        "tableColumn": "",
-        "targets": [
-          {
-            "dsType": "influxdb",
-            "groupBy": [
-              {
-                "params": [
-                  "$interval"
-                ],
-                "type": "time"
-              },
-              {
-                "params": [
-                  "null"
-                ],
-                "type": "fill"
-              }
-            ],
-            "measurement": "kubernetes_pod_container",
-            "orderByTime": "ASC",
-            "policy": "default",
-            "query": "import \"math\"\nfrom(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"kubernetes_pod_container\")\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> last()\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> yield(name: \"mean\")",
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "thresholds": "",
-        "title": "CPU Usage (Millicores)",
-        "type": "singlestat",
-        "valueFontSize": "200%",
-        "valueMaps": [
-          {
-            "op": "=",
-            "text": "N/A",
-            "value": "null"
-          }
-        ],
-        "valueName": "avg"
-      },
-      {
-        "cacheTimeout": null,
-        "colorBackground": false,
-        "colorValue": false,
-        "colors": [
-          "rgba(245, 54, 54, 0.9)",
-          "rgba(237, 129, 40, 0.89)",
-          "rgba(50, 172, 45, 0.97)"
-        ],
-        "datasource": null,
-        "editable": true,
-        "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "format": "bytes",
-        "gauge": {
-          "maxValue": 100,
-          "minValue": 0,
-          "show": false,
-          "thresholdLabels": false,
-          "thresholdMarkers": true
-        },
-        "gridPos": {
-          "h": 6,
-          "w": 12,
-          "x": 12,
-          "y": 0
-        },
-        "id": 5,
-        "interval": null,
-        "isNew": true,
-        "links": [],
-        "mappingType": 1,
-        "mappingTypes": [
-          {
-            "name": "value to text",
-            "value": 1
-          },
-          {
-            "name": "range to text",
-            "value": 2
-          }
-        ],
-        "maxDataPoints": 100,
-        "nullPointMode": "connected",
-        "nullText": null,
-        "postfix": "",
-        "postfixFontSize": "50%",
-        "prefix": "",
-        "prefixFontSize": "50%",
-        "rangeMaps": [
-          {
-            "from": "null",
-            "text": "N/A",
-            "to": "null"
-          }
-        ],
-        "sparkline": {
-          "fillColor": "rgba(31, 118, 189, 0.18)",
-          "full": false,
-          "lineColor": "rgb(31, 120, 193)",
-          "show": false
-        },
-        "tableColumn": "",
-        "targets": [
-          {
-            "dsType": "influxdb",
-            "groupBy": [
-              {
-                "params": [
-                  "$interval"
-                ],
-                "type": "time"
-              },
-              {
-                "params": [
-                  "null"
-                ],
-                "type": "fill"
-              }
-            ],
-            "measurement": "kubernetes_pod_container",
-            "orderByTime": "ASC",
-            "policy": "default",
-            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r._measurement == \"redis\")\n  |> filter(fn: (r) => r._field == \"used_memory_rss\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
-            "refId": "A",
-            "resultFormat": "time_series"
-          }
-        ],
-        "thresholds": "",
-        "title": "Memory",
-        "type": "singlestat",
-        "valueFontSize": "200%",
-        "valueMaps": [
-          {
-            "op": "=",
-            "text": "N/A",
-            "value": "null"
-          }
-        ],
-        "valueName": "current"
-      },
-      {
-        "cacheTimeout": null,
-        "colorBackground": false,
-        "colorValue": false,
-        "colors": [
-          "rgba(245, 54, 54, 0.9)",
-          "rgba(237, 129, 40, 0.89)",
-          "rgba(50, 172, 45, 0.97)"
-        ],
-        "datasource": null,
-        "editable": true,
-        "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
-        "format": "none",
-        "gauge": {
-          "maxValue": 100,
-          "minValue": 0,
-          "show": false,
-          "thresholdLabels": false,
-          "thresholdMarkers": true
-        },
+        "fill": 1,
+        "fillGradient": 0,
+        "grid": {},
         "gridPos": {
           "h": 7,
           "w": 12,
           "x": 0,
-          "y": 6
+          "y": 0
         },
-        "id": 2,
-        "interval": null,
+        "hiddenSeries": false,
+        "id": 8,
+        "interval": "",
         "isNew": true,
-        "links": [],
-        "mappingType": 1,
-        "mappingTypes": [
-          {
-            "name": "value to text",
-            "value": 1
-          },
-          {
-            "name": "range to text",
-            "value": 2
-          }
-        ],
-        "maxDataPoints": 100,
-        "nullPointMode": "connected",
-        "nullText": null,
-        "postfix": "",
-        "postfixFontSize": "50%",
-        "prefix": "",
-        "prefixFontSize": "50%",
-        "rangeMaps": [
-          {
-            "from": "null",
-            "text": "N/A",
-            "to": "null"
-          }
-        ],
-        "sparkline": {
-          "fillColor": "rgba(31, 118, 189, 0.18)",
-          "full": false,
-          "lineColor": "rgb(31, 120, 193)",
-          "show": false
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": false,
+          "total": false,
+          "values": false
         },
-        "tableColumn": "",
+        "lines": true,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "connected",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "9.1.1",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
         "targets": [
           {
+            "alias": "$tag_pod_name",
+            "datasource": null,
             "dsType": "influxdb",
             "groupBy": [
               {
@@ -311,31 +86,55 @@
               },
               {
                 "params": [
+                  "pod_name"
+                ],
+                "type": "tag"
+              },
+              {
+                "params": [
                   "null"
                 ],
                 "type": "fill"
               }
             ],
-            "measurement": "redis",
+            "measurement": "kubernetes_pod_container",
             "orderByTime": "ASC",
             "policy": "default",
-            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"redis\")\n  |> filter(fn: (r) => r[\"_field\"] == \"clients\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
             "refId": "A",
             "resultFormat": "time_series"
           }
         ],
-        "thresholds": "",
-        "title": "Connected Clients",
-        "type": "singlestat",
-        "valueFontSize": "200%",
-        "valueMaps": [
+        "thresholds": [],
+        "timeRegions": [],
+        "title": "CPU Usage (Millicores)",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "mode": "time",
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
           {
-            "op": "=",
-            "text": "N/A",
-            "value": "null"
+            "format": "short",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "logBase": 1,
+            "show": true
           }
         ],
-        "valueName": "avg"
+        "yaxis": {
+          "align": false
+        }
       },
       {
         "aliasColors": {},
@@ -345,12 +144,6 @@
         "datasource": null,
         "editable": true,
         "error": false,
-        "fieldConfig": {
-          "defaults": {
-            "custom": {}
-          },
-          "overrides": []
-        },
         "fill": 1,
         "fillGradient": 0,
         "grid": {},
@@ -358,7 +151,226 @@
           "h": 7,
           "w": 12,
           "x": 12,
-          "y": 6
+          "y": 0
+        },
+        "hiddenSeries": false,
+        "id": 10,
+        "isNew": true,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": false,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "connected",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "9.1.1",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "$tag_pod_name",
+            "datasource": null,
+            "dsType": "influxdb",
+            "groupBy": [
+              {
+                "params": [
+                  "$interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "pod_name"
+                ],
+                "type": "tag"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "kubernetes_pod_container",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A",
+            "resultFormat": "time_series"
+          }
+        ],
+        "thresholds": [],
+        "timeRegions": [],
+        "title": "Memory",
+        "tooltip": {
+          "msResolution": true,
+          "shared": true,
+          "sort": 0,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "mode": "time",
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "bytes",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "logBase": 1,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "editable": true,
+        "error": false,
+        "fill": 1,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 0,
+          "y": 7
+        },
+        "hiddenSeries": false,
+        "id": 12,
+        "interval": "",
+        "isNew": true,
+        "legend": {
+          "avg": false,
+          "current": false,
+          "max": false,
+          "min": false,
+          "show": false,
+          "total": false,
+          "values": false
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "connected",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "9.1.1",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "alias": "$tag_pod_name",
+            "datasource": null,
+            "dsType": "influxdb",
+            "groupBy": [
+              {
+                "params": [
+                  "$interval"
+                ],
+                "type": "time"
+              },
+              {
+                "params": [
+                  "pod_name"
+                ],
+                "type": "tag"
+              },
+              {
+                "params": [
+                  "null"
+                ],
+                "type": "fill"
+              }
+            ],
+            "measurement": "kubernetes_pod_container",
+            "orderByTime": "ASC",
+            "policy": "default",
+            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"redis\")\n  |> filter(fn: (r) => r[\"_field\"] == \"clients\")\n  |> keep(columns: [\"_time\", \"host\", \"server\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+            "refId": "A",
+            "resultFormat": "time_series"
+          }
+        ],
+        "thresholds": [],
+        "timeRegions": [],
+        "title": "Connected Clients",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 0,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "mode": "time",
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "format": "short",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "format": "short",
+            "logBase": 1,
+            "show": true
+          }
+        ],
+        "yaxis": {
+          "align": false
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": null,
+        "editable": true,
+        "error": false,
+        "fill": 1,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 12,
+          "x": 12,
+          "y": 7
         },
         "hiddenSeries": false,
         "id": 4,
@@ -381,7 +393,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "7.3.4",
+        "pluginVersion": "9.1.1",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -391,6 +403,7 @@
         "steppedLine": false,
         "targets": [
           {
+            "datasource": null,
             "dsType": "influxdb",
             "groupBy": [
               {
@@ -409,15 +422,13 @@
             "measurement": "redis",
             "orderByTime": "ASC",
             "policy": "default",
-            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"redis\")\n  |> filter(fn: (r) => r[\"_field\"] == \"instantaneous_ops_per_sec\")\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")\n",
+            "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_measurement\"] == \"redis\")\n  |> filter(fn: (r) => r[\"_field\"] == \"instantaneous_ops_per_sec\")\n  |> keep(columns: [\"_time\", \"host\", \"server\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")\n",
             "refId": "A",
             "resultFormat": "time_series"
           }
         ],
         "thresholds": [],
-        "timeFrom": null,
         "timeRegions": [],
-        "timeShift": null,
         "title": "Ops Per Second",
         "tooltip": {
           "msResolution": true,
@@ -427,38 +438,29 @@
         },
         "type": "graph",
         "xaxis": {
-          "buckets": null,
           "mode": "time",
-          "name": null,
           "show": true,
           "values": []
         },
         "yaxes": [
           {
             "format": "ops",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           },
           {
             "format": "short",
-            "label": null,
             "logBase": 1,
-            "max": null,
-            "min": null,
             "show": true
           }
         ],
         "yaxis": {
-          "align": false,
-          "alignLevel": null
+          "align": false
         }
       }
     ],
     "refresh": "5s",
-    "schemaVersion": 26,
+    "schemaVersion": 37,
     "style": "dark",
     "tags": [
       "drycc"
@@ -498,7 +500,8 @@
     "timezone": "browser",
     "title": "Redis",
     "uid": "FlIfrooGz",
-    "version": 0
+    "version": 0,
+    "weekStart": ""
   },
   "overwrite": false
 }
