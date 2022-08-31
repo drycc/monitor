@@ -29,7 +29,7 @@ RUN install-packages fontconfig curl \
       /usr/lib/`echo $(uname -m)`-linux-gnu/gconv/EBC* \
   && mkdir -p /usr/share/man/man{1..8} \
   && mkdir /var/lib/grafana -p \
-  && chown -R drycc:drycc /opt/drycc/grafana /usr/share/grafana /var/lib/grafana \
+  && chown -R ${DRYCC_UID}:${DRYCC_GID} /opt/drycc/grafana /usr/share/grafana /var/lib/grafana \
   && chmod +x /usr/share/grafana/start-grafana \
   && chmod 644 /usr/share/grafana/grafana.ini.tpl \
   && chmod +x /usr/share/grafana/entrypoint.sh
