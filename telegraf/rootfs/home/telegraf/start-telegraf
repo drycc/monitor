@@ -40,6 +40,28 @@ if [ -n "$DRYCC_REDIS_ADDRS" ]; then
   export REDIS_SERVERS
 fi
 
+# pd servers
+if [ -n "$PD_ADDRS" ]; then
+  PD_SERVERS=""
+  for ADDR in $(echo "${PD_ADDRS}" | tr "," "\n")
+  do
+    PD_SERVERS="\"$ADDR\", ${PD_SERVERS}"
+  done
+  PD_SERVERS=\["${PD_SERVERS::-2}"\]
+  export PD_SERVERS
+fi
+
+#tikv servers
+if [ -n "$TIKV_ADDRS" ]; then
+  TIKV_SERVERS=""
+  for ADDR in $(echo "${TIKV_ADDRS}" | tr "," "\n")
+  do
+    TIKV_SERVERS="\"$ADDR\", ${TIKV_SERVERS}"
+  done
+  TIKV_SERVERS=\["${TIKV_SERVERS::-2}"\]
+  export TIKV_SERVERS
+fi
+
 echo "Building config.toml!"
 envtpl > config.toml < config.toml.tpl | sed  '/^$/d'
 
