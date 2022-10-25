@@ -48,6 +48,7 @@ env:
 {{- else }}
   value: http://drycc-monitor-grafana.{{ .Values.global.platformDomain }}
 {{- end }}
+{{- if eq .Values.global.passportLocation "on-cluster"}}
 - name: "DRYCC_PASSPORT_URL"
 {{- if .Values.global.certManagerEnabled }}
   value: https://drycc-passport.{{ .Values.global.platformDomain }}
@@ -64,4 +65,12 @@ env:
     secretKeyRef:
       name: passport-creds
       key: drycc-passport-grafana-secret
+{{- else }}
+- name: DRYCC_PASSPORT_URL
+  value: "{{ .Values.grafana.passportUrl }}"
+- name: DRYCC_PASSPORT_KEY
+  value: "{{ .Values.grafana.passportKey }}"
+- name: DRYCC_PASSPORT_SECRET
+  value: "{{ .Values.grafana.passportSecret }}"
+{{- end }}
 {{- end }}

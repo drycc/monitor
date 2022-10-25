@@ -37,6 +37,10 @@ grafana:
   # this is usually a non required setting.
   environment:
     ALLOW_SIGN_UP: false
+  # The passportUrl, passportKey and passportSecret are will no longer use the built-in passport component
+  passportUrl: ""
+  passportKey: ""
+  passportSecret: ""
 
 telegraf:
   imageOrg: "drycc"
