@@ -19,7 +19,7 @@
   debug = {{ default false .AGENT_DEBUG }}
   quiet = {{ default false .AGENT_QUIET }}
   flush_buffer_when_full = {{ default true .AGENT_FLUSH_BUFFER }}
-  {{- if .AGENT_HOSTNAME }}hostname = {{ .AGENT_HOSTNAME | quote }} {{ end }}
+  {{ if .AGENT_HOSTNAME }}hostname = {{ .AGENT_HOSTNAME | quote }} {{ end }}
 
 # Set output configuration
 {{- if .AMON_INSTANCE }}
@@ -174,6 +174,16 @@
 {{- if .ENABLE_INFLUXDB_V2_INPUT }}
 [[inputs.prometheus]]
   urls = [{{ .INFLUXDB_V2_INPUT_URLS }}]
+{{ end }}
+
+{{- if .PD_SERVERS }}
+[[inputs.prometheus]]
+  urls = {{ .PD_SERVERS }}
+{{ end }}
+
+{{- if .TIKV_SERVERS }}
+[[inputs.prometheus]]
+  urls = {{ .TIKV_SERVERS }}
 {{ end }}
 
 {{- if and .KUBERNETES_URL .ENABLE_KUBERNETES }}

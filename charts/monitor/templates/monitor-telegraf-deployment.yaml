@@ -117,3 +117,15 @@ spec:
               name: redis-creds
               key: password
 {{- end }}
+{{- if eq .Values.global.storageLocation "on-cluster" }}
+        - name: PD_ADDRS
+          valueFrom:
+            secretKeyRef:
+              name: storage-meta-creds
+              key: pd_addrs
+        - name: TIKV_ADDRS
+          valueFrom:
+            secretKeyRef:
+              name: storage-meta-creds
+              key: tikv_addrs
+{{- end }}
