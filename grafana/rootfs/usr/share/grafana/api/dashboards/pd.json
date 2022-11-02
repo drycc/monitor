@@ -566,7 +566,7 @@
                 "options": {
                   "mode": "exclude",
                   "names": [
-                    "pd_regions_status gauge {host=\"sy-z1-003\", type=\"down-peer-region-count\", url=\"http://drycc-storage-meta-pd-0.drycc-storage-meta-pd.drycc.svc.cluster.local:2379/metrics\"}"
+                    "pd_regions_status"
                   ],
                   "prefix": "All except:",
                   "readOnly": true

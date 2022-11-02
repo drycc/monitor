@@ -122,10 +122,10 @@ spec:
           valueFrom:
             secretKeyRef:
               name: storage-meta-creds
-              key: pd_addrs
+              key: pd-addrs
         - name: TIKV_ADDRS
           valueFrom:
             secretKeyRef:
               name: storage-meta-creds
-              key: tikv_addrs
+              key: tikv-addrs
 {{- end }}
