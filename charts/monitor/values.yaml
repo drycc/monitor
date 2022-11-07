@@ -72,25 +72,19 @@ redis:
   port: "6379"
 
 global:
-  # Set the location of Workflow's influxdb cluster
+  # Set the location of Workflow's component cluster
   #
   # Valid values are:
-  # - on-cluster: Run Influxdb within the Kubernetes cluster
-  # - off-cluster: Influxdb is running outside of the cluster and credentials and connection information will be provided.
+  # - on-cluster: Run component within the Kubernetes cluster
+  # - off-cluster: component is running outside of the cluster and credentials and connection information will be provided.
   influxdbLocation: "on-cluster"
-  # Set the location of Workflow's grafana instance
-  #
-  # Valid values are:
-  # - on-cluster: Run Grafana within the Kubernetes cluster
-  # - off-cluster: Grafana is running outside of the cluster
   grafanaLocation: "on-cluster"
-  # Set the location of Workflow's redis instance
-  #
-  # Valid values are:
-  # - on-cluster: Run Redis within the Kubernetes cluster
-  # - off-cluster: Run Redis outside the Kubernetes cluster (configure in redis section)
   redisLocation: "on-cluster"
+  rabbitmqLocation: "on-cluster"
   storageLocation: "on-cluster"
+  databaseLocation: "on-cluster"
+  passportLocation: "on-cluster"
+  registryLocation: "on-cluster"
   # Role-Based Access Control for Kubernetes >= 1.5
   rbac: false
   ingressClass: ""

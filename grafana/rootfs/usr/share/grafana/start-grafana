@@ -4,6 +4,7 @@
 HEADER_CONTENT_TYPE="Content-Type: application/json"
 HEADER_ACCEPT="Accept: application/json"
 
+NAMESPACE=${NAMESPACE:-drycc}
 GRAFANA_USER=${DEFAULT_USER:-admin}
 GRAFANA_PASSWD=${DEFAULT_USER_PASSWORD:-admin}
 GRAFANA_PORT=${BIND_PORT:-3000}
@@ -102,6 +103,52 @@ curl -i -XPOST -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFA
 
 echo ""
 echo "Importing default dashboards..."
+# replace namespace
+# shellcheck disable=SC1003
+# shellcheck disable=SC2046
+sed -i 's@r\[\\"namespace\\\"\] == \\"drycc\\"@r\[\\"namespace\\"\] == \\"\'"${NAMESPACE}"'\\"@g' $(grep -F 'r[\"namespace\"] == \"drycc\"' -rl --include="*.json" "${DASHBOARD_LOCATION}")
+# drycc component dashboard
+DCD="${DASHBOARD_LOCATION}"/drycc_component_health.json
+
+# remove off-cluster component panel
+if [ "on-cluster" != "${INFLUXDB_LOCATION}" ]; then
+  rm -rf "${DASHBOARD_LOCATION}"/influx.json
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "INFLUXDB"))')" > "${DCD}"
+fi
+if [ "on-cluster" != "${REDIS_LOCATION}" ]; then
+  rm -rf "${DASHBOARD_LOCATION}"/redis.json
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "REDIS"))')" > "${DCD}"
+fi
+if [ "on-cluster" != "${RABBITMQ_LOCATION}" ]; then
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "RABBITMQ"))')" > "${DCD}"
+fi
+if [ "on-cluster" != "${DATABASE_LOCATION}" ]; then
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "DATABASE"))')" > "${DCD}"
+fi
+if [ "on-cluster" != "${PASSPORT_LOCATION}" ]; then
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "PASSPORT"))')" > "${DCD}"
+fi
+if [ "on-cluster" != "${REGISTRY_LOCATION}" ]; then
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "REGISTRY"))')" > "${DCD}"
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "REGISTRY-PROXY"))')" > "${DCD}"
+fi
+if [ "on-cluster" != "${STORAGE_LOCATION}" ]; then
+  rm -rf "${DASHBOARD_LOCATION}"/pd.json "${DASHBOARD_LOCATION}"/tikv.json
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "STORAGE-MINIO"))')" > "${DCD}"
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "STORAGE-META-PD"))')" > "${DCD}"
+  # shellcheck disable=SC2005
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "STORAGE-META-TIKV"))')" > "${DCD}"
+fi
+
 for filename in "${DASHBOARD_LOCATION}"/*.json; do
   echo "Importing ${filename} ..."
   curl -i -XPOST --data "@${filename}" -H "${HEADER_ACCEPT}" -H "${HEADER_CONTENT_TYPE}" "http://${GRAFANA_USER}:${GRAFANA_PASSWD}@localhost:${GRAFANA_PORT}/api/dashboards/db"
