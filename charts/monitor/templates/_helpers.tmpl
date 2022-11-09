@@ -1,6 +1,10 @@
 {{/* Generate monitor grafana envs */}}
 {{- define "grafana.envs" }}
 env:
+- name: NAMESPACE
+  valueFrom:
+    fieldRef:
+      fieldPath: metadata.namespace
 {{- if eq .Values.global.influxdbLocation "off-cluster" }}
 - name: "INFLUXDB_URL"
   valueFrom:
@@ -73,4 +77,18 @@ env:
 - name: DRYCC_PASSPORT_SECRET
   value: "{{ .Values.grafana.passportSecret }}"
 {{- end }}
+- name: "INFLUXDB_LOCATION"
+  value: {{ .Values.global.influxdbLocation }}
+- name: "REDIS_LOCATION"
+  value: {{ .Values.global.redisLocation }}
+- name: "RABBITMQ_LOCATION"
+  value: {{ .Values.global.rabbitmqLocation }}
+- name: "STORAGE_LOCATION"
+  value: {{ .Values.global.storageLocation }}
+- name: "DATABASE_LOCATION"
+  value: {{ .Values.global.databaseLocation }}
+- name: "PASSPORT_LOCATION"
+  value: {{ .Values.global.passportLocation }}
+- name: "REGISTRY_LOCATION"
+  value: {{ .Values.global.registryLocation }}
 {{- end }}

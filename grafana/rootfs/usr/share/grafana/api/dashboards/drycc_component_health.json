@@ -61,7 +61,7 @@
               "current": false,
               "max": false,
               "min": false,
-              "show": true,
+              "show": false,
               "total": false,
               "values": false
             },
@@ -169,7 +169,7 @@
               "current": false,
               "max": false,
               "min": false,
-              "show": true,
+              "show": false,
               "total": false,
               "values": false
             },
@@ -340,7 +340,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-passport\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-passport\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -450,7 +450,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-passport\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-passport\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -574,7 +574,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-controller/)\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-controller/)\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -684,7 +684,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-controller/)\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-controller/)\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -722,240 +722,6 @@
           }
         ],
         "title": "CONTROLLER",
-        "type": "row"
-      },
-      {
-        "collapsed": true,
-        "gridPos": {
-          "h": 1,
-          "w": 24,
-          "x": 0,
-          "y": 3
-        },
-        "id": 58,
-        "panels": [
-          {
-            "aliasColors": {},
-            "bars": false,
-            "dashLength": 10,
-            "dashes": false,
-            "editable": true,
-            "error": false,
-            "fill": 1,
-            "fillGradient": 0,
-            "grid": {},
-            "gridPos": {
-              "h": 7,
-              "w": 12,
-              "x": 0,
-              "y": 3
-            },
-            "hiddenSeries": false,
-            "id": 60,
-            "interval": "",
-            "isNew": true,
-            "legend": {
-              "avg": false,
-              "current": false,
-              "max": false,
-              "min": false,
-              "show": false,
-              "total": false,
-              "values": false
-            },
-            "lines": true,
-            "linewidth": 2,
-            "links": [],
-            "nullPointMode": "connected",
-            "options": {
-              "alertThreshold": true
-            },
-            "percentage": false,
-            "pluginVersion": "8.4.5",
-            "pointradius": 5,
-            "points": false,
-            "renderer": "flot",
-            "seriesOverrides": [],
-            "spaceLength": 10,
-            "stack": false,
-            "steppedLine": false,
-            "targets": [
-              {
-                "alias": "$tag_pod_name",
-                "datasource": null,
-                "dsType": "influxdb",
-                "groupBy": [
-                  {
-                    "params": [
-                      "$interval"
-                    ],
-                    "type": "time"
-                  },
-                  {
-                    "params": [
-                      "pod_name"
-                    ],
-                    "type": "tag"
-                  },
-                  {
-                    "params": [
-                      "null"
-                    ],
-                    "type": "fill"
-                  }
-                ],
-                "hide": false,
-                "measurement": "kubernetes_pod_container",
-                "orderByTime": "ASC",
-                "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-helmbroker/)\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
-                "refId": "A",
-                "resultFormat": "time_series"
-              }
-            ],
-            "thresholds": [],
-            "timeRegions": [],
-            "title": "CPU",
-            "tooltip": {
-              "msResolution": false,
-              "shared": true,
-              "sort": 0,
-              "value_type": "cumulative"
-            },
-            "type": "graph",
-            "xaxis": {
-              "mode": "time",
-              "show": true,
-              "values": []
-            },
-            "yaxes": [
-              {
-                "format": "short",
-                "label": "Millicores",
-                "logBase": 1,
-                "show": true
-              },
-              {
-                "format": "short",
-                "logBase": 1,
-                "show": true
-              }
-            ],
-            "yaxis": {
-              "align": false
-            }
-          },
-          {
-            "aliasColors": {},
-            "bars": false,
-            "dashLength": 10,
-            "dashes": false,
-            "editable": true,
-            "error": false,
-            "fill": 1,
-            "fillGradient": 0,
-            "grid": {},
-            "gridPos": {
-              "h": 7,
-              "w": 12,
-              "x": 12,
-              "y": 3
-            },
-            "hiddenSeries": false,
-            "id": 62,
-            "interval": "",
-            "isNew": true,
-            "legend": {
-              "avg": false,
-              "current": false,
-              "max": false,
-              "min": false,
-              "show": false,
-              "total": false,
-              "values": false
-            },
-            "lines": true,
-            "linewidth": 2,
-            "links": [],
-            "nullPointMode": "connected",
-            "options": {
-              "alertThreshold": true
-            },
-            "percentage": false,
-            "pluginVersion": "8.4.5",
-            "pointradius": 5,
-            "points": false,
-            "renderer": "flot",
-            "seriesOverrides": [],
-            "spaceLength": 10,
-            "stack": false,
-            "steppedLine": false,
-            "targets": [
-              {
-                "alias": "$tag_pod_name",
-                "datasource": null,
-                "dsType": "influxdb",
-                "groupBy": [
-                  {
-                    "params": [
-                      "$interval"
-                    ],
-                    "type": "time"
-                  },
-                  {
-                    "params": [
-                      "pod_name"
-                    ],
-                    "type": "tag"
-                  },
-                  {
-                    "params": [
-                      "null"
-                    ],
-                    "type": "fill"
-                  }
-                ],
-                "measurement": "kubernetes_pod_container",
-                "orderByTime": "ASC",
-                "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-helmbroker/)\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
-                "refId": "A",
-                "resultFormat": "time_series"
-              }
-            ],
-            "thresholds": [],
-            "timeRegions": [],
-            "title": "Memory",
-            "tooltip": {
-              "msResolution": true,
-              "shared": true,
-              "sort": 0,
-              "value_type": "cumulative"
-            },
-            "type": "graph",
-            "xaxis": {
-              "mode": "time",
-              "show": true,
-              "values": []
-            },
-            "yaxes": [
-              {
-                "format": "bytes",
-                "logBase": 1,
-                "show": true
-              },
-              {
-                "format": "short",
-                "logBase": 1,
-                "show": true
-              }
-            ],
-            "yaxis": {
-              "align": false
-            }
-          }
-        ],
-        "title": "HELM-BROKER",
         "type": "row"
       },
       {
@@ -1040,7 +806,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-builder\")\n |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-builder\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1149,7 +915,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-builder\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-builder\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1272,7 +1038,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-database\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-database\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1381,7 +1147,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-database\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-database\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1503,7 +1269,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger-fluentd\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger-fluentd\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1611,7 +1377,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger-fluentd\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger-fluentd\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1733,7 +1499,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-grafana\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-grafana\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1841,7 +1607,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-grafana\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-grafana\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -1964,7 +1730,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-influxdb/)\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-influxdb/)\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2073,7 +1839,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-influxdb/)\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] =~ /drycc-influxdb/)\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2195,7 +1961,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2256,7 +2022,7 @@
               "current": false,
               "max": false,
               "min": false,
-              "show": true,
+              "show": false,
               "total": false,
               "values": false
             },
@@ -2303,7 +2069,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-logger\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2426,7 +2192,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-minio\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-minio\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2487,7 +2253,7 @@
               "current": false,
               "max": false,
               "min": false,
-              "show": true,
+              "show": false,
               "total": false,
               "values": false
             },
@@ -2535,7 +2301,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-minio\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-minio\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2659,7 +2425,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-pd\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-pd\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2769,7 +2535,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-pd\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-pd\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -2893,7 +2659,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-tikv\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-tikv\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3003,7 +2769,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-tikv\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-storage-meta-tikv\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3125,7 +2891,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-rabbitmq\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-rabbitmq\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3233,7 +2999,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-rabbitmq\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-rabbitmq\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3355,7 +3121,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3462,7 +3228,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-redis\")\n |> keep(columns: [\"_time\", \"namespace\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3584,7 +3350,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3692,7 +3458,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3814,7 +3580,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry-proxy\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry-proxy\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -3922,7 +3688,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry-proxy\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-registry-proxy\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -4044,7 +3810,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-telegraf\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"cpu_usage_nanocores\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-telegraf\")\n  |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> movingAverage(n: 10)\n  |> map(fn: (r) => ({\n      r with\n      _value: r._value / 1000000.0\n    })\n  )\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
@@ -4152,7 +3918,7 @@
                 "measurement": "kubernetes_pod_container",
                 "orderByTime": "ASC",
                 "policy": "default",
-                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-telegraf\")\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> keep(columns: [\"_time\", \"node_name\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
+                "query": "from(bucket: v.bucket)\n  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n  |> filter(fn: (r) => r[\"_field\"] == \"memory_usage_bytes\")\n  |> filter(fn: (r) => r[\"namespace\"] == \"drycc\")\n |> filter(fn: (r) => r[\"container_name\"] == \"drycc-monitor-telegraf\")\n |> keep(columns: [\"_time\", \"node_name\", \"namespace\", \"pod_name\", \"container_name\", \"_value\"])\n  |> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n  |> yield(name: \"mean\")",
                 "refId": "A",
                 "resultFormat": "time_series"
               }
