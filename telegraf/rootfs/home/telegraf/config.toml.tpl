@@ -176,14 +176,20 @@
   urls = [{{ .INFLUXDB_V2_INPUT_URLS }}]
 {{ end }}
 
-{{- if .PD_SERVERS }}
+{{- if .DRYCC_STORAGE_METRICS }}
 [[inputs.prometheus]]
-  urls = {{ .PD_SERVERS }}
+  urls = {{ .DRYCC_STORAGE_METRICS }}
+  bearer_token_string = {{ .DRYCC_STORAGE_BEARER_TOKEN | quote }}
 {{ end }}
 
-{{- if .TIKV_SERVERS }}
+{{- if .DRYCC_STORAGE_PD_SERVERS }}
 [[inputs.prometheus]]
-  urls = {{ .TIKV_SERVERS }}
+  urls = {{ .DRYCC_STORAGE_PD_SERVERS }}
+{{ end }}
+
+{{- if .DRYCC_STORAGE_TIKV_SERVERS }}
+[[inputs.prometheus]]
+  urls = {{ .DRYCC_STORAGE_TIKV_SERVERS }}
 {{ end }}
 
 {{- if and .KUBERNETES_URL .ENABLE_KUBERNETES }}

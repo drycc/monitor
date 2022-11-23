@@ -40,26 +40,43 @@ if [ -n "$DRYCC_REDIS_ADDRS" ]; then
   export REDIS_SERVERS
 fi
 
-# pd servers
-if [ -n "$PD_ADDRS" ]; then
-  PD_SERVERS=""
-  for ADDR in $(echo "${PD_ADDRS}" | tr "," "\n")
-  do
-    PD_SERVERS="\"$ADDR\", ${PD_SERVERS}"
-  done
-  PD_SERVERS=\["${PD_SERVERS::-2}"\]
-  export PD_SERVERS
+# storage minio servers
+if [ -n "$DRYCC_STORAGE_ENDPOINT" ]; then
+  mc config host add storage \
+    "${DRYCC_STORAGE_ENDPOINT}" \
+    "${DRYCC_STORAGE_ACCESSKEY}" \
+    "${DRYCC_STORAGE_SECRETKEY}" \
+    --lookup "${DRYCC_STORAGE_LOOKUP}" \
+    --api s3v4
+  mc admin prometheus generate storage --insecure --json > ~/.mc/prometheus.json
+  # shellcheck disable=SC2089
+  DRYCC_STORAGE_METRICS=\[\"$DRYCC_STORAGE_ENDPOINT$(jq -r .metricsPath < ~/.mc/prometheus.json)\"\]
+  DRYCC_STORAGE_BEARER_TOKEN=$(jq -r .bearerToken < ~/.mc/prometheus.json)
+  # shellcheck disable=SC2090
+  export DRYCC_STORAGE_METRICS
+  export DRYCC_STORAGE_BEARER_TOKEN
 fi
 
-#tikv servers
-if [ -n "$TIKV_ADDRS" ]; then
-  TIKV_SERVERS=""
-  for ADDR in $(echo "${TIKV_ADDRS}" | tr "," "\n")
+# storage pd servers
+if [ -n "$DRYCC_STORAGE_PD_ADDRS" ]; then
+  DRYCC_STORAGE_PD_SERVERS=""
+  for ADDR in $(echo "${DRYCC_STORAGE_PD_ADDRS}" | tr "," "\n")
   do
-    TIKV_SERVERS="\"$ADDR\", ${TIKV_SERVERS}"
+    DRYCC_STORAGE_PD_SERVERS="\"$ADDR\", ${DRYCC_STORAGE_PD_SERVERS}"
   done
-  TIKV_SERVERS=\["${TIKV_SERVERS::-2}"\]
-  export TIKV_SERVERS
+  DRYCC_STORAGE_PD_SERVERS=\["${DRYCC_STORAGE_PD_SERVERS::-2}"\]
+  export DRYCC_STORAGE_PD_SERVERS
+fi
+
+# storage tikv servers
+if [ -n "$DRYCC_STORAGE_TIKV_ADDRS" ]; then
+  DRYCC_STORAGE_TIKV_SERVERS=""
+  for ADDR in $(echo "${DRYCC_STORAGE_TIKV_ADDRS}" | tr "," "\n")
+  do
+    DRYCC_STORAGE_TIKV_SERVERS="\"$ADDR\", ${DRYCC_STORAGE_TIKV_SERVERS}"
+  done
+  DRYCC_STORAGE_TIKV_SERVERS=\["${DRYCC_STORAGE_TIKV_SERVERS::-2}"\]
+  export DRYCC_STORAGE_TIKV_SERVERS
 fi
 
 echo "Building config.toml!"

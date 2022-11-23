@@ -38,21 +38,11 @@ spec:
           - -v
           - -u
           - $(INFLUXDB_URLS_V2)
-        env:
-{{- if eq .Values.global.influxdbLocation "off-cluster" }}
-        - name: "INFLUXDB_URLS_V2"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: url
-{{- else }}
-        - name: "INFLUXDB_URLS_V2"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)\""
-        - name: "INFLUXDB_V2_INPUT_URLS"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)/metrics\""
-        - name: "ENABLE_INFLUXDB_V2_INPUT"
-          value: "true"
-{{- end }}
+          - -g
+          - $(DRYCC_STORAGE_HEALTH)
+          - -a
+          - $(DRYCC_REDIS_ADDRS),$(DRYCC_STORAGE_PD_ADDRS),$(DRYCC_STORAGE_TIKV_ADDRS)
+        {{- include "telegraf.deployment.envs" . | indent 8 }}
       containers:
       - name: drycc-monitor-telegraf
         image: {{.Values.telegraf.imageRegistry}}/{{.Values.telegraf.imageOrg}}/telegraf:{{.Values.telegraf.imageTag}}
@@ -67,65 +57,4 @@ spec:
             memory: {{.Values.telegraf.limitsMemory}}
 {{- end}}
 {{- end}}
-        env:
-        - name: POD_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        {{- if eq .Values.global.influxdbLocation "off-cluster" }}
-        - name: "INFLUXDB_URLS_V2"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: url
-        {{- else }}
-        - name: "INFLUXDB_URLS_V2"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)\""
-        - name: "INFLUXDB_V2_INPUT_URLS"
-          value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)/metrics\""
-        - name: "ENABLE_INFLUXDB_V2_INPUT"
-          value: "true"
-        {{- end }}
-        - name: "INFLUXDB_BUCKET"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: bucket
-        - name: "INFLUXDB_ORG"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: org
-        - name: "INFLUXDB_TOKEN"
-          valueFrom:
-            secretKeyRef:
-              name: influxdb-creds
-              key: token
-        - name: "AGENT_QUIET"
-          value: "true"
-        - name: "AGENT_BUFFER_LIMIT"
-          value: "100000"
-{{- if eq .Values.global.redisLocation "on-cluster" }}
-        - name: DRYCC_REDIS_ADDRS
-          valueFrom:
-            secretKeyRef:
-              name: redis-creds
-              key: addrs
-        - name: DRYCC_REDIS_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: redis-creds
-              key: password
-{{- end }}
-{{- if eq .Values.global.storageLocation "on-cluster" }}
-        - name: PD_ADDRS
-          valueFrom:
-            secretKeyRef:
-              name: storage-meta-creds
-              key: pd-addrs
-        - name: TIKV_ADDRS
-          valueFrom:
-            secretKeyRef:
-              name: storage-meta-creds
-              key: tikv-addrs
-{{- end }}
+        {{- include "telegraf.deployment.envs" . | indent 8 }}

@@ -3,6 +3,7 @@ FROM registry.drycc.cc/drycc/base:bullseye
 ENV DRYCC_UID=1001 \
   DRYCC_GID=1001 \
   DRYCC_HOME_DIR=/home/telegraf \
+  MC_VERSION="2022.04.01.23.44.48" \
   TELEGRAF_VERSION="1.23.4" \
   ENVTPL_VERSION="1.0.0" \
   JQ_VERSION="1.6"
@@ -12,7 +13,8 @@ RUN groupadd drycc --gid ${DRYCC_GID} \
 
 COPY . /
 
-RUN install-stack telegraf ${TELEGRAF_VERSION} \
+RUN install-stack mc ${MC_VERSION} \
+  && install-stack telegraf ${TELEGRAF_VERSION} \
   && install-stack envtpl ${ENVTPL_VERSION} \
   && install-stack jq ${JQ_VERSION} \
   && rm -rf \
