@@ -3,25 +3,6 @@ platform: linux/amd64
 labels:
   type: exec
 
-- name: generate chart
-  commands:
-  - IMAGE_TAG=$([ ! -z $DRONE_TAG ] && echo \"${DRONE_TAG:1}\" || echo \"canary\")
-  - sed -i "s/imageTag:\ \"canary\"/imageTag:\ $IMAGE_TAG/g" charts/monitor/values.yaml
-  - helm package -u charts/monitor --version $([ -z $DRONE_TAG ] && echo 1.0.0 || echo ${DRONE_TAG#v})
-  - echo $CONTAINER_PASSWORD | helm registry login $DRYCC_REGISTRY -u $CONTAINER_USERNAME --password-stdin
-  - helm push monitor-$([ -z $DRONE_TAG ] && echo 1.0.0 || echo ${DRONE_TAG#v}).tgz oci://$DRYCC_REGISTRY/$([ -z $DRONE_TAG ] && echo charts-testing || echo charts)
-  environment:
-    DRYCC_REGISTRY:
-      from_secret: drycc_registry
-    CONTAINER_USERNAME:
-      from_secret: container_username
-    CONTAINER_PASSWORD:
-      from_secret: container_password
-  when:
-    event:
-    - push
-    - tag
-
 pipeline:
 - name: generate-chart
   type: local

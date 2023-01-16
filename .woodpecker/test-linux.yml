@@ -12,7 +12,6 @@ pipeline:
 - name: test-linux
   image: bash
   commands:
-  - mkdir -p $HOMEPATH/.docker; echo $IMAGE_PULL_SECRETS > $HOMEPATH/.docker/config.json
   - cd grafana && make test && cd ..
   - cd telegraf && make test && cd ..
   secrets:
