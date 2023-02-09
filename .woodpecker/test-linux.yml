@@ -1,0 +1,26 @@
+matrix:
+  platform:
+  - linux/amd64
+  - linux/arm64
+
+platform: ${platform}
+
+labels:
+  type: exec
+
+pipeline:
+- name: test-linux
+  image: bash
+  commands:
+  - mkdir -p $HOMEPATH/.docker; echo $IMAGE_PULL_SECRETS > $HOMEPATH/.docker/config.json
+  - cd grafana && make test && cd ..
+  - cd telegraf && make test && cd ..
+  secrets:
+  - dev_registry
+  - drycc_registry
+  - container_pull_secrets
+  when:
+    event:
+    - push
+    - tag
+    - pull_request
