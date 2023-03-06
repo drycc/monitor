@@ -5,40 +5,25 @@ env:
   valueFrom:
     fieldRef:
       fieldPath: metadata.namespace
-{{- if eq .Values.global.influxdbLocation "off-cluster" }}
-- name: "INFLUXDB_URL"
+{{- if eq .Values.global.prometheusLocation "off-cluster" }}
+- name: "PROMETHEUS_URL"
   valueFrom:
     secretKeyRef:
-      name: influxdb-creds
+      name: prometheus-creds
       key: url
 {{- else }}
-- name: "INFLUXDB_URL"
-  value: http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)
+- name: "PROMETHEUS_URL"
+  value: http://$(DRYCC_PROMETHEUS_SERVICE_HOST):$(DRYCC_PROMETHEUS_SERVICE_PORT)
 {{- end }}
-- name: "INFLUXDB_BUCKET"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: bucket
-- name: "INFLUXDB_ORG"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: org
-- name: "INFLUXDB_TOKEN"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: token
 - name: "BIND_PORT"
   value: "3000"
 {{- if not (.Values.grafana.environment.DEFAULT_USER) }}
 - name: "DEFAULT_USER"
-  value: {{ randAlphaNum 32 | b64enc }}
+  value: {{ randAlphaNum 32 }}
 {{- end}}
 {{- if not (.Values.grafana.environment.DEFAULT_USER_PASSWORD) }}
 - name: "DEFAULT_USER_PASSWORD"
-  value: {{ randAlphaNum 32 | b64enc }}
+  value: {{ randAlphaNum 32 }}
 {{- end}}
 - name: "KUBERNETES_CLUSTER_DOMAIN"
   value: {{.Values.global.clusterDomain}}
@@ -77,8 +62,8 @@ env:
 - name: DRYCC_PASSPORT_SECRET
   value: "{{ .Values.grafana.passportSecret }}"
 {{- end }}
-- name: "INFLUXDB_LOCATION"
-  value: {{ .Values.global.influxdbLocation }}
+- name: "PROMETHEUS_LOCATION"
+  value: {{ .Values.global.prometheusLocation }}
 - name: "REDIS_LOCATION"
   value: {{ .Values.global.redisLocation }}
 - name: "RABBITMQ_LOCATION"
@@ -91,100 +76,4 @@ env:
   value: {{ .Values.global.passportLocation }}
 - name: "REGISTRY_LOCATION"
   value: {{ .Values.global.registryLocation }}
-{{- end }}
-
-{{/* Generate monitor telegraf deployment envs */}}
-{{- define "telegraf.deployment.envs" }}
-env:
-- name: POD_NAMESPACE
-  valueFrom:
-    fieldRef:
-      fieldPath: metadata.namespace
-{{- if eq .Values.global.influxdbLocation "off-cluster" }}
-- name: "INFLUXDB_URLS_V2"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: url
-{{- else }}
-- name: "INFLUXDB_URLS_V2"
-  value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)\""
-- name: "INFLUXDB_V2_INPUT_URLS"
-  value: "\"http://$(DRYCC_INFLUXDB_SERVICE_HOST):$(DRYCC_INFLUXDB_SERVICE_PORT)/metrics\""
-- name: "ENABLE_INFLUXDB_V2_INPUT"
-  value: "true"
-{{- end }}
-- name: "INFLUXDB_BUCKET"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: bucket
-- name: "INFLUXDB_ORG"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: org
-- name: "INFLUXDB_TOKEN"
-  valueFrom:
-    secretKeyRef:
-      name: influxdb-creds
-      key: token
-- name: "AGENT_QUIET"
-  value: "true"
-- name: "AGENT_BUFFER_LIMIT"
-  value: "100000"
-{{- if eq .Values.global.redisLocation "on-cluster" }}
-- name: DRYCC_REDIS_ADDRS
-  valueFrom:
-    secretKeyRef:
-      name: redis-creds
-      key: addrs
-- name: DRYCC_REDIS_PASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: redis-creds
-      key: password
-{{- end }}
-{{- if eq .Values.global.storageLocation "on-cluster" }}
-- name: DRYCC_STORAGE_LOOKUP
-  valueFrom:
-    secretKeyRef:
-      name: storage-creds
-      key: lookup
-- name: DRYCC_STORAGE_HEALTH
-  valueFrom:
-    secretKeyRef:
-      name: storage-creds
-      key: health
-- name: DRYCC_STORAGE_BUCKET
-  valueFrom:
-    secretKeyRef:
-      name: storage-creds
-      key: builder-bucket
-- name: DRYCC_STORAGE_ENDPOINT
-  valueFrom:
-    secretKeyRef:
-      name: storage-creds
-      key: endpoint
-- name: DRYCC_STORAGE_ACCESSKEY
-  valueFrom:
-    secretKeyRef:
-      name: storage-creds
-      key: accesskey
-- name: DRYCC_STORAGE_SECRETKEY
-  valueFrom:
-    secretKeyRef:
-      name: storage-creds
-      key: secretkey
-- name: DRYCC_STORAGE_PD_ADDRS
-  valueFrom:
-    secretKeyRef:
-      name: storage-meta-creds
-      key: pd-addrs
-- name: DRYCC_STORAGE_TIKV_ADDRS
-  valueFrom:
-    secretKeyRef:
-      name: storage-meta-creds
-      key: tikv-addrs
-{{- end }}
 {{- end }}

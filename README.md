@@ -32,13 +32,13 @@ Grafana is a stand alone graphing application. It natively supports Influxdb as 
 └──────────┘             └─────────┘               └──────────────┘
                                                           │
 ┌──────────┐                                              │
-│   HOST   │                                              │
-│ Telegraf │───┐                                          │
+│   HOST   │───┐                                          │
+│ Telegraf │   │                                          │
 └──────────┘   │                                          │
                │                                          ▼
 ┌──────────┐   │    ┌──────────┐                     ┌──────────┐
-│   HOST   │───┼───▶│ Influxdb │◀──────Wire──────────│ Telegraf │
-│ Telegraf │   │    └──────────┘     Protocol        └──────────┘
+│   HOST   │───┼───▶│ Influxdb │◀────────Wire────────│ Telegraf │
+│ Telegraf │   │    └──────────┘       Protocol      └──────────┘
 └──────────┘   │         │
                │         │
 ┌──────────┐   │         ▼

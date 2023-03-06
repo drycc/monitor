@@ -78,6 +78,7 @@ global:
   # - on-cluster: Run component within the Kubernetes cluster
   # - off-cluster: component is running outside of the cluster and credentials and connection information will be provided.
   influxdbLocation: "on-cluster"
+  prometheusLocation: "on-cluster"
   grafanaLocation: "on-cluster"
   redisLocation: "on-cluster"
   rabbitmqLocation: "on-cluster"

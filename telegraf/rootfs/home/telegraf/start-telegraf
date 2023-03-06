@@ -18,67 +18,6 @@ if [ -n "$ENABLE_KUBERNETES" ]; then
   echo "Setting KUBERNETES_URL: $KUBERNETES_URL"
 fi
 
-if [ -n "$ENABLE_PROMETHEUS" ]; then
-  export PROMETHEUS_BEARER_TOKEN_PATH=${BEARER_TOKEN_PATH}
-  export PROMETHEUS_URLS="\"$API_URL/api/v1/proxy/nodes/$NODE_NAME/metrics\", \"$API_URL/metrics\""
-  echo "Setting PROMETHEUS_URLS: $PROMETHEUS_URLS"
-fi
-
-# if the influxdb url does not start with a quote, assume it's singular and quote it
-# shellcheck disable=SC2153
-if [ -n "$INFLUXDB_URL" ] && [ "${INFLUXDB_URLS:0:1}" != "\"" ]; then
-  export INFLUXDB_URLS="\"$INFLUXDB_URLS\""
-fi
-# redis servers
-if [ -n "$DRYCC_REDIS_ADDRS" ]; then
-  REDIS_SERVERS=""
-  for ADDR in $(echo "${DRYCC_REDIS_ADDRS}" | tr "," "\n")
-  do
-    REDIS_SERVERS="\":$DRYCC_REDIS_PASSWORD@$ADDR\", ${REDIS_SERVERS}"
-  done
-  REDIS_SERVERS=\["${REDIS_SERVERS::-2}"\]
-  export REDIS_SERVERS
-fi
-
-# storage minio servers
-if [ -n "$DRYCC_STORAGE_ENDPOINT" ]; then
-  mc config host add storage \
-    "${DRYCC_STORAGE_ENDPOINT}" \
-    "${DRYCC_STORAGE_ACCESSKEY}" \
-    "${DRYCC_STORAGE_SECRETKEY}" \
-    --lookup "${DRYCC_STORAGE_LOOKUP}" \
-    --api s3v4
-  mc admin prometheus generate storage --insecure --json > ~/.mc/prometheus.json
-  # shellcheck disable=SC2089
-  DRYCC_STORAGE_METRICS=\[\"$DRYCC_STORAGE_ENDPOINT$(jq -r .metricsPath < ~/.mc/prometheus.json)\"\]
-  DRYCC_STORAGE_BEARER_TOKEN=$(jq -r .bearerToken < ~/.mc/prometheus.json)
-  # shellcheck disable=SC2090
-  export DRYCC_STORAGE_METRICS
-  export DRYCC_STORAGE_BEARER_TOKEN
-fi
-
-# storage pd servers
-if [ -n "$DRYCC_STORAGE_PD_ADDRS" ]; then
-  DRYCC_STORAGE_PD_SERVERS=""
-  for ADDR in $(echo "${DRYCC_STORAGE_PD_ADDRS}" | tr "," "\n")
-  do
-    DRYCC_STORAGE_PD_SERVERS="\"$ADDR\", ${DRYCC_STORAGE_PD_SERVERS}"
-  done
-  DRYCC_STORAGE_PD_SERVERS=\["${DRYCC_STORAGE_PD_SERVERS::-2}"\]
-  export DRYCC_STORAGE_PD_SERVERS
-fi
-
-# storage tikv servers
-if [ -n "$DRYCC_STORAGE_TIKV_ADDRS" ]; then
-  DRYCC_STORAGE_TIKV_SERVERS=""
-  for ADDR in $(echo "${DRYCC_STORAGE_TIKV_ADDRS}" | tr "," "\n")
-  do
-    DRYCC_STORAGE_TIKV_SERVERS="\"$ADDR\", ${DRYCC_STORAGE_TIKV_SERVERS}"
-  done
-  DRYCC_STORAGE_TIKV_SERVERS=\["${DRYCC_STORAGE_TIKV_SERVERS::-2}"\]
-  export DRYCC_STORAGE_TIKV_SERVERS
-fi
-
 echo "Building config.toml!"
 envtpl > config.toml < config.toml.tpl | sed  '/^$/d'
 
