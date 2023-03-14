@@ -20,37 +20,35 @@ Grafana is a stand alone graphing application. It natively supports Influxdb as 
 # Architecture Diagram
 
 ```
-                        ┌────────┐                            
-                        │ Router │                  ┌────────┐
-                        └────────┘                  │ Logger │
-                            │                       └────────┘
-                        Log file                        │    
-                            │                           │    
-                            ▼                           ▼    
-┌────────┐             ┌─────────┐    logs/metrics   ┌──────────────┐
-│App Logs│──Log File──▶│ fluentd │───────topics─────▶│ Redis Stream │
-└────────┘             └─────────┘                   └──────────────┘
-                                                        │    
-                                                        │    
-┌─────────────┐                                         │    
-│ HOST        │                                         ▼    
-│  Telegraf   │───┐                                ┌────────┐
-└─────────────┘   │                                │Telegraf│
-                  │                                └────────┘
-┌─────────────┐   │                                    │    
-│ HOST        │   │    ┌───────────┐                   │    
-│  Telegraf   │───┼───▶│ InfluxDB  │◀────Wire ─────────┘    
-└─────────────┘   │    └───────────┘   Protocol       
-                  │          ▲                        
-┌─────────────┐   │          │                        
-│ HOST        │   │          ▼                        
-│  Telegraf   │───┘    ┌──────────┐                   
-└─────────────┘        │ Grafana  │                   
-                       └──────────┘                                        
+                          ┌────────┐                  ┌────────┐
+                          │ Router │                  │ Logger │
+                          └────────┘                  └────────┘
+                              │                           │
+                          logs file                       │
+                              │                           │
+                              ▼                           ▼
+┌──────────┐             ┌─────────┐ logs/metrics  ┌──────────────┐
+│ App Logs │──Log File──▶│ fluentd │─────topics───▶│ Redis Stream │
+└──────────┘             └─────────┘               └──────────────┘
+                                                          │
+┌──────────┐                                              │
+│   HOST   │                                              │
+│ Telegraf │───┐                                          │
+└──────────┘   │                                          │
+               │                                          ▼
+┌──────────┐   │    ┌──────────┐                     ┌──────────┐
+│   HOST   │───┼───▶│ Influxdb │◀──────Wire──────────│ Telegraf │
+│ Telegraf │   │    └──────────┘     Protocol        └──────────┘
+└──────────┘   │         │
+               │         │
+┌──────────┐   │         ▼
+│   HOST   │───┘    ┌─────────┐                     ┌────────────┐
+│ Telegraf │        │ Grafana │◀────────────────────│ Prometheus │
+└──────────┘        └─────────┘                     └────────────┘
+
 ```
 
 [k8s-home]: http://kubernetes.io/
 [issues]: https://github.com/drycc/monitor/issues
 [prs]: https://github.com/drycc/monitor/pulls
 [v2.18]: https://github.com/drycc/workflow/releases/tag/v2.18.0
-
