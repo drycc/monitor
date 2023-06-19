@@ -1,9 +1,9 @@
-FROM registry.drycc.cc/drycc/base:bullseye
+FROM registry.drycc.cc/drycc/base:bookworm
 
 ENV DRYCC_UID=1001 \
   DRYCC_GID=1001 \
   DRYCC_HOME_DIR=/usr/share/grafana \
-  GRAFANA_VERSION="9.1.1" \
+  GRAFANA_VERSION="9.5.3" \
   ENVTPL_VERSION="1.0.0" \
   JQ_VERSION="1.6"
 

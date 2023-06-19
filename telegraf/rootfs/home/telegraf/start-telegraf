@@ -19,7 +19,7 @@ if [ -n "$ENABLE_KUBERNETES" ]; then
 fi
 
 echo "Building config.toml!"
-envtpl > config.toml < config.toml.tpl | sed  '/^$/d'
+envtpl config.toml.tpl | sed  '/^$/d' | tee config.toml
 
 echo "Finished building toml..."
 echo "###########################################"

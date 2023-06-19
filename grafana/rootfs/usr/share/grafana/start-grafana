@@ -76,7 +76,6 @@ export GF_AUTH_ANONYMOUS_ENABLED=true
 export GF_SERVER_HTTP_PORT=${GRAFANA_PORT}
 
 BACKEND_ACCESS_MODE=${BACKEND_ACCESS_MODE:-proxy}
-PROMETHEUS_URL=${PROMETHEUS_URL}
 if [ -n "$PROMETHEUS_URL" ]; then
   echo "prometheus service URL is provided."
 else
