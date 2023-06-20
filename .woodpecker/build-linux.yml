@@ -17,6 +17,7 @@ pipeline:
   - cd grafana && make build-all push-all && cd ..
   - cd telegraf && make build-all push-all && cd ..
   secrets:
+  - codename
   - dev_registry
   - drycc_registry
   - container_username

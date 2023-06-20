@@ -15,6 +15,7 @@ pipeline:
   - cd grafana && make test && cd ..
   - cd telegraf && make test && cd ..
   secrets:
+  - codename
   - dev_registry
   - drycc_registry
   - container_pull_secrets
