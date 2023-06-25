@@ -15,36 +15,36 @@ This repository aims to contain the necessary components for a production qualit
 ## Current State
 Currently this repo provides only 2 components (Telegraf, and Grafana). Telegraf is the metrics collection agent that runs using the daemon set API. For more infomation please read [this](telegraf/README.md).
 
-Grafana is a stand alone graphing application. It natively supports Influxdb as a datasource and provides a robust engine for creating dashboards on top of timeseries data. We provide a few out of the box dashboards for monitoring Drycc Workflow and Kubernetes but please feel free to use them as a starting point for creating your own dashboards.
+Grafana is a stand alone graphing application. It natively supports Timescaledb as a datasource and provides a robust engine for creating dashboards on top of timeseries data. We provide a few out of the box dashboards for monitoring Drycc Workflow and Kubernetes but please feel free to use them as a starting point for creating your own dashboards.
 
 # Architecture Diagram
 
 ```
-                          ┌────────┐                  ┌────────┐
-                          │ Router │                  │ Logger │
-                          └────────┘                  └────────┘
-                              │                           │
-                          logs file                       │
-                              │                           │
-                              ▼                           ▼
-┌──────────┐             ┌─────────┐ logs/metrics  ┌──────────────┐
-│ App Logs │──Log File──▶│ fluentd │─────topics───▶│ Redis Stream │
-└──────────┘             └─────────┘               └──────────────┘
-                                                          │
-┌──────────┐                                              │
-│   HOST   │───┐                                          │
-│ Telegraf │   │                                          │
-└──────────┘   │                                          │
-               │                                          ▼
-┌──────────┐   │    ┌──────────┐                     ┌──────────┐
-│   HOST   │───┼───▶│ Influxdb │◀────────Wire────────│ Telegraf │
-│ Telegraf │   │    └──────────┘       Protocol      └──────────┘
-└──────────┘   │         │
-               │         │
-┌──────────┐   │         ▼
-│   HOST   │───┘    ┌─────────┐                     ┌────────────┐
-│ Telegraf │        │ Grafana │◀────────────────────│ Prometheus │
-└──────────┘        └─────────┘                     └────────────┘
+                           ┌─────────────┐                 ┌──────────────┐
+                           │    Router   │                 │    Logger    │
+                           └─────────────┘                 └──────────────┘
+                                  │                               │
+                              logs file                           │
+                                  │                               │
+                                  ▼                               ▼
+┌──────────┐               ┌───-─────────┐  logs/metrics   ┌──────────────┐
+│ App Logs │───Log File───▶│   Fluentd   │────topics──────▶│ Redis Stream │
+└──────────┘               └────-────────┘                 └──────────────┘
+                                                                  │
+┌──────────┐                                                      │
+│   HOST   │───┐                                                  │
+│ Telegraf │   │                                                  │
+└──────────┘   │                                                  │
+               │                                                  ▼
+┌──────────┐   │           ┌───────-─────┐                 ┌─────────────┐
+│   HOST   │───┼──────────▶│ Timescaledb │◀──────Wire──────│  Telegraf   │
+│ Telegraf │   │           └───────────-─┘     Protocol    └─────────────┘
+└──────────┘   │                  │
+               │                  │
+┌──────────┐   │                  ▼
+│   HOST   │───┘           ┌─────────────┐                 ┌─────────────┐
+│ Telegraf │               │   Grafana   │◀────────────────│ Prometheus  │
+└──────────┘               └─────────────┘                 └─────────────┘
 
 ```
 
