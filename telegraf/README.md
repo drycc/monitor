@@ -11,12 +11,13 @@ Telegraf configuration is based largely on a toml file that is passed in when th
 
  | Name | Default | Description |
  |-----------|---------------|---------------|
- | AGENT_INTERVAL | 10s | Default data collection interval for all inputs |
+ | AGENT_INTERVAL | 60s | Default data collection interval for all inputs |
  | AGENT_ROUND_INTERVAL | true | Rounds collection interval to 'interval' ie, if interval="10s" then always collect on :00, :10, :20, etc. |
- | AGENT_BUFFER_LIMIT | 10000 | Telegraf will cache metric_buffer_limit metrics for each output, and will flush this buffer on a successful write. |
- | AGENT_COLLECTION_JITTER | 0s | Collection jitter is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. This can be used to avoid many plugins querying things like sysfs at the same time, which can have a measurable effect on the system. |
- | AGENT_FLUSH_INTERVAL | 10s | Default data flushing interval for all outputs. You should not set this below interval. Maximum flush_interval will be flush_interval + flush_jitter |
- | AGENT_FLUSH_JITTER | 0s | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. ie, a jitter of 5s and flush_interval 10s means flushes will happen every 10-15s. |
+ | AGENT_BATCH_SIZE | 3000 | This controls the size of writes that Telegraf sends to output plugins. |
+ | AGENT_BUFFER_LIMIT | 30000 | Telegraf will cache metric_buffer_limit metrics for each output, and will flush this buffer on a successful write. |
+ | AGENT_COLLECTION_JITTER | 60s | Collection jitter is used to jitter the collection by a random amount. Each plugin will sleep for a random time within jitter before collecting. This can be used to avoid many plugins querying things like sysfs at the same time, which can have a measurable effect on the system. |
+ | AGENT_FLUSH_INTERVAL | 60s | Default data flushing interval for all outputs. You should not set this below interval. Maximum flush_interval will be flush_interval + flush_jitter |
+ | AGENT_FLUSH_JITTER | 60s | Jitter the flush interval by a random amount. This is primarily to avoid large write spikes for users running a large number of telegraf instances. ie, a jitter of 5s and flush_interval 10s means flushes will happen every 10-15s. |
  | AGENT_DEBUG | false | Run telegraf in debug mode. |
  | AGENT_QUIET | false | Run telegraf in quiet mode. |
  | AGENT_HOSTNAME | NodeName | Override default hostname |

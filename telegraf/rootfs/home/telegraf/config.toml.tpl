@@ -10,12 +10,13 @@
 
 # Set Agent Configuration
 [agent]
-  interval = {{ default "10s" .AGENT_INTERVAL | quote }}
+  interval = {{ default "60s" .AGENT_INTERVAL | quote }}
   round_interval = {{ default true .AGENT_ROUND_INTERVAL }}
-  metric_buffer_limit = {{ default "10000" .AGENT_BUFFER_LIMIT }}
-  collection_jitter = {{ default "1s" .AGENT_COLLECTION_JITTER | quote }}
-  flush_interval = {{ default "1s" .AGENT_FLUSH_INTERVAL | quote }}
-  flush_jitter = {{ default "0s" .AGENT_FLUSH_JITTER | quote }}
+  metric_batch_size = {{ default "3000" .AGENT_BATCH_SIZE }}
+  metric_buffer_limit = {{ default "30000" .AGENT_BUFFER_LIMIT }}
+  collection_jitter = {{ default "60s" .AGENT_COLLECTION_JITTER | quote }}
+  flush_interval = {{ default "60s" .AGENT_FLUSH_INTERVAL | quote }}
+  flush_jitter = {{ default "60s" .AGENT_FLUSH_JITTER | quote }}
   debug = {{ default false .AGENT_DEBUG }}
   quiet = {{ default false .AGENT_QUIET }}
   flush_buffer_when_full = {{ default true .AGENT_FLUSH_BUFFER }}
