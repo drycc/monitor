@@ -94,18 +94,18 @@ env:
 {{- if (.Values.telegraf.postgresqlConnection) }}
 - name: POSTGRESQL_CONNECTION
   value: {{ .Values.telegraf.postgresqlConnection }}
-{{- else if eq .Values.global.databaseLocation "on-cluster"  }}
+{{- else if eq .Values.global.timeseriesLocation "on-cluster"  }}
 - name: PG_USER
   valueFrom:
     secretKeyRef:
-      name: database-creds
+      name: timeseries-creds
       key: user
 - name: PG_PASSWORD
   valueFrom:
     secretKeyRef:
-      name: database-creds
+      name: timeseries-creds
       key: password
 - name: POSTGRESQL_CONNECTION
-  value: "postgres://$(PG_USER):$(PG_PASSWORD)@drycc-database.{{.Release.Namespace}}.svc.{{.Values.global.clusterDomain}}:5432/monitor"
+  value: "postgres://$(PG_USER):$(PG_PASSWORD)@drycc-timeseries.{{.Release.Namespace}}.svc.{{.Values.global.clusterDomain}}:5432/monitor"
 {{- end }}
 {{- end }}

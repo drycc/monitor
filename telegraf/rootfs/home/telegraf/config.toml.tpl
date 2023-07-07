@@ -61,7 +61,7 @@
   tags_as_foreign_keys = true
   create_templates = [
     '''{{`CREATE TABLE {{ .table }} ({{ .columns }})`}}''',
-    '''{{`SELECT create_hypertable({{ .table|quoteLiteral }}, 'time', chunk_time_interval => INTERVAL '7 days')`}}''',
+    '''{{`SELECT create_distributed_hypertable({{ .table|quoteLiteral }}, 'time', partitioning_column => 'tag_id', number_partitions => (SELECT count(*) FROM timescaledb_information.data_nodes)::integer, replication_factor => 2, chunk_time_interval => INTERVAL '7d')`}}''',
     '''{{`ALTER TABLE {{ .table }} SET (timescaledb.compress, timescaledb.compress_segmentby = 'tag_id')`}}''',
     '''{{`SELECT add_retention_policy({{ .table|quoteLiteral }}, INTERVAL '1 months')`}}''',
     '''{{`SELECT add_compression_policy({{ .table|quoteLiteral }}, INTERVAL '2 hours')`}}''',
