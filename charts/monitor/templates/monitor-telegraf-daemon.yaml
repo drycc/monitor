@@ -16,7 +16,7 @@ spec:
   {{- end }}
   template:
     metadata:
-      labels:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
         app: drycc-monitor-telegraf
     spec:
       securityContext:

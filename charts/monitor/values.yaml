@@ -12,16 +12,14 @@ grafana:
     - "true"
 
   podAffinityPreset:
-    key: "security"
     type: ""
-    values:
-    - "drycc-security"
+    extraMatchLabels:
+      security: "drycc-security"
 
   podAntiAffinityPreset:
-    key: "app"
     type: "soft"
-    values:
-    - "drycc-monitor-grafana"
+    extraMatchLabels:
+      app: "drycc-monitor-grafana"
 
   # Service
   service:
@@ -57,16 +55,14 @@ telegraf:
     - "true"
 
   podAffinityPreset:
-    key: "security"
     type: ""
-    values:
-    - "drycc-security"
+    extraMatchLabels:
+      security: "drycc-security"
 
   podAntiAffinityPreset:
-    key: "app"
     type: "soft"
-    values:
-    - "drycc-monitor-telegraf"
+    extraMatchLabels:
+      app: "drycc-monitor-telegraf"
 
 redis:
   replicas: 1

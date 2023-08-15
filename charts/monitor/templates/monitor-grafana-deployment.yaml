@@ -19,12 +19,12 @@ spec:
       app: drycc-monitor-grafana
   template:
     metadata:
-      labels:
+      labels: {{- include "common.labels.standard" . | nindent 8 }}
         app: drycc-monitor-grafana
     spec:
       affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.grafana.podAffinityPreset.type "key" .Values.grafana.podAffinityPreset.key "values" .Values.grafana.podAffinityPreset.values ) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.grafana.podAntiAffinityPreset.type "key" .Values.grafana.podAntiAffinityPreset.key "values" .Values.grafana.podAntiAffinityPreset.values ) | nindent 10 }}
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.grafana.podAffinityPreset.type "component" "" "extraMatchLabels" .Values.grafana.podAffinityPreset.extraMatchLabels "topologyKey" "" "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.grafana.podAntiAffinityPreset.type "component" "" "extraMatchLabels" .Values.grafana.podAntiAffinityPreset.extraMatchLabels "topologyKey" "" "context" $) | nindent 10 }}
         nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.grafana.nodeAffinityPreset.type "key" .Values.grafana.nodeAffinityPreset.key "values" .Values.grafana.nodeAffinityPreset.values ) | nindent 10 }}
       securityContext:
         fsGroup: 1001
