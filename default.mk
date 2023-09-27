@@ -1,7 +1,6 @@
 SHELL := /bin/bash
 
 # all monitor components share/use the following targets/exports
-DOCKER_HOST = $(shell echo $$DOCKER_HOST)
 BUILD_TAG ?= git-$(shell git rev-parse --short HEAD)
 DRYCC_REGISTRY ?= ${DEV_REGISTRY}
 IMAGE_PREFIX ?= drycc
@@ -11,33 +10,33 @@ include ../includes.mk
 include ../versioning.mk
 include ../deploy.mk
 
-TEST_ENV_PREFIX := docker run --rm -v ${CURDIR}:/bash -w /bash ${DEV_REGISTRY}/drycc/go-dev
+TEST_ENV_PREFIX := podman run --rm -v ${CURDIR}:/bash -w /bash ${DEV_REGISTRY}/drycc/go-dev
 
-build: docker-build
-push: docker-push
-deploy: check-kubectl docker-build docker-push install
+build: podman-build
+push: podman-push
+deploy: check-kubectl podman-build podman-push install
 
-docker-build:
-	docker build ${DOCKER_BUILD_FLAGS} --build-arg CODENAME=${CODENAME} -t ${IMAGE} rootfs
-	docker tag ${IMAGE} ${MUTABLE_IMAGE}
+podman-build:
+	podman build --build-arg CODENAME=${CODENAME} -t ${IMAGE} rootfs
+	podman tag ${IMAGE} ${MUTABLE_IMAGE}
 
-docker-buildx:
-	docker buildx build --build-arg CODENAME=${CODENAME} --platform ${PLATFORM} -t ${IMAGE} rootfs --push
+podman-buildx:
+	podman buildx build --build-arg CODENAME=${CODENAME} --platform ${PLATFORM} -t ${IMAGE} rootfs --push
 
-clean: check-docker
-	docker rmi $(IMAGE)
+clean: check-podman
+	podman rmi $(IMAGE)
 	
 test: test-style
 
 test-style:
 	${TEST_ENV_PREFIX} shellcheck $(SHELL_SCRIPTS)
 
-.PHONY: build push docker-build clean upgrade deploy test test-style
+.PHONY: build push podman-build clean upgrade deploy test test-style
 
 build-all:
-	docker build ${DOCKER_BUILD_FLAGS} --build-arg CODENAME=${CODENAME} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
-	docker build ${DOCKER_BUILD_FLAGS} --build-arg CODENAME=${CODENAME} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
+	podman build --build-arg CODENAME=${CODENAME} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
+	podman build --build-arg CODENAME=${CODENAME} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
 
 push-all:
-	docker push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION}
-	docker push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION}
+	podman push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION}
+	podman push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION}

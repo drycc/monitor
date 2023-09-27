@@ -1,7 +1,7 @@
-.PHONY: check-docker
-check-docker:
-	@if [ -z $$(which docker) ]; then \
-		echo "Missing \`docker\` client which is required for development"; \
+.PHONY: check-podman
+check-podman:
+	@if [ -z $$(which podman) ]; then \
+		echo "Missing \`podman\` client which is required for development"; \
 		exit 2; \
 	fi
 

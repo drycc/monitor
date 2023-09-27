@@ -1,7 +1,7 @@
 # [Telegraf](https://influxdata.com/time-series-platform/telegraf/)
 
 ## Description
-Telegraf is a metrics collection daemon from InfluxData. It contains numerous input and output plugins that allows the user to customize what data they collect and where it is sent. This image is based on the official [drycc base image](https://github.com/drycc/docker-base).
+Telegraf is a metrics collection daemon from InfluxData. It contains numerous input and output plugins that allows the user to customize what data they collect and where it is sent. This image is based on the official [drycc base image](https://github.com/drycc/base).
 
 ## Configuration
 Telegraf configuration is based largely on a toml file that is passed in when the binary starts. The issue with doing this in a containerized environment is how can you "dynamically" build this file based on values passed into the container at runtime. Therefore, this image relies on a project called [envtpl](https://github.com/arschles/envtpl) to produce the telegraf configuration file. It can take environment variables and through using go templates produce the necessary stanzas in the toml file to start telegraf. Currently, the go template only supports basic if checks and outputting values that have been set.
@@ -29,15 +29,15 @@ The provided `Makefile` has various targets to help support building and publish
 ### Environment variables
 There are a few key environment variables you should be aware of when interacting with the `make` targets.
 
-* `BUILD_TAG` - The tag provided to the docker image when it is built (defaults to the git-sha)
+* `BUILD_TAG` - The tag provided to the container image when it is built (defaults to the git-sha)
 * `SHORT_NAME` - The name of the image (defaults to `grafana`)
 * `DRYCC_REGISTRY` - This is the registry you are using (default `dockerhub`)
 * `IMAGE_PREFIX` - This is the account for the registry you are using (default `drycc`)
 
 ### Make targets
 
-* `make build` - Build docker image
-* `make push` - Push docker image to a registry
+* `make build` - Build container image
+* `make push` - Push container image to a registry
 * `make upgrade` - Replaces the running grafana instance with a new one
 
 The typical workflow will look something like this - `DRYCC_REGISTRY= IMAGE_PREFIX=foouser make build push upgrade``
