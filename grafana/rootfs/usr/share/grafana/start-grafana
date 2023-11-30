@@ -9,9 +9,6 @@ GRAFANA_USER=${DEFAULT_USER:-admin}
 GRAFANA_PASSWD=${DEFAULT_USER_PASSWORD:-admin}
 GRAFANA_PORT=${BIND_PORT:-3000}
 
-PROMETHEUS_HOST=${DRYCC_PROMETHEUS_SERVICE_HOST:-"drycc-prometheus.drycc.svc.${KUBERNETES_CLUSTER_DOMAIN}"}
-PROMETHEUS_PORT=${DRYCC_PROMETHEUS_SERVICE_PORT:-9090}
-
 DASHBOARD_LOCATION=${DASHBOARD_JSON_PATH:-"/usr/share/grafana/api/dashboards"}
 # Create the dashboards directory
 mkdir /usr/share/grafana/dashboards
@@ -76,11 +73,7 @@ export GF_AUTH_ANONYMOUS_ENABLED=true
 export GF_SERVER_HTTP_PORT=${GRAFANA_PORT}
 
 BACKEND_ACCESS_MODE=${BACKEND_ACCESS_MODE:-proxy}
-if [ -n "$PROMETHEUS_URL" ]; then
-  echo "prometheus service URL is provided."
-else
-  PROMETHEUS_URL="http://${PROMETHEUS_HOST}:${PROMETHEUS_PORT}"
-fi
+PROMETHEUS_URL=${PROMETHEUS_URL:-"http://${DRYCC_PROMETHEUS_SERVICE_HOST}:${DRYCC_PROMETHEUS_SERVICE_PORT}"}
 
 echo "Using the following URL for prometheus: ${PROMETHEUS_URL}"
 echo "Using the following backend access mode for prometheus: ${BACKEND_ACCESS_MODE}"

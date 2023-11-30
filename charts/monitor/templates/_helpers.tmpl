@@ -12,8 +12,18 @@ env:
       name: prometheus-creds
       key: url
 {{- else }}
+- name: "PROMETHEUS_USERNAME"
+  valueFrom:
+    secretKeyRef:
+      name: prometheus-creds
+      key: username
+- name: "PROMETHEUS_PASSWORD"
+  valueFrom:
+    secretKeyRef:
+      name: prometheus-creds
+      key: password
 - name: "PROMETHEUS_URL"
-  value: http://$(DRYCC_PROMETHEUS_SERVICE_HOST):$(DRYCC_PROMETHEUS_SERVICE_PORT)
+  value: "http://$(PROMETHEUS_USERNAME):$(PROMETHEUS_PASSWORD)@drycc-prometheus.{{$.Release.Namespace}}.svc.{{$.Values.global.clusterDomain}}:9090"
 {{- end }}
 - name: "BIND_PORT"
   value: "3000"
