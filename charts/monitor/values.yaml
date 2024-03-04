@@ -1,8 +1,24 @@
+imageOrg: "drycc"
+imagePullPolicy: "Always"
+imageTag: "canary"
+imageRegistry: "registry.drycc.cc"
+
+## Enable diagnostic mode
+##
+diagnosticMode:
+  ## @param diagnosticMode.enabled Enable diagnostic mode (all probes will be disabled and the command will be overridden)
+  ##
+  enabled: false
+  ## @param diagnosticMode.command Command to override all containers
+  ##
+  command:
+    - sleep
+  ## @param diagnosticMode.args Args to override all containers
+  ##
+  args:
+    - infinity
+
 grafana:
-  imageOrg: "drycc"
-  imagePullPolicy: "Always"
-  imageTag: "canary"
-  imageRegistry: "registry.drycc.cc"
   # limitsCpu: "100m"
   # limitsMemory: "50Mi"
   nodeAffinityPreset:
@@ -41,10 +57,6 @@ grafana:
   passportSecret: ""
 
 telegraf:
-  imageOrg: "drycc"
-  imagePullPolicy: "Always"
-  imageTag: "canary"
-  imageRegistry: "registry.drycc.cc"
   # limitsCpu: "100m"
   # limitsMemory: "50Mi"
   postgresqlConnection: ""

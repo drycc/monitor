@@ -6,7 +6,7 @@ metadata:
   labels:
     heritage: drycc
   annotations:
-    component.drycc.cc/version: {{ .Values.grafana.imageTag }}
+    component.drycc.cc/version: {{ .Values.imageTag }}
 spec:
   replicas: 1
   strategy:
@@ -32,8 +32,12 @@ spec:
         runAsUser: 1001
       containers:
       - name: drycc-monitor-grafana
-        image: {{.Values.grafana.imageRegistry}}/{{.Values.grafana.imageOrg}}/grafana:{{.Values.grafana.imageTag}}
-        imagePullPolicy: {{.Values.grafana.imagePullPolicy}}
+        image: {{.Values.imageRegistry}}/{{.Values.imageOrg}}/grafana:{{.Values.imageTag}}
+        imagePullPolicy: {{.Values.imagePullPolicy}}
+        {{- if .Values.diagnosticMode.enabled }}
+        command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 10 }}
+        args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 10 }}
+        {{- end }}
         {{- if or (.Values.grafana.limitsCpu) (.Values.grafana.limitsMemory)}}
         resources:
           limits:
