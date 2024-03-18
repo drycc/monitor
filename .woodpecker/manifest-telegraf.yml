@@ -1,9 +1,8 @@
-platform: linux/amd64
-
 labels:
   type: exec
- 
-pipeline:
+  platform: linux/amd64
+
+steps:
 - name: generate-manifest
   image: bash
   commands:
