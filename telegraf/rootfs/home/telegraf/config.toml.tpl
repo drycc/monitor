@@ -57,6 +57,7 @@
 
 {{- if .POSTGRESQL_CONNECTION}}
 [[outputs.postgresql]]
+  startup_error_behavior = "retry"
   connection = "{{ .POSTGRESQL_CONNECTION }}"
   tags_as_foreign_keys = true
   create_templates = [
@@ -70,6 +71,7 @@
 
 {{- if .KAFKA_BROKERS}}
 [[outputs.kafka]]
+  startup_error_behavior = "retry"
   brokers = [{{ .KAFKA_BROKERS }}]
   topic = {{ default "telegraf" .KAFKA_TOPIC | quote }}
   routing_tag = {{ .KAFKA_ROUTING_TAG | quote }}
