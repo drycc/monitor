@@ -98,7 +98,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Deployment.*$\",namespace=\"$namespace\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+            "expr": "sum (container_memory_working_set_bytes{pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "",
@@ -178,7 +178,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\",namespace=\"$namespace\"}[1m])) / sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}[1m])) / sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "",
@@ -253,7 +253,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum(kube_deployment_status_replicas_available{deployment=~\"^$Deployment$\",namespace=\"$namespace\"}) / sum(kube_deployment_status_replicas{deployment=~\"^$Deployment$\",namespace=\"$namespace\"}) * 100",
+            "expr": "sum(kube_deployment_status_replicas_available{deployment=~\"^$Deployment$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}) / sum(kube_deployment_status_replicas{deployment=~\"^$Deployment$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}) * 100",
             "intervalFactor": 2,
             "range": true,
             "refId": "A",
@@ -326,7 +326,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (container_memory_working_set_bytes{namespace=\"$namespace\",pod=~\"^$Deployment.*$\"})",
+            "expr": "sum (container_memory_working_set_bytes{namespace=\"$Namespace\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\"})",
             "interval": "",
             "intervalFactor": 2,
             "legendFormat": "",
@@ -472,7 +472,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\",namespace=\"$namespace\"}[1m]))",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}[1m]))",
             "interval": "",
             "intervalFactor": 2,
             "legendFormat": "",
@@ -618,7 +618,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum(kube_deployment_status_replicas_available{namespace=\"$namespace\",deployment=~\"^$Deployment$\"})",
+            "expr": "sum(kube_deployment_status_replicas_available{namespace=\"$Namespace\",deployment=~\"^$Deployment$\",pod=~\"^$Statefulset.*$\"})",
             "intervalFactor": 2,
             "range": true,
             "refId": "A",
@@ -691,7 +691,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum(kube_deployment_status_replicas{namespace=\"$namespace\",deployment=~\"^$Deployment$\"})",
+            "expr": "sum(kube_deployment_status_replicas{namespace=\"$Namespace\",deployment=~\"^$Deployment$\",pod=~\"^$Statefulset.*$\"})",
             "intervalFactor": 2,
             "range": true,
             "refId": "A",
@@ -756,7 +756,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",pod!=\"\",pod=~\"^$Deployment.*$\",namespace=\"$namespace\"}[1m])) by (pod)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",pod!=\"\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}[1m])) by (pod)",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "{{ pod }}",
@@ -857,7 +857,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (rate (container_cpu_usage_seconds_total{pod!=\"\",pod!=\"POD\",pod=~\"^$Deployment.*$\",namespace=\"$namespace\"}[1m])) by (pod)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{pod!=\"\",pod!=\"POD\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}[1m])) by (pod)",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
@@ -957,7 +957,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (container_memory_working_set_bytes{image!=\"\",pod!=\"\",pod=~\"^$Deployment.*$\",namespace=\"$namespace\"}) by (pod)",
+            "expr": "sum (container_memory_working_set_bytes{image!=\"\",pod!=\"\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}) by (pod)",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "{{ pod }}",
@@ -1055,7 +1055,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",id!=\"\",namespace=\"${namespace}\"}[1m])) by (pod)",
+            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",id!=\"\",pod=~\"^$Statefulset.*$\",namespace=\"${Namespace}\"}[2m])) by (pod)",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "-> {{ pod }}",
@@ -1067,7 +1067,7 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",id!=\"\",namespace=\"${namespace}\"}[1m])) by (pod)",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",id!=\"\",pod=~\"^$statefulset.*$\",namespace=\"${namespace}\"}[2m])) by (pod)",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "<- {{ pod }}",
@@ -1122,8 +1122,8 @@
         {
           "current": {
             "selected": true,
-            "text": "activity-server",
-            "value": "activity-server"
+            "text": "",
+            "value": ""
           },
           "datasource": null,
           "definition": "label_values(namespace)",
@@ -1134,7 +1134,65 @@
           "options": [],
           "query": {
             "query": "label_values(namespace)",
-            "refId": "StandardVariableQuery"
+            "refId": "PrometheusVariableQueryEditor-VariableQuery"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {},
+          "definition": "label_values({namespace=\"$Namespace\"},deployment)",
+          "hide": 0,
+          "includeAll": true,
+          "multi": true,
+          "name": "Deployment",
+          "options": [],
+          "query": {
+            "query": "label_values({namespace=\"$Namespace\"},deployment)",
+            "refId": "PrometheusVariableQueryEditor-VariableQuery"
+          },
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "definition": "label_values({namespace=\"$Namespace\"},statefulset)",
+          "hide": 0,
+          "includeAll": true,
+          "multi": true,
+          "name": "Statefulset",
+          "options": [],
+          "query": {
+            "query": "label_values({namespace=\"$Namespace\"},statefulset)",
+            "refId": "PrometheusVariableQueryEditor-VariableQuery"
           },
           "refresh": 1,
           "regex": "",
@@ -1149,34 +1207,7 @@
             "text": "All",
             "value": "$__all"
           },
-          "datasource": null,
-          "definition": "",
-          "hide": 0,
-          "includeAll": true,
-          "multi": false,
-          "name": "Deployment",
-          "options": [],
-          "query": {
-            "query": "label_values(deployment)",
-            "refId": "Prometheus-all-Deployment-Variable-Query"
-          },
-          "refresh": 1,
-          "regex": "",
-          "skipUrlSync": false,
-          "sort": 0,
-          "tagValuesQuery": "",
-          "tagsQuery": "",
-          "type": "query",
-          "useTags": false
-        },
-        {
-          "allValue": ".*",
-          "current": {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
-          "datasource": null,
+          "datasource": {},
           "definition": "label_values(node)",
           "hide": 0,
           "includeAll": true,
@@ -1199,7 +1230,7 @@
       ]
     },
     "time": {
-      "from": "now-15m",
+      "from": "now-1h",
       "to": "now"
     },
     "timepicker": {
@@ -1230,8 +1261,7 @@
     "timezone": "browser",
     "title": "Kubernetes Deployment metrics",
     "uid": "wdtm7Mc7z123",
-    "version": 1,
+    "version": 13,
     "weekStart": ""
-  },
-  "overwrite": false
+  }
 }
