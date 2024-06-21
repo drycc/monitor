@@ -93,7 +93,7 @@
           "showThresholdLabels": false,
           "showThresholdMarkers": true
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -173,7 +173,7 @@
           "showThresholdLabels": false,
           "showThresholdMarkers": true
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -248,7 +248,7 @@
           "showThresholdLabels": false,
           "showThresholdMarkers": true
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -321,7 +321,7 @@
           },
           "textMode": "auto"
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -339,7 +339,6 @@
         "type": "stat"
       },
       {
-        "datasource": null,
         "fieldConfig": {
           "defaults": {
             "color": {
@@ -396,7 +395,7 @@
           },
           "textMode": "auto"
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -467,7 +466,7 @@
           },
           "textMode": "auto"
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -542,7 +541,7 @@
           },
           "textMode": "auto"
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -613,7 +612,7 @@
           },
           "textMode": "auto"
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -686,7 +685,7 @@
           },
           "textMode": "auto"
         },
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "targets": [
           {
             "datasource": null,
@@ -744,7 +743,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -768,7 +767,7 @@
         ],
         "thresholds": [],
         "timeRegions": [],
-        "title": "Deployment CPU usage",
+        "title": "Pod CPU usage",
         "tooltip": {
           "msResolution": true,
           "shared": true,
@@ -845,7 +844,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -857,11 +856,11 @@
           {
             "datasource": null,
             "editorMode": "code",
-            "expr": "sum (rate (container_cpu_usage_seconds_total{pod!=\"\",pod!=\"POD\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}[1m])) by (pod)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{pod!=\"\",pod!=\"POD\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}[1m])) by (pod, container)",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "pod: {{ pod }} ",
+            "legendFormat": "container: {{ pod }}:{{ container }} ",
             "metric": "container_cpu",
             "range": true,
             "refId": "A",
@@ -945,7 +944,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -969,7 +968,105 @@
         ],
         "thresholds": [],
         "timeRegions": [],
-        "title": "Deployment memory usage",
+        "title": "Pod memory usage",
+        "tooltip": {
+          "msResolution": false,
+          "shared": true,
+          "sort": 2,
+          "value_type": "cumulative"
+        },
+        "type": "graph",
+        "xaxis": {
+          "mode": "time",
+          "show": true,
+          "values": []
+        },
+        "yaxes": [
+          {
+            "$$hashKey": "object:920",
+            "format": "bytes",
+            "logBase": 1,
+            "show": true
+          },
+          {
+            "$$hashKey": "object:921",
+            "format": "short",
+            "logBase": 1,
+            "show": false
+          }
+        ],
+        "yaxis": {
+          "align": false
+        }
+      },
+      {
+        "aliasColors": {},
+        "bars": false,
+        "dashLength": 10,
+        "dashes": false,
+        "datasource": {},
+        "decimals": 2,
+        "editable": true,
+        "error": false,
+        "fill": 0,
+        "fillGradient": 0,
+        "grid": {},
+        "gridPos": {
+          "h": 7,
+          "w": 24,
+          "x": 0,
+          "y": 29
+        },
+        "hiddenSeries": false,
+        "id": 44,
+        "isNew": true,
+        "legend": {
+          "alignAsTable": true,
+          "avg": true,
+          "current": true,
+          "max": false,
+          "min": false,
+          "rightSide": true,
+          "show": true,
+          "sideWidth": 200,
+          "sort": "current",
+          "sortDesc": true,
+          "total": false,
+          "values": true
+        },
+        "lines": true,
+        "linewidth": 2,
+        "links": [],
+        "nullPointMode": "connected",
+        "options": {
+          "alertThreshold": true
+        },
+        "percentage": false,
+        "pluginVersion": "9.5.3",
+        "pointradius": 5,
+        "points": false,
+        "renderer": "flot",
+        "seriesOverrides": [],
+        "spaceLength": 10,
+        "stack": false,
+        "steppedLine": false,
+        "targets": [
+          {
+            "datasource": {},
+            "editorMode": "code",
+            "expr": "sum (container_memory_working_set_bytes{image!=\"\",pod!=\"\",pod=~\"^$Deployment.*$\",pod=~\"^$Statefulset.*$\",namespace=\"$Namespace\"}) by (pod, container)",
+            "interval": "10s",
+            "intervalFactor": 1,
+            "legendFormat": "{{ pod }}:{{ container }}",
+            "metric": "container_memory_usage:sort_desc",
+            "range": true,
+            "refId": "A",
+            "step": 10
+          }
+        ],
+        "thresholds": [],
+        "timeRegions": [],
+        "title": "Container memory usage",
         "tooltip": {
           "msResolution": false,
           "shared": true,
@@ -1016,7 +1113,7 @@
           "h": 7,
           "w": 24,
           "x": 0,
-          "y": 29
+          "y": 36
         },
         "hiddenSeries": false,
         "id": 16,
@@ -1043,7 +1140,7 @@
           "alertThreshold": true
         },
         "percentage": false,
-        "pluginVersion": "9.1.1",
+        "pluginVersion": "9.5.3",
         "pointradius": 5,
         "points": false,
         "renderer": "flot",
@@ -1079,7 +1176,7 @@
         ],
         "thresholds": [],
         "timeRegions": [],
-        "title": "Deployment network I/O",
+        "title": "Pod network I/O",
         "tooltip": {
           "msResolution": false,
           "shared": true,
@@ -1130,11 +1227,11 @@
           "hide": 0,
           "includeAll": false,
           "multi": false,
-          "name": "namespace",
+          "name": "Namespace",
           "options": [],
           "query": {
             "query": "label_values(namespace)",
-            "refId": "PrometheusVariableQueryEditor-VariableQuery"
+            "refId": "StandardVariableQuery"
           },
           "refresh": 1,
           "regex": "",
@@ -1261,7 +1358,7 @@
     "timezone": "browser",
     "title": "Kubernetes Deployment metrics",
     "uid": "wdtm7Mc7z123",
-    "version": 13,
+    "version": 1,
     "weekStart": ""
   }
 }
