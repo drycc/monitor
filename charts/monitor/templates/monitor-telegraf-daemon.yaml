@@ -10,10 +10,8 @@ spec:
   selector:
     matchLabels:
       app: drycc-monitor-telegraf
-  {{- if ge .Capabilities.KubeVersion.Minor "6" }}
   updateStrategy:
     type: RollingUpdate
-  {{- end }}
   template:
     metadata:
       labels: {{- include "common.labels.standard" . | nindent 8 }}
