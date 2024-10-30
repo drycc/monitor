@@ -4,10 +4,10 @@ FROM registry.drycc.cc/drycc/base:${CODENAME}
 ENV DRYCC_UID=1001 \
   DRYCC_GID=1001 \
   DRYCC_HOME_DIR=/home/telegraf \
-  MC_VERSION="2023.06.15.15.08.26" \
-  TELEGRAF_VERSION="1.30.2" \
+  MC_VERSION="2024.10.08.09.37.26" \
+  TELEGRAF_VERSION="1.32.2" \
   ENVTPL_VERSION="1.0.0" \
-  JQ_VERSION="1.6"
+  JQ_VERSION="1.7.1"
 
 RUN groupadd drycc --gid ${DRYCC_GID} \
   && useradd drycc -u ${DRYCC_UID} -g ${DRYCC_GID} -s /bin/bash -m -d ${DRYCC_HOME_DIR}
