@@ -1277,7 +1277,7 @@
               {
                 "alias": "$tag_pod_name",
                 "editorMode": "code",
-                "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",pod!=\"\",namespace=\"drycc\",container=~\"^drycc-logger-fluentd.*$\"}[1m])) by (pod) * 1000",
+                "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",pod!=\"\",namespace=\"drycc\",container=~\"^drycc-logger-fluentbit.*$\"}[1m])) by (pod) * 1000",
                 "groupBy": [
                   {
                     "params": [
@@ -1386,7 +1386,7 @@
               {
                 "alias": "$tag_pod_name",
                 "editorMode": "code",
-                "expr": "sum (container_memory_working_set_bytes{image!=\"\",pod!=\"\",namespace=\"drycc\",container=~\"^drycc-logger-fluent.*$\"}) by (pod)",
+                "expr": "sum (container_memory_working_set_bytes{image!=\"\",pod!=\"\",namespace=\"drycc\",container=~\"^drycc-logger-fluentbit.*$\"}) by (pod)",
                 "groupBy": [
                   {
                     "params": [
@@ -1452,7 +1452,7 @@
             "refId": "A"
           }
         ],
-        "title": "FLUENTD",
+        "title": "FLUENTBIT",
         "type": "row"
       },
       {

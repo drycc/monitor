@@ -26,24 +26,24 @@ Grafana is a stand alone graphing application. It natively supports Timescaledb 
                                   │                               │
                               logs file                           │
                                   │                               │
-                                  ▼                               ▼
-┌──────────┐               ┌───-─────────┐  logs/metrics   ┌──────────────┐
-│ App Logs │───Log File───▶│   Fluentd   │────topics──────▶│ Redis Stream │
-└──────────┘               └────-────────┘                 └──────────────┘
+                                  v                               v
+┌──────────┐               ┌─────────────┐  logs/metrics   ┌──────────────┐
+│ App Logs │───Log File──> │  Fluentbit  │──────topics────>│ Redis Stream │
+└──────────┘               └─────────────┘                 └──────────────┘
                                                                   │
 ┌──────────┐                                                      │
 │   HOST   │───┐                                                  │
 │ Telegraf │   │                                                  │
 └──────────┘   │                                                  │
-               │                                                  ▼
-┌──────────┐   │           ┌───────-─────┐                 ┌─────────────┐
-│   HOST   │───┼──────────▶│ Timescaledb │◀──────Wire──────│  Telegraf   │
-│ Telegraf │   │           └───────────-─┘     Protocol    └─────────────┘
+               │                                                  v
+┌──────────┐   │           ┌─────────────┐                 ┌─────────────┐
+│   HOST   │───┼──────────>│ Timescaledb │<──────Wire──────│  Telegraf   │
+│ Telegraf │   │           └─────────────┘     Protocol    └─────────────┘
 └──────────┘   │                  │
                │                  │
-┌──────────┐   │                  ▼
+┌──────────┐   │                  v
 │   HOST   │───┘           ┌─────────────┐                 ┌─────────────┐
-│ Telegraf │               │   Grafana   │◀────────────────│ Prometheus  │
+│ Telegraf │               │   Grafana   │<────────────────│ Prometheus  │
 └──────────┘               └─────────────┘                 └─────────────┘
 
 ```
