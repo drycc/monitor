@@ -2,19 +2,19 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: drycc-monitor-grafana
+  name: drycc-grafana
   annotations:
-    {{- with .Values.grafana.service.annotations }}
+    {{- with .Values.service.annotations }}
     {{- toYaml . | nindent 4 }}
     {{- end }}
   labels:
     heritage: drycc
-    app: drycc-monitor-grafana
+    app: drycc-grafana
 spec:
   ports:
   - port: 80
-    name: ui
-    targetPort: ui
+    name: grafana
+    targetPort: grafana
   selector:
-    app: drycc-monitor-grafana
+    app: drycc-grafana
 {{- end }}

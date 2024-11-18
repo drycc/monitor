@@ -18,63 +18,43 @@ diagnosticMode:
   args:
     - infinity
 
-grafana:
-  # limitsCpu: "100m"
-  # limitsMemory: "50Mi"
-  nodeAffinityPreset:
-    key: "drycc.cc/node"
-    type: "soft"
-    values:
-    - "true"
+# limitsCpu: "100m"
+# limitsMemory: "50Mi"
 
-  podAffinityPreset:
-    type: ""
-    extraMatchLabels:
-      security: "drycc-security"
+nodeAffinityPreset:
+  key: "drycc.cc/node"
+  type: "soft"
+  values:
+  - "true"
 
-  podAntiAffinityPreset:
-    type: "soft"
-    extraMatchLabels:
-      app: "drycc-monitor-grafana"
+podAffinityPreset:
+  type: ""
+  extraMatchLabels:
+    security: "drycc-security"
 
-  # Service
-  service:
-    # Provide any additional service annotations
-    annotations: {}
+podAntiAffinityPreset:
+  type: "soft"
+  extraMatchLabels:
+    app: "drycc-grafana"
 
-  persistence:
-    enabled: false
-    accessMode: ReadWriteOnce
-    size: 5Gi
-  # Any custom grafana environment variables
-  # can be specified as key-value pairs under environment
-  # this is usually a non required setting.
-  environment:
-    ALLOW_SIGN_UP: false
-  # The passportUrl, passportKey and passportSecret are will no longer use the built-in passport component
-  passportUrl: ""
-  passportKey: ""
-  passportSecret: ""
+# Service
+service:
+  # Provide any additional service annotations
+  annotations: {}
 
-telegraf:
-  # limitsCpu: "100m"
-  # limitsMemory: "50Mi"
-  postgresqlConnection: ""
-  nodeAffinityPreset:
-    key: "drycc.cc/node"
-    type: "soft"
-    values:
-    - "true"
-
-  podAffinityPreset:
-    type: ""
-    extraMatchLabels:
-      security: "drycc-security"
-
-  podAntiAffinityPreset:
-    type: "soft"
-    extraMatchLabels:
-      app: "drycc-monitor-telegraf"
+persistence:
+  enabled: false
+  accessMode: ReadWriteOnce
+  size: 5Gi
+# Any custom grafana environment variables
+# can be specified as key-value pairs under environment
+# this is usually a non required setting.
+environment:
+  ALLOW_SIGN_UP: false
+# The passportUrl, passportKey and passportSecret are will no longer use the built-in passport component
+passportUrl: ""
+passportKey: ""
+passportSecret: ""
 
 redis:
   replicas: 1
@@ -86,14 +66,14 @@ global:
   # Valid values are:
   # - on-cluster: Run component within the Kubernetes cluster
   # - off-cluster: component is running outside of the cluster and credentials and connection information will be provided.
-  prometheusLocation: "on-cluster"
-  grafanaLocation: "on-cluster"
   redisLocation: "on-cluster"
-  rabbitmqLocation: "on-cluster"
+  grafanaLocation: "on-cluster"
   storageLocation: "on-cluster"
+  rabbitmqLocation: "on-cluster"
   databaseLocation: "on-cluster"
   passportLocation: "on-cluster"
   registryLocation: "on-cluster"
+  prometheusLocation: "on-cluster"
   # Role-Based Access Control for Kubernetes >= 1.5
   rbac: false
   ingressClass: ""

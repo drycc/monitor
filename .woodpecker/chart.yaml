@@ -25,5 +25,4 @@ steps:
     - tag
 
 depends_on:
-- manifest-grafana
-- manifest-telegraf
+- manifest

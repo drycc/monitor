@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: drycc-monitor-grafana
+  name: drycc-grafana
   labels:
     heritage: drycc
   annotations:
@@ -16,49 +16,49 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app: drycc-monitor-grafana
+      app: drycc-grafana
   template:
     metadata:
       labels: {{- include "common.labels.standard" . | nindent 8 }}
-        app: drycc-monitor-grafana
+        app: drycc-grafana
     spec:
       affinity:
-        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.grafana.podAffinityPreset.type "component" "" "extraMatchLabels" .Values.grafana.podAffinityPreset.extraMatchLabels "topologyKey" "" "context" $) | nindent 10 }}
-        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.grafana.podAntiAffinityPreset.type "component" "" "extraMatchLabels" .Values.grafana.podAntiAffinityPreset.extraMatchLabels "topologyKey" "" "context" $) | nindent 10 }}
-        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.grafana.nodeAffinityPreset.type "key" .Values.grafana.nodeAffinityPreset.key "values" .Values.grafana.nodeAffinityPreset.values ) | nindent 10 }}
+        podAffinity: {{- include "common.affinities.pods" (dict "type" .Values.podAffinityPreset.type "component" "" "extraMatchLabels" .Values.podAffinityPreset.extraMatchLabels "topologyKey" "" "context" $) | nindent 10 }}
+        podAntiAffinity: {{- include "common.affinities.pods" (dict "type" .Values.podAntiAffinityPreset.type "component" "" "extraMatchLabels" .Values.podAntiAffinityPreset.extraMatchLabels "topologyKey" "" "context" $) | nindent 10 }}
+        nodeAffinity: {{- include "common.affinities.nodes" (dict "type" .Values.nodeAffinityPreset.type "key" .Values.nodeAffinityPreset.key "values" .Values.nodeAffinityPreset.values ) | nindent 10 }}
       securityContext:
         fsGroup: 1001
         runAsGroup: 1001
         runAsUser: 1001
       containers:
-      - name: drycc-monitor-grafana
+      - name: drycc-grafana
         image: {{.Values.imageRegistry}}/{{.Values.imageOrg}}/grafana:{{.Values.imageTag}}
         imagePullPolicy: {{.Values.imagePullPolicy}}
         {{- if .Values.diagnosticMode.enabled }}
         command: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.command "context" $) | nindent 10 }}
         args: {{- include "common.tplvalues.render" (dict "value" .Values.diagnosticMode.args "context" $) | nindent 10 }}
         {{- end }}
-        {{- if or (.Values.grafana.limitsCpu) (.Values.grafana.limitsMemory)}}
+        {{- if or (.Values.limitsCpu) (.Values.limitsMemory)}}
         resources:
           limits:
-            {{- if (.Values.grafana.limitsCpu) }}
-            cpu: {{.Values.grafana.limitsCpu}}
+            {{- if (.Values.limitsCpu) }}
+            cpu: {{.Values.limitsCpu}}
             {{- end}}
-            {{- if (.Values.grafana.limitsMemory) }}
-            memory: {{.Values.grafana.limitsMemory}}
+            {{- if (.Values.limitsMemory) }}
+            memory: {{.Values.limitsMemory}}
             {{- end}}
         {{- end}}
         ports:
         - containerPort: 3000
-          name: ui
+          name: grafana
         {{- include "grafana.envs" . | indent 8 }}
-      {{- if .Values.grafana.persistence.enabled }}
+      {{- if .Values.persistence.enabled }}
         volumeMounts:
         - name: grafana-data
           mountPath: /var/lib/grafana
       volumes:
       - name: grafana-data
         persistentVolumeClaim:
-          claimName: drycc-monitor-grafana
+          claimName: drycc-grafana
       {{- end }}
 {{- end }}

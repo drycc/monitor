@@ -11,8 +11,7 @@ steps:
 - name: test-linux
   image: bash
   commands:
-  - cd grafana && make test && cd ..
-  - cd telegraf && make test && cd ..
+  - make test
   secrets:
   - codename
   - dev_registry

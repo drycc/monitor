@@ -1,14 +1,16 @@
 SHELL := /bin/bash
 
-# all monitor components share/use the following targets/exports
+# grafana share/use the following targets/exports
+SHORT_NAME ?= grafana
+SHELL_SCRIPTS = rootfs/usr/share/grafana/start-grafana
+
 BUILD_TAG ?= git-$(shell git rev-parse --short HEAD)
 DRYCC_REGISTRY ?= ${DEV_REGISTRY}
 IMAGE_PREFIX ?= drycc
 PLATFORM ?= linux/amd64,linux/arm64
 
-include ../includes.mk
-include ../versioning.mk
-include ../deploy.mk
+include includes.mk
+include versioning.mk
 
 TEST_ENV_PREFIX := podman run --rm -v ${CURDIR}:/bash -w /bash ${DEV_REGISTRY}/drycc/go-dev
 
@@ -33,10 +35,3 @@ test-style:
 
 .PHONY: build push podman-build clean upgrade deploy test test-style
 
-build-all:
-	podman build --build-arg CODENAME=${CODENAME} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION} ../grafana/rootfs
-	podman build --build-arg CODENAME=${CODENAME} -t ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION} ../telegraf/rootfs
-
-push-all:
-	podman push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/grafana:${VERSION}
-	podman push ${DRYCC_REGISTRY}/${IMAGE_PREFIX}/telegraf:${VERSION}

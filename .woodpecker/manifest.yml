@@ -6,7 +6,7 @@ steps:
 - name: generate-manifest
   image: bash
   commands:
-  - sed -i "s/{{project}}/telegraf/g" .woodpecker/manifest.tmpl
+  - sed -i "s/{{project}}/$${CI_REPO_NAME}/g" .woodpecker/manifest.tmpl
   - sed -i "s/registry.drycc.cc/$${DRYCC_REGISTRY}/g" .woodpecker/manifest.tmpl
   secrets:
   - drycc_registry
