@@ -74,8 +74,8 @@ env:
 {{- end }}
 - name: "PROMETHEUS_LOCATION"
   value: {{ .Values.global.prometheusLocation }}
-- name: "REDIS_LOCATION"
-  value: {{ .Values.global.redisLocation }}
+- name: "VALKEY_LOCATION"
+  value: {{ .Values.global.valkeyLocation }}
 - name: "RABBITMQ_LOCATION"
   value: {{ .Values.global.rabbitmqLocation }}
 - name: "STORAGE_LOCATION"

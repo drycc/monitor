@@ -90,13 +90,12 @@ path = {{ .DATABASE_PATH }}
 
 #################################### Session ####################################
 [session]
-# Either "memory", "file", "redis", "mysql", "postgres", default is "file"
+# Either "memory", "file", "mysql", "postgres", default is "file"
 provider = {{ default "file" .SESSION_PROVIDER }}
 
 # Provider config options
 # memory: not have any config yet
 # file: session dir path, is relative to grafana data_path
-# redis: config like redis server e.g. `addr=127.0.0.1:6379,pool_size=100,db=grafana`
 # mysql: go-sql-driver/mysql dsn config string, e.g. `user:password@tcp(127.0.0.1:3306)/database_name`
 # postgres: user=a password=b host=localhost port=5432 dbname=c sslmode=disable
 {{ if .SESSION_PROVIDER_CONFIG }}

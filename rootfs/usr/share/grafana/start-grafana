@@ -98,10 +98,10 @@ sed -i 's@r\[\\"namespace\\\"\] == \\"drycc\\"@r\[\\"namespace\\"\] == \\"\'"${N
 DCD="${DASHBOARD_LOCATION}"/drycc_component_health.json
 
 # remove off-cluster component panel
-if [ "on-cluster" != "${REDIS_LOCATION}" ]; then
-  rm -rf "${DASHBOARD_LOCATION}"/redis.json
+if [ "on-cluster" != "${VALKEY_LOCATION}" ]; then
+  rm -rf "${DASHBOARD_LOCATION}"/valkey.json
   # shellcheck disable=SC2005
-  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "REDIS"))')" > "${DCD}"
+  echo "$(<"${DCD}" jq 'del(.dashboard.panels[] | select(.title == "VALKEY"))')" > "${DCD}"
 fi
 if [ "on-cluster" != "${RABBITMQ_LOCATION}" ]; then
   # shellcheck disable=SC2005
